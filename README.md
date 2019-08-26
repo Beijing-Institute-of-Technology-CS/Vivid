@@ -1,3 +1,3 @@
 # Vivid
-Vivid is vivid~
+Vivid is vivid~<br>
 An IM!
