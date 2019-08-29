@@ -15,11 +15,16 @@
 #include <vector>
 //#include <mysql/mysql.h>
 
-#include "Utils/cJSON.h"
-#include "Utils/cJSON.c"
-#include "User.h"
 #include "Utils/ThreadPool.h"
+#include "Utils/cJSON.h"
+//#include "Utils/cJSON.c"
+
+
+#include "User.h"
+
 #include "Database/Database.h"
+
+#include "JsonUtils/JsonUtils.h"
 
 #define PORT 8899
 #define QUEUE_SIZE 5
@@ -57,34 +62,33 @@ int main() {
     std::cout << "json parsing" << std::endl;
 
     cJSON *json_root = NULL;
-    cJSON *json_sub = NULL;
 
-    char *p = NULL;
+    char *s_json = NULL;
 
     json_root = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json_root,"key0","value");
-    cJSON_AddNumberToObject(json_root,"key1",111);
-    json_sub = cJSON_CreateObject();
+    cJSON_AddStringToObject(json_root,"username","cyc");
+    cJSON_AddStringToObject(json_root,"password","pwd");
 
-    cJSON_AddStringToObject(json_sub,"key0","subJson");
-    cJSON_AddItemToObject(json_root,"key2",json_sub);
-
-    p = cJSON_Print(json_root);
+    s_json = cJSON_Print(json_root);
 
     cJSON_Delete(json_root);
 
-    std::cout << p << std::endl;
+    std::cout << s_json << std::endl;
 
-    cJSON *pjson_root = cJSON_Parse(p);
+    json_root = cJSON_Parse(s_json);
 
-    cJSON *pjson_sub = cJSON_GetObjectItem(pjson_root,"key2");
+    char * username;
+    char * password;
 
-    char * val = cJSON_Print(cJSON_GetObjectItem(pjson_root,"key0"));
-    char *subjson = cJSON_Print(cJSON_GetObjectItem(pjson_sub,"key0"));
+//    username = cJSON_Print(cJSON_GetObjectItem(json_root,"username"));
 
-    std::cout << val << std::endl;
-    std::cout << subjson << std::endl;
+//    std::cout << username << std::endl;
+
+    JsonUtils::parse_requset_token(s_json,username,password);
+
+    std::cout << username << password << std::endl;
+
 
     /**
      * server socket starting

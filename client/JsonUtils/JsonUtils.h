@@ -42,7 +42,6 @@ public:
 
     static char * parse_response_getMessages_json(char * s_json);
 
-
 };
 
 
