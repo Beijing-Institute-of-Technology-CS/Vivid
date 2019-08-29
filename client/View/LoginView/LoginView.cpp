@@ -13,7 +13,6 @@ void LoginView::show() {
     GtkWidget *psw_label;
     GtkWidget *name_entry;
     GtkWidget *psw_entry;
-    GtkWidget *fixed;
 
     GtkWidget *login_button;
     GtkWidget *reg_button;
@@ -29,13 +28,13 @@ void LoginView::show() {
     name_label = gtk_label_new("用户名：");
     name_entry = gtk_entry_new();
     psw_label = gtk_label_new("密码：");
-    psw_entry2 = gtk_entry_new();
+    psw_entry = gtk_entry_new();
     reg_button = gtk_button_new_with_label("register");
     login_button = gtk_button_new_with_label("login");
 
     LoginInputContent inputContent;
-    inputContent.usernameWidget = entry1;
-    inputContent.passwordWidget = entry2;
+    inputContent.usernameWidget = name_entry;
+    inputContent.passwordWidget =psw_entry;
 
     g_signal_connect(G_OBJECT(login_window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
     g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(button_login_clicked_callback), &inputContent);
@@ -52,12 +51,12 @@ void LoginView::show() {
     gtk_widget_set_size_request(image_logo,500,150);
     gtk_box_pack_start(GTK_BOX(main_box),image_logo,FALSE,FALSE,0);
 
-    gtk_box_pack_start(GTK_(main_box),fixed,FALSE,FALSE,0);
+    gtk_box_pack_start(GTK_BOX(main_box),fixed,FALSE,FALSE,0);
 
-    gtk_fixed_put(fixed,name_label,120,10);
-    gtk_fixed_put(fixed,name_entry,200,10);
-    gtk_fixed_put(fixed,psw_label,140,40);
-    gtk_fixed_put(fixed,psw_entry,200,40);
+    gtk_fixed_put(GTK_FIXED(fixed),name_label,120,10);
+    gtk_fixed_put(GTK_FIXED(fixed),name_entry,200,10);
+    gtk_fixed_put(GTK_FIXED(fixed),psw_label,140,40);
+    gtk_fixed_put(GTK_FIXED(fixed),psw_entry,200,40);
 
     gtk_box_pack_start(GTK_BOX(main_box),sep,FALSE,FALSE,5);
 
@@ -66,7 +65,7 @@ void LoginView::show() {
     
     gtk_button_set_relief(GTK_BUTTON(reg_button),GTK_RELIEF_NONE);
 
-    gtk_box_pack_start(GTK_BOX(button_box),login_button,FALSE,FALSE,5);
+    gtk_box_pack_end(GTK_BOX(button_box),login_button,FALSE,FALSE,5);
 
     gtk_widget_show_all(login_window);
     gtk_main();
