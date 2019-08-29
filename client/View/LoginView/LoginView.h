@@ -10,16 +10,19 @@
 class LoginView {
 public:
     void set_login_callback(void (* callback)(GtkWidget* button,gpointer data));
+    void create();
     void show();
+
+    void get_input_login_content(const char * & username, const char * & password);
 
 private:
     void (* button_login_clicked_callback)(GtkWidget* button,gpointer data);
-};
 
-typedef struct LoginInputContent {
-    const GtkWidget* usernameWidget;
-    const GtkWidget* passwordWidget;
-} LoginInputContent;
+    GtkWidget *login_window;
+    GtkWidget *name_entry;
+    GtkWidget *psw_entry;
+
+};
 
 
 #endif //CLIENT_LOGINVIEW_H
