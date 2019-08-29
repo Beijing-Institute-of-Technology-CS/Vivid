@@ -52,7 +52,6 @@ void do_services(int new_socket){
 
 
 int main() {
-
     Database::mql_connect();
 
     /**
@@ -78,16 +77,16 @@ int main() {
     cJSON_AddStringToObject(json_token,"uPwd","pwd");
     cJSON_AddItemToObject(json_root,"requestToken",json_token);
 
-//    cJSON_AddStringToObject(json_content,"username","cyc");
-//    cJSON_AddStringToObject(json_content,"password","password");
-//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
-
-//    cJSON_AddStringToObject(json_content,"lastCalledMessage","99");
-//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
-
-    cJSON_AddNumberToObject(json_content,"utoId",999);
-    cJSON_AddStringToObject(json_content,"content","connnt");
+    cJSON_AddStringToObject(json_content,"username","cyc");
+    cJSON_AddStringToObject(json_content,"password","password");
     cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+//    cJSON_AddNumberToObject(json_content,"lastCalledMessage",99);
+//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+//    cJSON_AddNumberToObject(json_content,"utoId",999);
+//    cJSON_AddStringToObject(json_content,"content","connnt");
+//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
 
     s_json = cJSON_Print(json_root);
 
@@ -105,21 +104,21 @@ int main() {
     JsonUtils::parse_request_token(s_json, &uId, uPwd);
     std::cout << (uId) << " " << uPwd << std::endl;
 
-//    char *username;
-//    char *password;
-//
-//    JsonUtils::parse_request_login_json(s_json,username,password);
-//    std::cout << username << " " << password << std::endl;
+    char *username;
+    char *password;
 
-//    char * lastCalledMessage;
-//    JsonUtils::parse_request_getMessages_json(s_json,lastCalledMessage);
+    JsonUtils::parse_request_login_json(s_json,username,password);
+    std::cout << username << " " << password << std::endl;
+
+//    int lastCalledMessage;
+//    JsonUtils::parse_request_getMessages_json(s_json,&lastCalledMessage);
 //    std::cout << lastCalledMessage << std::endl;
 
-    int utoId;
-    char * content;
-
-    JsonUtils::parse_request_sendMessages_json(s_json, &utoId, content);
-    std::cout << utoId <<" " << content << std::endl;
+//    int utoId;
+//    char * content;
+//
+//    JsonUtils::parse_request_sendMessages_json(s_json, &utoId, content);
+//    std::cout << utoId <<" " << content << std::endl;
 
     /**
      * server socket starting
