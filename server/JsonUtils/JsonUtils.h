@@ -8,7 +8,7 @@
 
 class JsonUtils {
 public:
-    static bool parse_requset_token(char * s_json, char *& username, char *& password);
+    static bool parse_requset_token(char * s_json, char *& uId, char *& uPwd);
 
     static bool parse_requset_register_json(char * s_json, char *&username,char *&password);
 

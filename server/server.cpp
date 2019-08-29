@@ -62,13 +62,14 @@ int main() {
     std::cout << "json parsing" << std::endl;
 
     cJSON *json_root = NULL;
+    cJSON
 
     char *s_json = NULL;
 
     json_root = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json_root,"username","cyc");
-    cJSON_AddStringToObject(json_root,"password","pwd");
+    cJSON_AddStringToObject(json_root,"uId","cyc");
+    cJSON_AddStringToObject(json_root,"upwd","pwd");
 
     s_json = cJSON_Print(json_root);
 
@@ -78,12 +79,9 @@ int main() {
 
     json_root = cJSON_Parse(s_json);
 
-    char * username;
-    char * password;
+    char * uId;
+    char * uPwd;
 
-//    username = cJSON_Print(cJSON_GetObjectItem(json_root,"username"));
-
-//    std::cout << username << std::endl;
 
     JsonUtils::parse_requset_token(s_json,username,password);
 

@@ -6,14 +6,17 @@
 #include "../Utils/cJSON.c"
 #include "../Utils/cJSON.h"
 
+//todo:free memory
 
+bool JsonUtils::parse_requset_token(char *s_json, char *& uId, char *&uPwd) {
+    cJSON * json_root;
+    cJSON * json_requestToken;
 
-bool JsonUtils::parse_requset_token(char *s_json, char *& username, char *& password) {
-    cJSON *json_root;
     json_root = cJSON_Parse(s_json);
+    json_requestToken = cJSON_GetObjectItem(json_root,"requestToken");
 
-    username = cJSON_Print(cJSON_GetObjectItem(json_root,"uId"));
-    password = cJSON_Print(cJSON_GetObjectItem(json_root,"uPwd"));
+    uId = cJSON_Print(cJSON_GetObjectItem(json_requestToken,"uId"));
+    uPwd = cJSON_Print(cJSON_GetObjectItem(json_requestToken,"uPWd"));
 
     return true;
 }
