@@ -1,6 +1,6 @@
 #include <iostream>
 #include <gtk/gtk.h>
-#include "View/MainView/MainView.h"
+#include "View/TestView/MainView.h"
 
 MainView mainView;
 
