@@ -4,15 +4,13 @@
 
 #include "LoginView.h"
 
-void LoginView::show() {
-    GtkWidget *login_window;
+void LoginView::create() {
+
     GtkWidget *main_box;
     GtkWidget *fixed;
     GtkWidget *button_box;
     GtkWidget *name_label;
     GtkWidget *psw_label;
-    GtkWidget *name_entry;
-    GtkWidget *psw_entry;
 
     GtkWidget *login_button;
     GtkWidget *reg_button;
@@ -32,13 +30,8 @@ void LoginView::show() {
     reg_button = gtk_button_new_with_label("register");
     login_button = gtk_button_new_with_label("login");
 
-    LoginInputContent inputContent;
-    inputContent.usernameWidget = name_entry;
-    inputContent.passwordWidget =psw_entry;
-
     g_signal_connect(G_OBJECT(login_window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
-    g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(button_login_clicked_callback), &inputContent);
-//    g_signal_connect_swapped(G_OBJECT(login_button),"clicked", G_CALLBACK(gtk_widget_destroy),login_window);
+    g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(button_login_clicked_callback), this);
 
     gtk_window_set_title(GTK_WINDOW(login_window),"login");
     gtk_window_set_default_size(GTK_WINDOW(login_window),500,400);
@@ -46,6 +39,7 @@ void LoginView::show() {
     gtk_container_set_border_width(GTK_CONTAINER(login_window),0);
     gtk_window_set_resizable(GTK_WINDOW(login_window),FALSE);
 
+    gtk_entry_set_visibility(GTK_ENTRY(psw_entry),FALSE);
 
     gtk_container_add(GTK_CONTAINER(login_window),main_box);
     gtk_widget_set_size_request(image_logo,500,150);
@@ -66,11 +60,17 @@ void LoginView::show() {
     gtk_button_set_relief(GTK_BUTTON(reg_button),GTK_RELIEF_NONE);
 
     gtk_box_pack_end(GTK_BOX(button_box),login_button,FALSE,FALSE,5);
-
-    gtk_widget_show_all(login_window);
-    gtk_main();
 }
 
 void LoginView::set_login_callback(void (* callback)(GtkWidget* button,gpointer data)) {
     this->button_login_clicked_callback = callback;
+}
+
+void LoginView::get_input_login_content(const char *&username, const char *&password) {
+    username = gtk_entry_get_text(GTK_ENTRY(name_entry));
+    password = gtk_entry_get_text(GTK_ENTRY(psw_entry));
+}
+
+void LoginView::show() {
+    gtk_widget_show_all(login_window);
 }
