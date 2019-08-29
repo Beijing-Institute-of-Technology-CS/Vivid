@@ -12,15 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93d91354-7ea6-41c9-9b94-f001f3575e1d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/Vivid.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Database/Database.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Database/Database.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JsonUtils/JsonUtils.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JsonUtils/JsonUtils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/.idea/client.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JsonUtils/JsonUtils.h" beforeDir="false" afterPath="$PROJECT_DIR$/JsonUtils/JsonUtils.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +86,7 @@
       <updated>1566961071034</updated>
       <workItem from="1566961072410" duration="9946000" />
       <workItem from="1566995716858" duration="10008000" />
-      <workItem from="1567048336757" duration="2491000" />
+      <workItem from="1567048336757" duration="2983000" />
     </task>
     <servers />
   </component>
