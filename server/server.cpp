@@ -13,12 +13,13 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-#include <mysql/mysql.h>
+//#include <mysql/mysql.h>
 
 #include "Utils/cJSON.h"
 #include "Utils/cJSON.c"
 #include "User.h"
 #include "Utils/ThreadPool.h"
+#include "Database/Database.h"
 
 #define PORT 8899
 #define QUEUE_SIZE 5
@@ -43,50 +44,12 @@ void do_services(int new_socket){
     }
 }
 
-void mysql_connect(){
-//    /**
-//     * mysql initiating
-//     */
-//    MYSQL mysql, *mysql_sock;
-//    MYSQL_RES * mysql_results;
-//    MYSQL_ROW row;
-//
-//    char * query_sql = "select * from User";
-//
-//    mysql_init(&mysql);
-//
-//    if((mysql_sock=mysql_real_connect(&mysql,LOCALHOST,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_DATABASE_NAME,MYSQL_PORT,NULL,0))==NULL){
-//        perror("mysql connection failed");
-//        exit(EXIT_FAILURE);
-//    }else{
-//        std::cout << "mysql connected" << std::endl;
-//    }
-//
-//    /**
-//     * querying...
-//     */
-//
-//    if(mysql_query(&mysql,query_sql)!=0){
-//        perror("query failed");
-//        exit(EXIT_FAILURE);
-//    }else{
-//        if((mysql_results = mysql_store_result(&mysql))==NULL){
-//            perror("store failed");
-//            exit(EXIT_FAILURE);
-//        }else{
-//            while((row=mysql_fetch_row(mysql_results))!=NULL) {
-//                printf("%s %s %s %s", row[0], row[1], row[2], row[3]);
-//            }
-//        }
-//    }
-//
-//    mysql_free_result(mysql_results);
-//    mysql_close(mysql_sock);
-}
+
 
 int main() {
 
-    mysql_connect();
+    Database::mql_connect();
+
     /**
      * json
      */
@@ -113,6 +76,15 @@ int main() {
 
     std::cout << p << std::endl;
 
+    cJSON *pjson_root = cJSON_Parse(p);
+
+    cJSON *pjson_sub = cJSON_GetObjectItem(pjson_root,"key2");
+
+    char * val = cJSON_Print(cJSON_GetObjectItem(pjson_root,"key0"));
+    char *subjson = cJSON_Print(cJSON_GetObjectItem(pjson_sub,"key0"));
+
+    std::cout << val << std::endl;
+    std::cout << subjson << std::endl;
 
     /**
      * server socket starting
