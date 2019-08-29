@@ -15,11 +15,16 @@
 #include <vector>
 //#include <mysql/mysql.h>
 
-#include "Utils/cJSON.h"
-#include "Utils/cJSON.c"
-#include "User.h"
 #include "Utils/ThreadPool.h"
+#include "Utils/cJSON.h"
+//#include "Utils/cJSON.c"
+
+
+#include "User.h"
+
 #include "Database/Database.h"
+
+#include "JsonUtils/JsonUtils.h"
 
 #define PORT 8899
 #define QUEUE_SIZE 5
@@ -57,34 +62,64 @@ int main() {
     std::cout << "json parsing" << std::endl;
 
     cJSON *json_root = NULL;
-    cJSON *json_sub = NULL;
+    char * json_requestType = "sendMessages";
+    cJSON *json_token = NULL;
+    cJSON *json_content = NULL;
 
-    char *p = NULL;
+    char *s_json = NULL;
 
     json_root = cJSON_CreateObject();
+    json_token = cJSON_CreateObject();
+    json_content = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json_root,"key0","value");
-    cJSON_AddNumberToObject(json_root,"key1",111);
-    json_sub = cJSON_CreateObject();
+    cJSON_AddStringToObject(json_root,"requestType",json_requestType);
 
-    cJSON_AddStringToObject(json_sub,"key0","subJson");
-    cJSON_AddItemToObject(json_root,"key2",json_sub);
+    cJSON_AddStringToObject(json_token,"uId","1");
+    cJSON_AddStringToObject(json_token,"uPwd","pwd");
+    cJSON_AddItemToObject(json_root,"requestToken",json_token);
 
-    p = cJSON_Print(json_root);
+//    cJSON_AddStringToObject(json_content,"username","cyc");
+//    cJSON_AddStringToObject(json_content,"password","password");
+//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+//    cJSON_AddStringToObject(json_content,"lastCalledMessage","99");
+//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+    cJSON_AddStringToObject(json_content,"utoId","999");
+    cJSON_AddStringToObject(json_content,"content","connnt");
+    cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+    s_json = cJSON_Print(json_root);
 
     cJSON_Delete(json_root);
 
-    std::cout << p << std::endl;
+    std::cout << s_json << std::endl;
 
-    cJSON *pjson_root = cJSON_Parse(p);
+    char * requestType;
+    JsonUtils::parse_request_type(s_json, requestType);
+    std::cout << requestType << std::endl;
 
-    cJSON *pjson_sub = cJSON_GetObjectItem(pjson_root,"key2");
+    char * uId;
+    char * uPwd;
 
-    char * val = cJSON_Print(cJSON_GetObjectItem(pjson_root,"key0"));
-    char *subjson = cJSON_Print(cJSON_GetObjectItem(pjson_sub,"key0"));
+    JsonUtils::parse_request_token(s_json, uId, uPwd);
+    std::cout << uId << " " << uPwd << std::endl;
 
-    std::cout << val << std::endl;
-    std::cout << subjson << std::endl;
+//    char *username;
+//    char *password;
+//
+//    JsonUtils::parse_request_login_json(s_json,username,password);
+//    std::cout << username << " " << password << std::endl;
+
+//    char * lastCalledMessage;
+//    JsonUtils::parse_request_getMessages_json(s_json,lastCalledMessage);
+//    std::cout << lastCalledMessage << std::endl;
+
+    char * utoId;
+    char * content;
+
+    JsonUtils::parse_request_sendMessages_json(s_json, utoId, content);
+    std::cout << utoId <<" " << content << std::endl;
 
     /**
      * server socket starting
