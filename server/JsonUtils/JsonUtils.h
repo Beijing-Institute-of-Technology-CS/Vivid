@@ -6,7 +6,8 @@
 #define SERVER_JSONUTILS_H
 
 #include <vector>
-#include "../User.h"
+#include "../Beans/User.h"
+#include "../Beans/Message.h"
 
 class JsonUtils {
 public:
@@ -28,9 +29,11 @@ public:
 
     static char * make_response_login_json(char *result, int uId);
 
-    static char * make_response_getInfo_json(char *result, int fIcon, int contactsNumber, std::vector<User> contactsArray);
+    static char * make_response_getInfo_json(char *result, int fIcon, std::vector<User> contactsArray);
 
-//    static char * make_response_getMessages_json(char *result, int messagesNumber, std::vector<User> ,)
+    static char * make_response_getMessages_json(char *result, std::vector<Message> messagesArray);
+
+    static char * make_response_sendMessages_json(char *result, int mId);
 };
 
 

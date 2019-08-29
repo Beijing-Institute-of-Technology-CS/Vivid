@@ -6,7 +6,7 @@
 
 User::User() {}
 
-User::User(int uId, char *uName, char *uPassword, char *fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
+User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
                                                                      fIconFile(fIconFile) {}
 
 int User::getUId() const {
@@ -33,10 +33,10 @@ void User::setUPassword(char *uPassword) {
     User::uPassword = uPassword;
 }
 
-char *User::getFIconFile() const {
+int User::getFIconFile() const {
     return fIconFile;
 }
 
-void User::setFIconFile(char *fIconFile) {
+void User::setFIconFile(int fIconFile) {
     User::fIconFile = fIconFile;
 }
