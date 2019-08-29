@@ -62,14 +62,32 @@ int main() {
     std::cout << "json parsing" << std::endl;
 
     cJSON *json_root = NULL;
-    cJSON
+    char * json_requestType = "sendMessages";
+    cJSON *json_token = NULL;
+    cJSON *json_content = NULL;
 
     char *s_json = NULL;
 
     json_root = cJSON_CreateObject();
+    json_token = cJSON_CreateObject();
+    json_content = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(json_root,"uId","cyc");
-    cJSON_AddStringToObject(json_root,"upwd","pwd");
+    cJSON_AddStringToObject(json_root,"requestType",json_requestType);
+
+    cJSON_AddStringToObject(json_token,"uId","1");
+    cJSON_AddStringToObject(json_token,"uPwd","pwd");
+    cJSON_AddItemToObject(json_root,"requestToken",json_token);
+
+//    cJSON_AddStringToObject(json_content,"username","cyc");
+//    cJSON_AddStringToObject(json_content,"password","password");
+//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+//    cJSON_AddStringToObject(json_content,"lastCalledMessage","99");
+//    cJSON_AddItemToObject(json_root,"requestContent",json_content);
+
+    cJSON_AddStringToObject(json_content,"utoId","999");
+    cJSON_AddStringToObject(json_content,"content","connnt");
+    cJSON_AddItemToObject(json_root,"requestContent",json_content);
 
     s_json = cJSON_Print(json_root);
 
@@ -77,16 +95,31 @@ int main() {
 
     std::cout << s_json << std::endl;
 
-    json_root = cJSON_Parse(s_json);
+    char * requestType;
+    JsonUtils::parse_request_type(s_json, requestType);
+    std::cout << requestType << std::endl;
 
     char * uId;
     char * uPwd;
 
+    JsonUtils::parse_request_token(s_json, uId, uPwd);
+    std::cout << uId << " " << uPwd << std::endl;
 
-    JsonUtils::parse_requset_token(s_json,username,password);
+//    char *username;
+//    char *password;
+//
+//    JsonUtils::parse_request_login_json(s_json,username,password);
+//    std::cout << username << " " << password << std::endl;
 
-    std::cout << username << password << std::endl;
+//    char * lastCalledMessage;
+//    JsonUtils::parse_request_getMessages_json(s_json,lastCalledMessage);
+//    std::cout << lastCalledMessage << std::endl;
 
+    char * utoId;
+    char * content;
+
+    JsonUtils::parse_request_sendMessages_json(s_json, utoId, content);
+    std::cout << utoId <<" " << content << std::endl;
 
     /**
      * server socket starting

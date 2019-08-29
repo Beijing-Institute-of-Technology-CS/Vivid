@@ -11,12 +11,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d91354-7ea6-41c9-9b94-f001f3575e1d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Network/NetworkUtils.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Network/NetworkUtils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/JsonUtils/JsonUtils.h" beforeDir="false" afterPath="$PROJECT_DIR$/../client/JsonUtils/JsonUtils.h" afterDir="false" />
+    <list default="true" id="93d91354-7ea6-41c9-9b94-f001f3575e1d" name="Default Changelist" comment="server json request parsing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JsonUtils/JsonUtils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/JsonUtils/JsonUtils.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JsonUtils/JsonUtils.h" beforeDir="false" afterPath="$PROJECT_DIR$/JsonUtils/JsonUtils.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/server.cpp" afterDir="false" />
@@ -90,8 +86,23 @@
       <updated>1566961071034</updated>
       <workItem from="1566961072410" duration="9946000" />
       <workItem from="1566995716858" duration="10008000" />
-      <workItem from="1567048336757" duration="6168000" />
+      <workItem from="1567048336757" duration="9965000" />
     </task>
+    <task id="LOCAL-00001" summary="???">
+      <created>1567063858789</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1567063858789</updated>
+    </task>
+    <task id="LOCAL-00002" summary="???">
+      <created>1567064395573</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1567064395573</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,5 +118,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="???" />
+    <option name="LAST_COMMIT_MESSAGE" value="???" />
   </component>
 </project>
