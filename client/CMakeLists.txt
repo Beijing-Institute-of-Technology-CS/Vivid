@@ -11,6 +11,6 @@ link_directories(${GTK3_LIBRARY_DIRS})
 
 add_definitions(${GTK3_CFLAGS_OTHER})
 
-add_executable(client main.cpp View/TestView/MainView.cpp View/TestView/MainView.h)
+add_executable(client main.cpp View/TestView/MainView.cpp View/TestView/MainView.h View/LoginView/LoginView.cpp View/LoginView/LoginView.h)
 
 target_link_libraries(client ${GTK3_LIBRARIES})

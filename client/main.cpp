@@ -1,44 +1,22 @@
 #include <iostream>
 #include <gtk/gtk.h>
-#include "View/TestView/MainView.h"
+#include "View/LoginView/LoginView.h"
 
-MainView mainView;
 
-/**
- * 点击按钮回调
- */
-void on_button_clicked();
-
-/**
- * 初始化回调
- */
-void init();
-
-/**
- * 启动主界面
- */
-void start_main_view();
+void login_callback(GtkWidget* button,gpointer data) {
+    const LoginInputContent content = * (LoginInputContent*)data;
+    const char* username = gtk_entry_get_text(GTK_ENTRY(content.usernameWidget));
+    const char* password = gtk_entry_get_text(GTK_ENTRY(content.passwordWidget));
+    std::cout << username << std::endl << password << std::endl;
+}
 
 int main(int argc , char* argv[]) {
-    //初始化
-    init();
     gtk_init(&argc, &argv);
 
-    //启动主界面
-    start_main_view();
+    LoginView loginView;
+    loginView.set_login_callback(login_callback);
+
+    loginView.show();
 
     return 0;
-}
-
-void init() {
-    mainView.set_button_callback(on_button_clicked);
-}
-
-
-void start_main_view() {
-    mainView.show_main_view();
-}
-
-void on_button_clicked() {
-    std::cout << "clicked!" << std::endl;
 }
