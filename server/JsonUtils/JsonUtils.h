@@ -20,9 +20,13 @@ public:
 
     static bool parse_request_getMessages_json(char * s_json, int * lastCalledMessage);
 
-    static bool parse_request_sendMessages_json(char *s_json, int *utoId, char *&content);
+    static bool parse_request_sendMessages_json(char *s_json, int *uToId, char *&content);
 
-//    static char * make_response_register_json(char *result, int uId,);
+    static char * make_response_register_json(char *result, int uId);
+
+    static char * make_response_login_json(char *result, int uId);
+
+    static char * make_response_getInfo_json(char *result, int )
 };
 
 

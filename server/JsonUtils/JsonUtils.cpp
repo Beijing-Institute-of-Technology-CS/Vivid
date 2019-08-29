@@ -84,18 +84,64 @@ bool JsonUtils::parse_request_getMessages_json(char *s_json, int *lastCalledMess
 }
 
 //checked
-bool JsonUtils::parse_request_sendMessages_json(char *s_json, int *utoId, char *&content) {
+bool JsonUtils::parse_request_sendMessages_json(char *s_json, int *uToId, char *&content) {
     cJSON *json_root;
     cJSON *json_requestContent;
 
     json_root = cJSON_Parse(s_json);
     json_requestContent = cJSON_GetObjectItem(json_root, "requestContent");
 
-    (*utoId) = cJSON_GetObjectItem(json_requestContent, "utoId")->valueint;
+    (*uToId) = cJSON_GetObjectItem(json_requestContent, "uToId")->valueint;
     content = cJSON_GetObjectItem(json_requestContent, "content")->valuestring;
 
     cJSON_Delete(json_root);
     return true;
 }
+
+/**
+ * response json
+ */
+
+char *JsonUtils::make_response_register_json(char *result, int uId) {
+    char *s_json;
+
+    cJSON *json_root = cJSON_CreateObject();
+    char *json_responseType = "register";
+    char *json_result = result;
+    cJSON *json_responseContent =  cJSON_CreateObject();
+
+    cJSON_AddStringToObject(json_root,"responseType",json_responseType);
+    cJSON_AddStringToObject(json_root,"responseType",json_result);
+
+    cJSON_AddNumberToObject(json_responseContent,"uId",uId);
+    cJSON_AddStringToObject(json_responseContent,"publicKey","null");
+    cJSON_AddItemToObject(json_root,"responseContent",json_responseContent);
+
+    s_json = cJSON_Print(json_root);
+
+    return s_json;
+}
+
+char *JsonUtils::make_response_login_json(char *result, int uId) {
+    char *s_json;
+
+    cJSON *json_root = cJSON_CreateObject();
+    char *json_responseType = "login";
+    char *json_result = result;
+    cJSON *json_responseContent =  cJSON_CreateObject();
+
+    cJSON_AddStringToObject(json_root,"responseType",json_responseType);
+    cJSON_AddStringToObject(json_root,"responseType",json_result);
+
+    cJSON_AddNumberToObject(json_responseContent,"uId",uId);
+    cJSON_AddStringToObject(json_responseContent,"publicKey","null");
+    cJSON_AddItemToObject(json_root,"responseContent",json_responseContent);
+
+    s_json = cJSON_Print(json_root);
+
+    return s_json;
+}
+
+
 
 
