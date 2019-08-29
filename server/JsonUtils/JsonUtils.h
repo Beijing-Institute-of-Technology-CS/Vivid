@@ -8,7 +8,7 @@
 
 class JsonUtils {
 public:
-    static bool parse_request_token(char * s_json, char *& uId, char *& uPwd);
+    static bool parse_request_token(char * s_json, int * uId, char *& uPwd);
 
     static bool parse_request_type(char *s_json, char *&requestType);
 
@@ -18,11 +18,15 @@ public:
 
     static bool parse_request_getInfo_json(char * s_json);
 
-    static bool parse_request_getMessages_json(char * s_json, char *& lastCalledMessage);
+    static bool parse_request_getMessages_json(char * s_json, int * lastCalledMessage);
 
-    static bool parse_request_sendMessages_json(char *s_json, char *&utoId, char *&content);
+    static bool parse_request_sendMessages_json(char *s_json, int *uToId, char *&content);
 
-    static bool make_response_register_json();
+    static char * make_response_register_json(char *result, int uId);
+
+    static char * make_response_login_json(char *result, int uId);
+
+    static char * make_response_getInfo_json(char *result, int )
 };
 
 

@@ -1,33 +1,42 @@
 //
-// Created by YichengChen on 8/28/19.
+// Created by YichengChen on 8/29/19.
 //
 
 #include "User.h"
 
-bool User::isInUse() const {
-    return is_in_use;
+User::User() {}
+
+User::User(int uId, char *uName, char *uPassword, char *fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
+                                                                     fIconFile(fIconFile) {}
+
+int User::getUId() const {
+    return uId;
 }
 
-void User::setIsInUse(bool isInUse) {
-    is_in_use = isInUse;
+void User::setUId(int uId) {
+    User::uId = uId;
 }
 
-int User::getSd() const {
-    return sd;
+char *User::getUName() const {
+    return uName;
 }
 
-void User::setSd(int sd) {
-    User::sd = sd;
+void User::setUName(char *uName) {
+    User::uName = uName;
 }
 
-const char *User::getName() const {
-    return name;
+char *User::getUPassword() const {
+    return uPassword;
 }
 
-const char *User::getBuffer() const {
-    return buffer;
+void User::setUPassword(char *uPassword) {
+    User::uPassword = uPassword;
 }
 
-User::User() {
-    is_in_use = false;
+char *User::getFIconFile() const {
+    return fIconFile;
+}
+
+void User::setFIconFile(char *fIconFile) {
+    User::fIconFile = fIconFile;
 }

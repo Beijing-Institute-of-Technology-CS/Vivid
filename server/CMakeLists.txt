@@ -3,8 +3,8 @@ project(server)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(server server.cpp User.cpp User.h Database/Database.cpp Database/Database.h JsonUtils/JsonUtils.cpp
-        JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp JsonUtils/JsonUtils.h Network/NetworkUtils.cpp Network/NetworkUtils.h)
+add_executable(server server.cpp Database/Database.cpp Database/Database.h JsonUtils/JsonUtils.cpp
+        JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp JsonUtils/JsonUtils.h Network/NetworkUtils.cpp Network/NetworkUtils.h User.cpp User.h)
 
 INCLUDE_DIRECTORIES(/usr/local/mysql/include)
 

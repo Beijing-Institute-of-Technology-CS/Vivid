@@ -74,7 +74,7 @@ int main() {
 
     cJSON_AddStringToObject(json_root,"requestType",json_requestType);
 
-    cJSON_AddStringToObject(json_token,"uId","1");
+    cJSON_AddNumberToObject(json_token,"uId",1);
     cJSON_AddStringToObject(json_token,"uPwd","pwd");
     cJSON_AddItemToObject(json_root,"requestToken",json_token);
 
@@ -85,7 +85,7 @@ int main() {
 //    cJSON_AddStringToObject(json_content,"lastCalledMessage","99");
 //    cJSON_AddItemToObject(json_root,"requestContent",json_content);
 
-    cJSON_AddStringToObject(json_content,"utoId","999");
+    cJSON_AddNumberToObject(json_content,"utoId",999);
     cJSON_AddStringToObject(json_content,"content","connnt");
     cJSON_AddItemToObject(json_root,"requestContent",json_content);
 
@@ -99,11 +99,11 @@ int main() {
     JsonUtils::parse_request_type(s_json, requestType);
     std::cout << requestType << std::endl;
 
-    char * uId;
+    int uId;
     char * uPwd;
 
-    JsonUtils::parse_request_token(s_json, uId, uPwd);
-    std::cout << uId << " " << uPwd << std::endl;
+    JsonUtils::parse_request_token(s_json, &uId, uPwd);
+    std::cout << (uId) << " " << uPwd << std::endl;
 
 //    char *username;
 //    char *password;
@@ -115,10 +115,10 @@ int main() {
 //    JsonUtils::parse_request_getMessages_json(s_json,lastCalledMessage);
 //    std::cout << lastCalledMessage << std::endl;
 
-    char * utoId;
+    int utoId;
     char * content;
 
-    JsonUtils::parse_request_sendMessages_json(s_json, utoId, content);
+    JsonUtils::parse_request_sendMessages_json(s_json, &utoId, content);
     std::cout << utoId <<" " << content << std::endl;
 
     /**
