@@ -10,7 +10,7 @@
 
 class OnLoginSuccessCallback;
 
-class LoginController : OnButtonLoginClickedCallback {
+class LoginController : OnButtonLoginClickedCallback, OnLoginWindowCloseCallback {
 public:
     LoginController();
 
@@ -18,10 +18,13 @@ public:
     void dismissLoginView();
 
     void onButtonLoginClicked() override;
+    void onLoginWindowClose() override;
 
     void setLoginSuccessCallback(OnLoginSuccessCallback *loginSuccessCallback);
+    void setLoginWindowCloseCallback(OnLoginWindowCloseCallback *loginWindowCloseCallback);
 
 private:
+    bool isLoginSuccess = false;
     LoginView loginView;
 
     bool checkLogin(const char * username, const char * password);
@@ -30,6 +33,7 @@ private:
     void onLoginFailed();
 
     OnLoginSuccessCallback * loginSuccessCallback = nullptr;
+    OnLoginWindowCloseCallback * loginWindowCloseCallback;
 };
 
 class OnLoginSuccessCallback {

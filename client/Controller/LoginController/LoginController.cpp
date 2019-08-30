@@ -6,6 +6,7 @@
 
 LoginController::LoginController() {
     loginView.setLoginClickedCallback(this);
+    loginView.setCloseCallback(this);
 }
 
 void LoginController::showLoginView() {
@@ -29,11 +30,13 @@ bool LoginController::checkLogin(const char *username, const char *password) {
 }
 
 void LoginController::onLoginSuccess() {
+    isLoginSuccess = true;
     printf("Login Success!\n");
     loginSuccessCallback->onLoginSuccessCallback();
 }
 
 void LoginController::onLoginFailed() {
+    isLoginSuccess = false;
     printf("Login Failed!\n");
 }
 
@@ -50,4 +53,15 @@ void LoginController::onButtonLoginClicked() {
 
 void LoginController::setLoginSuccessCallback(OnLoginSuccessCallback *loginSuccessCallback) {
     LoginController::loginSuccessCallback = loginSuccessCallback;
+}
+
+void LoginController::onLoginWindowClose() {
+    printf("LOGIN WINDOW CLOSE CALLBACK\n");
+    if (!isLoginSuccess) {
+        loginWindowCloseCallback->onLoginWindowClose();
+    }
+}
+
+void LoginController::setLoginWindowCloseCallback(OnLoginWindowCloseCallback *loginWindowCloseCallback) {
+    LoginController::loginWindowCloseCallback = loginWindowCloseCallback;
 }

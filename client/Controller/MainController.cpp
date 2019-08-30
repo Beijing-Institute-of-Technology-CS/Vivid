@@ -7,6 +7,7 @@
 
 MainController::MainController() {
     loginController.setLoginSuccessCallback(this);
+    loginController.setLoginWindowCloseCallback(this);
 }
 
 void MainController::onLoginSuccessCallback() {
@@ -25,5 +26,9 @@ void MainController::setExitApplicationFunc(void (*exitApplication)()) {
 }
 
 void MainController::onTestViewExit() {
+    exit_application();
+}
+
+void MainController::onLoginWindowClose() {
     exit_application();
 }

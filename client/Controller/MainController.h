@@ -9,7 +9,7 @@
 #include "LoginController/LoginController.h"
 #include "../View/TestView/TestView.h"
 
-class MainController : OnLoginSuccessCallback, TestViewExitCallback {
+class MainController : OnLoginSuccessCallback, TestViewExitCallback, OnLoginWindowCloseCallback {
 public:
     MainController();
     void start();
@@ -19,6 +19,7 @@ public:
     void setExitApplicationFunc(void (*exitApplication)());
 
     void onTestViewExit() override;
+    void onLoginWindowClose() override;
 
 private:
     LoginController loginController;

@@ -8,6 +8,7 @@
 #include <gtk/gtk.h>
 
 class OnButtonLoginClickedCallback;
+class OnLoginWindowCloseCallback;
 
 class LoginView {
 public:
@@ -16,6 +17,8 @@ public:
     void destroy();
 
     void setLoginClickedCallback(OnButtonLoginClickedCallback *loginClickedCallback);
+    void setCloseCallback(OnLoginWindowCloseCallback *closeCallback);
+
     void get_input_login_content(const char * & username, const char * & password);
 
 private:
@@ -24,15 +27,20 @@ private:
     GtkWidget *psw_entry = nullptr;
 
     OnButtonLoginClickedCallback * loginClickedCallback = nullptr;
-
-    //login click callback
     static void onButtonLoginClicked(GtkWidget* button, gpointer data);
 
+    OnLoginWindowCloseCallback * closeCallback = nullptr;
+    static void onWindowClose(GtkWidget * widget, gpointer data);
 };
 
 class OnButtonLoginClickedCallback {
 public:
     virtual void onButtonLoginClicked() = 0;
+};
+
+class OnLoginWindowCloseCallback {
+public:
+    virtual void onLoginWindowClose() = 0;
 };
 
 
