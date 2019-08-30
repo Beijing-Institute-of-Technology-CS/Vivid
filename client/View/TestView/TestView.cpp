@@ -23,7 +23,7 @@ void TestView::show_main_view() {
     /**
      * 信号连接
      */
-     g_signal_connect(G_OBJECT(window), "delete_event",
+     g_signal_connect(G_OBJECT(window), "destroy",
              G_CALLBACK(exit_callback), this);
 
      g_signal_connect(G_OBJECT(button), "clicked",
@@ -49,7 +49,6 @@ void TestView::show_main_view() {
      */
      gtk_widget_show(button);
      gtk_widget_show(window);
-     gtk_main();
 }
 
 void TestView::setExitCallback(TestViewExitCallback *exitCallback) {

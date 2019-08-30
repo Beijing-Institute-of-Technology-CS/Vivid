@@ -8,12 +8,12 @@
 MainController::MainController() {
     loginController.setLoginSuccessCallback(this);
     loginController.setLoginWindowCloseCallback(this);
+    testView.setExitCallback(this);
 }
 
 void MainController::onLoginSuccessCallback() {
     loginController.dismissLoginView();
     //todo: 只是为了演示 实际会有controller
-    TestView testView;
     testView.show_main_view();
 }
 

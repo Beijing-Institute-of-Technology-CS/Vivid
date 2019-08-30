@@ -23,6 +23,7 @@ public:
 
 private:
     LoginController loginController;
+    TestView testView;
 
     void (* exit_application)();
 };
