@@ -21,13 +21,13 @@
 #include "Database/Database.h"
 #include "Network/NetworkUtils.h"
 
-#include "Constants.h"
+#include "../Constants.h"
 
 int main() {
     Database::mql_connect();
 
 //    JsonTesting::json_parse_request_testing();
-//    JsonTesting::json_make_response_testing();
+    JsonTesting::json_make_response_testing();
 
 //    NetworkUtils::init_server();
     NetworkUtils::start_server();

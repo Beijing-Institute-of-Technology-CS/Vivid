@@ -16,9 +16,11 @@
 #include <arpa/inet.h>
 
 #include "NetworkUtils.h"
-#include "../Constants.h"
+#include "../../Constants.h"
 #include "../Beans/User.h"
 #include "../Utils/ThreadPool.h"
+#include "../JsonUtils/JsonUtils.h"
+
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
@@ -83,12 +85,12 @@ void NetworkUtils::start_server() {
 
     fd_set read_fds;
 
-    User user[USERS_SIZE];
+    User users[USERS_SIZE];
 
-    int client_sockets[USERS_SIZE];
+//    int client_sockets[USERS_SIZE];
 
     for(int i=0;i<USERS_SIZE;i++){
-        client_sockets[i]=0;
+        users[i].setFd(0);
     }
 
     int max_fd = master_socket;
@@ -110,7 +112,7 @@ void NetworkUtils::start_server() {
         int fd;
 
         for(int i=0;i<USERS_SIZE;i++) {
-            fd = client_sockets[i];
+            fd = users[i].getFd();
 
             if (fd > 0) {
                 FD_SET(fd, &read_fds);
@@ -157,8 +159,8 @@ void NetworkUtils::start_server() {
              */
             for(int i=0;i<USERS_SIZE;i++){
 
-                if(client_sockets[i]==0){
-                    client_sockets[i] = new_socket;
+                if(users[i].getFd() == 0){
+                    users[i].setFd(new_socket);
                     std::cout << "adding to list of sockets as "<< i <<std::endl;
 
                     break;
@@ -167,10 +169,11 @@ void NetworkUtils::start_server() {
         }
 
         /**
+         * read from client
          * else handling some IO operation on other socket
          */
         for(int i=0;i<USERS_SIZE;i++){
-            fd = client_sockets[i];
+            fd = users[i].getFd();
 
             if(FD_ISSET(fd,&read_fds)){
                 int val_read = read(fd,buffer,BUFFER_SIZE);
@@ -183,9 +186,17 @@ void NetworkUtils::start_server() {
                     getpeername(fd,(sockaddr *)&address,(socklen_t *)&addrlen);
                     std::cout << "host disconnected " << " ip " << inet_ntoa(address.sin_addr) << " port " << ntohs(address.sin_port) << std::endl;
                     close(fd);
-                    client_sockets[i]=0;
+                    users[i].setFd(0);
                 }
                 else{
+                    /**
+                     * json parsing
+                     */
+                     char * json_requestType;
+                     JsonUtils::parse_request_type(buffer,json_requestType);
+
+
+
                     buffer[val_read]='\0';
                     if(send(fd,buffer,strlen(buffer),0)<=0){
                         perror("send failed!");

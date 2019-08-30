@@ -27,11 +27,16 @@ public:
 
     void setFIconFile(int fIconFile);
 
+    int getFd() const;
+
+    void setFd(int fd);
+
 private:
     int uId;
     char * uName;
     char * uPassword;
     int fIconFile;
+    int fd;
 };
 
 
