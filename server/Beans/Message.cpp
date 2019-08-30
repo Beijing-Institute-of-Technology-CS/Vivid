@@ -40,3 +40,19 @@ char *Message::getMTime() const {
 void Message::setMTime(char *mTime) {
     Message::mTime = mTime;
 }
+
+int Message::getFromId() const {
+    return fromId;
+}
+
+void Message::setFromId(int fromId) {
+    Message::fromId = fromId;
+}
+
+int Message::getToId() const {
+    return toId;
+}
+
+void Message::setToId(int toId) {
+    Message::toId = toId;
+}
