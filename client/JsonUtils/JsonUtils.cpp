@@ -3,8 +3,8 @@
 //
 
 #include "JsonUtils.h"
-#include "../Utils/cJSON.h"
-#include "../Utils/cJSON.c"
+//#include "../Utils/cJSON.h"
+//#include "../Utils/cJSON.c"
 
 /**
  * make request json
@@ -304,7 +304,7 @@ bool JsonUtils::parse_response_result_json(char *s_json, char *&result) {
         return false;
     }
 
-    char *temp_result = cJSON_GetObjectItem(pJsonRoot, "responseType")->valuestring;
+    char *temp_result = cJSON_GetObjectItem(pJsonRoot, "result")->valuestring;
     result = (char *)malloc((strlen(temp_result)+1)*sizeof(char));
     strcpy(result, temp_result);
     cJSON_Delete(pJsonRoot);
@@ -334,10 +334,10 @@ bool JsonUtils::parse_response_register_json(char *s_json, int *uId, char *&publ
     *uId = cJSON_GetObjectItem(pSubJson, "uId")->valueint;
     char *temp_publicKey = cJSON_GetObjectItem(pSubJson, "publicKey")->valuestring;
     publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
-    strcpy(temp_publicKey, publicKey);
+    strcpy(publicKey, temp_publicKey);
 
-    cJSON_Delete(pJsonRoot);
-    cJSON_Delete(pSubJson);
+//    cJSON_Delete(pJsonRoot);
+//    cJSON_Delete(pSubJson);
     return true;
 }
 
@@ -346,7 +346,26 @@ bool JsonUtils::parse_response_register_json(char *s_json, int *uId, char *&publ
  * @param s_json
  * @return
  */
-bool JsonUtils::parse_response_login_json(char *s_json) {
+bool JsonUtils::parse_response_login_json(char *s_json, int *uId, char *&publicKey) {
+    cJSON *pJsonRoot = NULL;
+    cJSON * pSubJson = NULL;
+    if(NULL == s_json){
+        return false;
+    }
+
+    pJsonRoot = cJSON_Parse(s_json);
+    if(NULL == pJsonRoot){
+        return false;
+    }
+
+    pSubJson = cJSON_GetObjectItem(pJsonRoot, "responseContent");
+    *uId = cJSON_GetObjectItem(pSubJson, "uId")->valueint;
+    char *temp_publicKey = cJSON_GetObjectItem(pSubJson, "publicKey")->valuestring;
+    publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
+    strcpy(publicKey, temp_publicKey);
+
+//    cJSON_Delete(pJsonRoot);
+//    cJSON_Delete(pSubJson);
     return true;
 }
 
@@ -381,16 +400,17 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
 //        contactsArray[i].uName = cJSON_GetObjectItem(pContactsArray, "uName")->valuestring;
 //        contactsArray[i].fIcon = cJSON_GetObjectItem(pContactsArray, "fIcon")->valueint;
 //    }
-//todo
+
     while(json_contactsArray != NULL){
         User user;
         user.setUId(cJSON_GetObjectItem(json_contactsArray, "uId")->valueint);
         user.setUName(cJSON_GetObjectItem(json_contactsArray, "uName")->valuestring);
         user.setFIconFile(cJSON_GetObjectItem(json_contactsArray, "fIcon")->valueint);
         contactsArray->push_back(user);
+        json_contactsArray = json_contactsArray->next;
     }
 
-    cJSON_Delete(pJsonRoot);
+//    cJSON_Delete(pJsonRoot);
     return true;
 }
 
@@ -432,9 +452,10 @@ bool JsonUtils::parse_response_getMessages_json(char *s_json, int *messagesNumbe
         message.setFId(cJSON_GetObjectItem(json_messagesArray, "fId")->valueint);
         message.setMTime(cJSON_GetObjectItem(json_messagesArray, "mTime")->valuestring);
         messagesArray->push_back(message);
+        json_messagesArray = json_messagesArray->next;
     }
 
-    cJSON_Delete(pJsonRoot);
+//    cJSON_Delete(pJsonRoot);
     return true;
 }
 
@@ -460,6 +481,6 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, int *mId) {
     *mId = cJSON_GetObjectItem(pSubJson, "mId")->valueint;
 
     cJSON_Delete(pJsonRoot);
-    cJSON_Delete(pSubJson);
+//    cJSON_Delete(pSubJson);
     return true;
 }

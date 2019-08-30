@@ -4,8 +4,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "Utils/cJSON.h"
-#include "Utils/cJSON.c"
+//#include "Utils/cJSON.h"
+//#include "Utils/cJSON.c"
 
 #define PORT 8899
 #define LOCALHOST "127.0.0.1"
@@ -58,7 +58,8 @@ int main() {
     /**
      * sending messages
      */
-    printf("%s", hello_message);
+    char *hello_message = "hello";
+    printf("%s", "hello");
     send(sock, hello_message, strlen(hello_message), 0);
     printf("hello from client sent\n");
 

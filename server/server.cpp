@@ -1,4 +1,4 @@
-q#include <cstdio>
+#include <cstdio>
 #include <fcntl.h>
 #include <csignal>
 #include <sys/socket.h>
