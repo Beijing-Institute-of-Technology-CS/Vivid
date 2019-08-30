@@ -6,24 +6,33 @@
 #define SERVER_JSONUTILS_H
 
 
+#include <vector>
+#include "../Utils/cJSON.h"
+#include "../beans/User.h"
+#include "../beans/Message.h"
+
+
+
 /**
  * read token from database!
  */
 
 class JsonUtils {
 public:
-    static char * make_request_reqister_json(char * username, char password);
+//    static char * make_request_token_json(int uId, char *uPwd);
 
-    static char * make_request_login_json(char * username, char password);
+    static char * make_request_reqister_json(char * username, char *password, char *uId, char *uPwd);
 
-    static char * make_request_getInfo_json();
+    static char * make_request_login_json(char * username, char *password, char *uId, char *uPwd);
+
+    static char * make_request_getInfo_json(int uId, char *uPwd);
 
     /**
      * read lastCalledMessage from db
      */
-    static char * make_request_getMessages_json();
+    static char * make_request_getMessages_json(int lastCalledMessage, int uId, char *uPwd);
 
-    static char * make_request_sendMessages_json(int uToId, char * content);
+    static char * make_request_sendMessages_json(int uToId, char * content, int uId, char *uPwd);
 
 
     /**
@@ -32,15 +41,19 @@ public:
      * @return
      */
 
-    static char * parse_response_register_json(char * s_json);
+    static bool parse_response_type_json(char *s_json, char *&responseType);
 
-    static char * parse_response_login_json(char * s_json);
+    static bool parse_response_result_json(char *s_json, char *&result);
 
-    static char * parse_response_getInfo_json(char * s_json);
+    static bool parse_response_register_json(char * s_json, int *uId, char *&publicKey);
 
-    static char * parse_response_getMessages_json(char * s_json);
+    static bool parse_response_login_json(char * s_json);
 
-    static char * parse_response_getMessages_json(char * s_json);
+    static bool parse_response_getInfo_json(char * s_json, int *fIcon, int *contactsNumber, std::vector<User> *contactsArray);
+
+    static bool parse_response_getMessages_json(char * s_json, int *messagesNumber, std::vector<Message> *messagesArray);
+
+    static bool parse_response_sendMessages_json(char * s_json, int *mId);
 
 };
 
