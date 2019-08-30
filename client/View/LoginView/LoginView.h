@@ -7,19 +7,33 @@
 
 #include <gtk/gtk.h>
 
+class OnButtonLoginClickedCallback;
+
 class LoginView {
 public:
-    void set_login_callback(void (* callback)(GtkWidget* button,gpointer data));
+    void create();
     void show();
+    void destroy();
+
+    void setLoginClickedCallback(OnButtonLoginClickedCallback *loginClickedCallback);
+    void get_input_login_content(const char * & username, const char * & password);
 
 private:
-    void (* button_login_clicked_callback)(GtkWidget* button,gpointer data);
+    GtkWidget *login_window = nullptr;
+    GtkWidget *name_entry = nullptr;
+    GtkWidget *psw_entry = nullptr;
+
+    OnButtonLoginClickedCallback * loginClickedCallback = nullptr;
+
+    //login click callback
+    static void onButtonLoginClicked(GtkWidget* button, gpointer data);
+
 };
 
-typedef struct LoginInputContent {
-    const GtkWidget* usernameWidget;
-    const GtkWidget* passwordWidget;
-} LoginInputContent;
+class OnButtonLoginClickedCallback {
+public:
+    virtual void onButtonLoginClicked() = 0;
+};
 
 
 #endif //CLIENT_LOGINVIEW_H

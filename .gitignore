@@ -1,0 +1,6 @@
+cmake-build-debug/
+.DS_Store
+.idea
+test.cpp
+test.h
+CMakeLists.txt

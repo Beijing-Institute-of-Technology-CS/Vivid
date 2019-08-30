@@ -22,7 +22,7 @@ void MainView::show_main_view() {
              G_CALLBACK(gtk_main_quit), NULL);
 
      g_signal_connect(G_OBJECT(button), "clicked",
-             G_CALLBACK(button_clicked_callback), NULL);
+             G_CALLBACK(buttonClickedCallback), NULL);
 
     /**
      * 设定属性
@@ -47,6 +47,3 @@ void MainView::show_main_view() {
      gtk_main();
 }
 
-void MainView::set_button_callback(void (*callback)()) {
-    this->button_clicked_callback = callback;
-}
