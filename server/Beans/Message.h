@@ -28,11 +28,22 @@ public:
 
     void setMTime(char *mTime);
 
+    int getFromId() const;
+
+    void setFromId(int fromId);
+
+    int getToId() const;
+
+    void setToId(int toId);
+
 private:
     int mId;
     char * mContent;
     int fId;
     char * mTime;
+
+    int fromId;
+    int toId;
 };
 
 
