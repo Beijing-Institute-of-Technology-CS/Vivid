@@ -2,14 +2,15 @@
 // Created by William Zhang on 2019-08-29.
 //
 
-#include "MainView.h"
+#include "TestView.h"
 #include <gtk/gtk.h>
 
-void test_callback(GtkWidget * button, gpointer data) {
+void TestView::exit_callback(GtkWidget * button, gpointer data) {
     printf("TEST_CALLBACK");
+    ((TestView *)data)->exitCallback->onTestViewExit();
 }
 
-void MainView::show_main_view() {
+void TestView::show_main_view() {
     /**
      * 创建构件
      */
@@ -23,7 +24,7 @@ void MainView::show_main_view() {
      * 信号连接
      */
      g_signal_connect(G_OBJECT(window), "delete_event",
-             G_CALLBACK(test_callback), NULL);
+             G_CALLBACK(exit_callback), this);
 
      g_signal_connect(G_OBJECT(button), "clicked",
              G_CALLBACK(buttonClickedCallback), NULL);
@@ -49,5 +50,9 @@ void MainView::show_main_view() {
      gtk_widget_show(button);
      gtk_widget_show(window);
      gtk_main();
+}
+
+void TestView::setExitCallback(TestViewExitCallback *exitCallback) {
+    TestView::exitCallback = exitCallback;
 }
 

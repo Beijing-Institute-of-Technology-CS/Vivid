@@ -3,7 +3,7 @@
 //
 
 #include "MainController.h"
-#include "../View/TestView/MainView.h"
+#include "../View/TestView/TestView.h"
 
 MainController::MainController() {
     loginController.setLoginSuccessCallback(this);
@@ -12,10 +12,18 @@ MainController::MainController() {
 void MainController::onLoginSuccessCallback() {
     loginController.dismissLoginView();
     //todo: 只是为了演示 实际会有controller
-    MainView mainView;
-    mainView.show_main_view();
+    TestView testView;
+    testView.show_main_view();
 }
 
 void MainController::start() {
     loginController.showLoginView();
+}
+
+void MainController::setExitApplicationFunc(void (*exitApplication)()) {
+    exit_application = exitApplication;
+}
+
+void MainController::onTestViewExit() {
+    exit_application();
 }
