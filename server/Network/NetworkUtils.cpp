@@ -85,9 +85,8 @@ void NetworkUtils::start_server() {
 
     fd_set read_fds;
 
-    User users[USERS_SIZE];
+//    User users[USERS_SIZE];
 
-//    int client_sockets[USERS_SIZE];
 
     for(int i=0;i<USERS_SIZE;i++){
         users[i].setFd(0);
@@ -179,6 +178,9 @@ void NetworkUtils::start_server() {
             fd = users[i].getFd();
 
             if(FD_ISSET(fd,&read_fds)){
+                /**
+                 * disconnected
+                 */
                 int val_read = read(fd,buffer,BUFFER_SIZE);
                 if(val_read == 0){
 
@@ -199,15 +201,35 @@ void NetworkUtils::start_server() {
                     /**
                      * verifying token
                      */
-                    
+
                     int uId;
                     char * uPwdFromJson;
                     JsonUtils::parse_request_token(buffer,&uId,uPwdFromJson);
 
-                    //todo check
-
+                    //todo check from database
                     if(1){
+                        char * requestType;
+                        JsonUtils::parse_request_type(buffer,requestType);
 
+                        char * uId;
+
+
+                        if(strcmp(requestType,TYPE_REGISTER)==0){
+
+                        }else if(strcmp(requestType,TYPE_LOGIN)==0){
+
+                        }else if(strcmp(requestType,TYPE_GET_INFO)==0){
+
+                        }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
+
+                        }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
+                            int uToId;
+                            char * mContent;
+
+                            JsonUtils::parse_request_sendMessages_json(buffer,&uToId,mContent);
+
+                            std::cout << "send to " << uToId;
+                        }
                     }else{
                         perror("wrong token!");
                     }

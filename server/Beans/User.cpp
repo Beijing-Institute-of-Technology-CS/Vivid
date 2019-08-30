@@ -4,10 +4,8 @@
 
 #include "User.h"
 
-User::User() {}
+User::User() {inUse = false;}
 
-User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
-                                                                     fIconFile(fIconFile) {}
 
 int User::getUId() const {
     return uId;
@@ -48,3 +46,12 @@ int User::getFd() const {
 void User::setFd(int fd) {
     User::fd = fd;
 }
+
+bool User::isInUse() const {
+    return inUse;
+}
+
+void User::setInUse(bool inUse) {
+    User::inUse = inUse;
+}
+

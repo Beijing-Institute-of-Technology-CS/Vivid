@@ -9,7 +9,6 @@
 class User {
 public:
     User();
-    User(int uId, char *uName, char *uPassword, int fIconFile);
 
     int getUId() const;
 
@@ -31,12 +30,17 @@ public:
 
     void setFd(int fd);
 
+    bool isInUse() const;
+
+    void setInUse(bool inUse);
+
 private:
     int uId;
     char * uName;
     char * uPassword;
     int fIconFile;
     int fd;
+    bool inUse;
 };
 
 
