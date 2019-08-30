@@ -254,7 +254,7 @@ char* JsonUtils::make_request_sendMessages_json(int uToId, char *content, int uI
         cJSON_Delete(pJsonRoot);
         return NULL;
     }
-//    cJSON_Delete(pJsonRoot);
+    cJSON_Delete(pJsonRoot);
 //    cJSON_Delete(pSubJson);
     return p;
 }
@@ -336,7 +336,7 @@ bool JsonUtils::parse_response_register_json(char *s_json, int *uId, char *&publ
     publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
 
-//    cJSON_Delete(pJsonRoot);
+    cJSON_Delete(pJsonRoot);
 //    cJSON_Delete(pSubJson);
     return true;
 }
@@ -364,7 +364,7 @@ bool JsonUtils::parse_response_login_json(char *s_json, int *uId, char *&publicK
     publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
 
-//    cJSON_Delete(pJsonRoot);
+    cJSON_Delete(pJsonRoot);
 //    cJSON_Delete(pSubJson);
     return true;
 }
@@ -404,13 +404,16 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
     while(json_contactsArray != NULL){
         User user;
         user.setUId(cJSON_GetObjectItem(json_contactsArray, "uId")->valueint);
-        user.setUName(cJSON_GetObjectItem(json_contactsArray, "uName")->valuestring);
+        char *temp_uName = cJSON_GetObjectItem(json_contactsArray, "uName")->valuestring;
+        char *uName = (char *)malloc((strlen(temp_uName)+1)*sizeof(char));
+        strcpy(uName, temp_uName);
+        user.setUName(uName);
         user.setFIconFile(cJSON_GetObjectItem(json_contactsArray, "fIcon")->valueint);
         contactsArray->push_back(user);
         json_contactsArray = json_contactsArray->next;
     }
 
-//    cJSON_Delete(pJsonRoot);
+    cJSON_Delete(pJsonRoot);
     return true;
 }
 
@@ -448,14 +451,20 @@ bool JsonUtils::parse_response_getMessages_json(char *s_json, int *messagesNumbe
     while(json_messagesArray !=NULL){
         Message message;
         message.setMId(cJSON_GetObjectItem(json_messagesArray, "mId")->valueint);
-        message.setMContent(cJSON_GetObjectItem(json_messagesArray, "mContent")->valuestring);
+        char *temp_mContent = cJSON_GetObjectItem(json_messagesArray, "mContent")->valuestring;
+        char *mContent = (char *)malloc((strlen(temp_mContent)+1)*sizeof(char));
+        strcpy(mContent, temp_mContent);
+        message.setMContent(mContent);
         message.setFId(cJSON_GetObjectItem(json_messagesArray, "fId")->valueint);
-        message.setMTime(cJSON_GetObjectItem(json_messagesArray, "mTime")->valuestring);
+        char *temp_mTime = cJSON_GetObjectItem(json_messagesArray, "mTime")->valuestring;
+        char *mTime = (char *)malloc((strlen(temp_mTime)+1)*sizeof(char));
+        strcpy(mTime, temp_mTime);
+        message.setMTime(mTime);
         messagesArray->push_back(message);
         json_messagesArray = json_messagesArray->next;
     }
 
-//    cJSON_Delete(pJsonRoot);
+    cJSON_Delete(pJsonRoot);
     return true;
 }
 
