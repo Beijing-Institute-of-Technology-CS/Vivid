@@ -18,15 +18,11 @@ public:
 
     char *getMContent() const;
 
-    void setMContent(char *mContent);
-
     int getFId() const;
 
     void setFId(int fId);
 
     char *getMTime() const;
-
-    void setMTime(char *mTime);
 
     int getFromId() const;
 
@@ -36,11 +32,13 @@ public:
 
     void setToId(int toId);
 
+    char * mContent;
+    char * mTime;
+
+
 private:
     int mId;
-    char * mContent;
     int fId;
-    char * mTime;
 
     int fromId;
     int toId;

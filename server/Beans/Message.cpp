@@ -18,10 +18,6 @@ char *Message::getMContent() const {
     return mContent;
 }
 
-void Message::setMContent(char *mContent) {
-    Message::mContent = mContent;
-}
-
 int Message::getFId() const {
     return fId;
 }
@@ -32,10 +28,6 @@ void Message::setFId(int fId) {
 
 char *Message::getMTime() const {
     return mTime;
-}
-
-void Message::setMTime(char *mTime) {
-    Message::mTime = mTime;
 }
 
 int Message::getFromId() const {

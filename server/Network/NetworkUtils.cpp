@@ -215,7 +215,7 @@ void NetworkUtils::start_server() {
 
                     if(strcmp(requestType,TYPE_REGISTER)==0){
                         //todo save username,password to db,
-                        //send uId,publicKey,
+                        //todo send uId,publicKey,
 
                         char *username;
                         char *password;
@@ -232,20 +232,29 @@ void NetworkUtils::start_server() {
 
                         JsonUtils::parse_request_login_json(buffer,&uId,password);
 
-                        users[uId].setInUse(true);
-                        users[uId].setUPassword()
+                        //todo db_check
+                        if(1){
+                            users[uId].setInUse(true);
+                            users[uId].uPassword = (char *)malloc((strlen(password)+1)*sizeof(char));
+                            strcpy(users[uId].uPassword,password);
 
+                            //todo read username from db;
+                            char *username = "cyc";
+                            char *s_json = JsonUtils::make_response_login_json(TRUE_CONTENT,username);
+                        }else{
+
+                            char *s_json = JsonUtils::make_response_login_json(FALSE_CONTENT,NULL_CONTENT);
+                            send(fd,s_json,strlen(s_json),0);
+                        }
                     }
 
                     int uId;
-                    char * uPwdFromJson;
-                    JsonUtils::parse_request_token(buffer,&uId,uPwdFromJson);
+                    char * uPwd;
+                    JsonUtils::parse_request_token(buffer,&uId,uPwd);
 
                     //todo check from database
                     if(1){
-
-
-                        else if(strcmp(requestType,TYPE_GET_INFO)==0){
+                        if(strcmp(requestType,TYPE_GET_INFO)==0){
 
                         }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
 

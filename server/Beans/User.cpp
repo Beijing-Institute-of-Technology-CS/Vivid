@@ -19,16 +19,8 @@ char *User::getUName() const {
     return uName;
 }
 
-void User::setUName(char *uName) {
-    User::uName = uName;
-}
-
 char *User::getUPassword() const {
     return uPassword;
-}
-
-void User::setUPassword(char *uPassword) {
-    User::uPassword = uPassword;
 }
 
 int User::getFIconFile() const {

@@ -88,7 +88,7 @@ void JsonTesting::json_parse_request_testing() {
 void JsonTesting::json_make_response_testing() {
     std::cout << JsonUtils::make_response_register_json(TRUE_CONTENT,1) << std::endl;
 
-    std::cout << JsonUtils::make_response_login_json(FALSE_CONTENT,2) << std::endl;
+    std::cout << JsonUtils::make_response_login_json(FALSE_CONTENT,"cyc") << std::endl;
 
     std::vector <User> v_users;
 

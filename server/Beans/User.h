@@ -18,11 +18,7 @@ public:
 
     char *getUName() const;
 
-    void setUName(char *uName);
-
     char *getUPassword() const;
-
-    void setUPassword(char *uPassword);
 
     int getFIconFile() const;
 
@@ -36,10 +32,12 @@ public:
 
     void setInUse(bool inUse);
 
-private:
-    int uId;
     char * uName;
     char * uPassword;
+
+private:
+    int uId;
+
     int fIconFile;
     int fd;
     bool inUse;
