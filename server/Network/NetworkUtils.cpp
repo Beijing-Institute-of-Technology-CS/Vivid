@@ -180,15 +180,21 @@ void NetworkUtils::start_server() {
             fd = clients[i].getFd();
 
             if(FD_ISSET(fd,&read_fds)){
+
                 /**
-                 * disconnected
+                 * buffer is json
                  */
                 int val_read = read(fd,buffer,BUFFER_SIZE);
+
                 if(val_read == 0){
 
                     /**
                      * close this socket
                      */
+
+                    /**
+                    * disconnected
+                    */
 
                     getpeername(fd,(sockaddr *)&address,(socklen_t *)&addrlen);
                     std::cout << "host disconnected " << " ip " << inet_ntoa(address.sin_addr) << " port " << ntohs(address.sin_port) << std::endl;
@@ -201,7 +207,7 @@ void NetworkUtils::start_server() {
                      */
 
                     /**
-                     * verifying token
+                     * login or register
                      */
 
                     char * requestType;
@@ -211,11 +217,23 @@ void NetworkUtils::start_server() {
                         //todo save username,password to db,
                         //send uId,publicKey,
 
+                        char *username;
+                        char *password;
+
+                        JsonUtils::parse_request_register_json(buffer,username,password);
+
+
                     }else if(strcmp(requestType,TYPE_LOGIN)==0){
                         /**
                          * online
                          */
+                        int uId;
+                        char *password;
+
+                        JsonUtils::parse_request_login_json(buffer,&uId,password);
+
                         users[uId].setInUse(true);
+                        users[uId].setUPassword()
 
                     }
 

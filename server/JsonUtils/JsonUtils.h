@@ -17,7 +17,7 @@ public:
 
     static bool parse_request_register_json(char * s_json, char *&username, char *&password);
 
-    static bool parse_request_login_json(char * s_json, char *&username, char *&password);
+    static bool parse_request_login_json(char * s_json, int *uId, char *&password);
 
     static bool parse_request_getInfo_json(char * s_json);
 

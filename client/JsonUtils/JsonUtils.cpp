@@ -3,9 +3,7 @@
 //
 
 #include "JsonUtils.h"
-//#include "../Utils/cJSON.h"
-//#include "../Utils/cJSON.c"
-
+#include "../../Constants.h"
 /**
  * make request json
  */
@@ -56,12 +54,12 @@ char* JsonUtils::make_request_reqister_json(char *username, char *password) {
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, "requestType", "register");
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_REGISTER);
 
     pSubJson = cJSON_CreateObject();
-    cJSON_AddStringToObject(pSubJson, "uId", "null");
-    cJSON_AddStringToObject(pSubJson, "uPwd", "null");
-    cJSON_AddItemToObject(pJsonRoot, "requestToken", pSubJson);
+    cJSON_AddStringToObject(pSubJson, KEY_UID, NULL_CONTENT);
+    cJSON_AddStringToObject(pSubJson, KEY_UPWD, NULL_CONTENT);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN, pSubJson);
 
     pSubJson = cJSON_CreateObject();
     if(NULL == pSubJson)
@@ -70,9 +68,9 @@ char* JsonUtils::make_request_reqister_json(char *username, char *password) {
         cJSON_Delete(pJsonRoot);
         return NULL;
     }
-    cJSON_AddStringToObject(pSubJson, "username", username);
-    cJSON_AddStringToObject(pSubJson, "password", password);
-    cJSON_AddItemToObject(pJsonRoot, "requestContent", pSubJson);
+    cJSON_AddStringToObject(pSubJson, KEY_USERNAME, username);
+    cJSON_AddStringToObject(pSubJson, KEY_PASSWORD, password);
+    cJSON_AddItemToObject(pJsonRoot, KEY_RESPONSE_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
@@ -92,7 +90,7 @@ char* JsonUtils::make_request_reqister_json(char *username, char *password) {
  * @param password
  * @return
  */
-char* JsonUtils::make_request_login_json(char *username, char *password, char *uId, char*uPwd) {
+char* JsonUtils::make_request_login_json(int uId, char *password) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;
@@ -103,12 +101,12 @@ char* JsonUtils::make_request_login_json(char *username, char *password, char *u
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, "requestType", "login");
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_LOGIN);
 
     pSubJson = cJSON_CreateObject();
-    cJSON_AddStringToObject(pSubJson, "uId", "null");
-    cJSON_AddStringToObject(pSubJson, "uPwd", "null");
-    cJSON_AddItemToObject(pJsonRoot, "requestToken", pSubJson);
+    cJSON_AddStringToObject(pSubJson, KEY_UID, NULL_CONTENT);
+    cJSON_AddStringToObject(pSubJson, KEY_PASSWORD, NULL_CONTENT);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN pSubJson);
 
     pSubJson = cJSON_CreateObject();
     if(NULL == pSubJson)
@@ -117,9 +115,9 @@ char* JsonUtils::make_request_login_json(char *username, char *password, char *u
         cJSON_Delete(pJsonRoot);
         return NULL;
     }
-    cJSON_AddStringToObject(pSubJson, "username", username);
-    cJSON_AddStringToObject(pSubJson, "password", password);
-    cJSON_AddItemToObject(pJsonRoot, "requestContent", pSubJson);
+    cJSON_AddNumberToObject(pSubJson, KEY_UID,uId);
+    cJSON_AddStringToObject(pSubJson, KEY_PASSWORD, password);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
@@ -148,12 +146,12 @@ char* JsonUtils::make_request_getInfo_json(int uId, char *uPwd) {
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, "requestType", "getInfo");
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_GET_INFO;
 
     pSubJson = cJSON_CreateObject();
-    cJSON_AddNumberToObject(pSubJson, "uId", uId);
-    cJSON_AddStringToObject(pSubJson, "uPwd", uPwd);
-    cJSON_AddItemToObject(pJsonRoot, "requestToken", pSubJson);
+    cJSON_AddNumberToObject(pSubJson, KEY_UID, uId);
+    cJSON_AddStringToObject(pSubJson, KEY_UPWD, uPwd);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
@@ -183,12 +181,12 @@ char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, c
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, "requestType", "getMessages");
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_GET_MESSAGES);
 
     pSubJson = cJSON_CreateObject();
-    cJSON_AddNumberToObject(pSubJson, "uId", uId);
-    cJSON_AddStringToObject(pSubJson, "uPwd", uPwd);
-    cJSON_AddItemToObject(pJsonRoot, "requestToken", pSubJson);
+    cJSON_AddNumberToObject(pSubJson, KEY_UID, uId);
+    cJSON_AddStringToObject(pSubJson, KEY_UPWD, uPwd);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN, pSubJson);
 
     pSubJson = cJSON_CreateObject();
     if(NULL == pSubJson)
@@ -197,8 +195,8 @@ char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, c
         cJSON_Delete(pJsonRoot);
         return NULL;
     }
-    cJSON_AddNumberToObject(pSubJson, "lastCalledMessage", lastCalledMessage);
-    cJSON_AddItemToObject(pJsonRoot, "requestContent", pSubJson);
+    cJSON_AddNumberToObject(pSubJson, KEY_LAST_CALLED_MESSAGE, lastCalledMessage);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
@@ -229,12 +227,12 @@ char* JsonUtils::make_request_sendMessages_json(int uToId, char *content, int uI
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, "requestType", "sendMessages");
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_SEND_MESSAGES);
 
     pSubJson = cJSON_CreateObject();
-    cJSON_AddNumberToObject(pSubJson, "uId", uId);
-    cJSON_AddStringToObject(pSubJson, "uPwd", uPwd);
-    cJSON_AddItemToObject(pJsonRoot, "requestToken", pSubJson);
+    cJSON_AddNumberToObject(pSubJson, KEY_UID, uId);
+    cJSON_AddStringToObject(pSubJson, KEY_UPWD, uPwd);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN, pSubJson);
 
     pSubJson = cJSON_CreateObject();
     if(NULL == pSubJson)
@@ -243,9 +241,9 @@ char* JsonUtils::make_request_sendMessages_json(int uToId, char *content, int uI
         cJSON_Delete(pJsonRoot);
         return NULL;
     }
-    cJSON_AddNumberToObject(pSubJson, "utoId", uToId);
-    cJSON_AddStringToObject(pSubJson, "content", content);
-    cJSON_AddItemToObject(pJsonRoot, "requestContent", pSubJson);
+    cJSON_AddNumberToObject(pSubJson, KEY_UTOID, uToId);
+    cJSON_AddStringToObject(pSubJson, KEY_CONTENT, content);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
@@ -280,7 +278,7 @@ bool JsonUtils::parse_response_type_json(char *s_json, char *&responseType) {
         return false;
     }
 
-    char *temp_responseType = cJSON_GetObjectItem(pJsonRoot, "responseType")->valuestring;
+    char *temp_responseType = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_TYPE)->valuestring;
     responseType = (char *)malloc((strlen(temp_responseType)+1)*sizeof(char));
     strcpy(responseType, temp_responseType);
     cJSON_Delete(pJsonRoot);
@@ -304,7 +302,7 @@ bool JsonUtils::parse_response_result_json(char *s_json, char *&result) {
         return false;
     }
 
-    char *temp_result = cJSON_GetObjectItem(pJsonRoot, "result")->valuestring;
+    char *temp_result = cJSON_GetObjectItem(pJsonRoot,KEY_RESULT)->valuestring;
     result = (char *)malloc((strlen(temp_result)+1)*sizeof(char));
     strcpy(result, temp_result);
     cJSON_Delete(pJsonRoot);
@@ -330,9 +328,9 @@ bool JsonUtils::parse_response_register_json(char *s_json, int *uId, char *&publ
         return false;
     }
 
-    pSubJson = cJSON_GetObjectItem(pJsonRoot, "responseContent");
-    *uId = cJSON_GetObjectItem(pSubJson, "uId")->valueint;
-    char *temp_publicKey = cJSON_GetObjectItem(pSubJson, "publicKey")->valuestring;
+    pSubJson = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
+    *uId = cJSON_GetObjectItem(pSubJson, KEY_UID)->valueint;
+    char *temp_publicKey = cJSON_GetObjectItem(pSubJson, KEY_PUBLIC_KEY)->valuestring;
     publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
 
@@ -358,9 +356,9 @@ bool JsonUtils::parse_response_login_json(char *s_json, int *uId, char *&publicK
         return false;
     }
 
-    pSubJson = cJSON_GetObjectItem(pJsonRoot, "responseContent");
-    *uId = cJSON_GetObjectItem(pSubJson, "uId")->valueint;
-    char *temp_publicKey = cJSON_GetObjectItem(pSubJson, "publicKey")->valuestring;
+    pSubJson = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
+    *uId = cJSON_GetObjectItem(pSubJson, KEY_UID)->valueint;
+    char *temp_publicKey = cJSON_GetObjectItem(pSubJson, KEY_PUBLIC_KEY)->valuestring;
     publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
 
@@ -388,11 +386,11 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
         return false;
     }
 
-    cJSON *json_responseContent = cJSON_GetObjectItem(pJsonRoot, "responseContent");
-    *fIcon = cJSON_GetObjectItem(json_responseContent, "fIcon")->valueint;
-    cJSON *json_contacts = cJSON_GetObjectItem(json_responseContent, "contacts");
-    *contactsNumber = cJSON_GetObjectItem(json_contacts, "contactsNumber")->valueint;
-    cJSON *json_contactsArray = cJSON_GetObjectItem(json_contacts, "contactsArray")->child;
+    cJSON *json_responseContent = cJSON_GetObjectItem(pJsonRoot,KEY_RESPONSE_CONTENT);
+    *fIcon = cJSON_GetObjectItem(json_responseContent, KEY_FICON)->valueint;
+    cJSON *json_contacts = cJSON_GetObjectItem(json_responseContent,KEY_CONTACTS);
+    *contactsNumber = cJSON_GetObjectItem(json_contacts, KEY_CONTACTS_NUMBER)->valueint;
+    cJSON *json_contactsArray = cJSON_GetObjectItem(json_contacts, KEY_CONTACTS_ARRAY)->child;
 //    int contactsArraySize = cJSON_GetArraySize(json_contactsArray);
 //    cJSON *pContactsArray = json_contactsArray->child;
 //    for(int i=0; i<contactsArraySize; i++, pContactsArray = pContactsArray->next){
@@ -403,12 +401,12 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
 
     while(json_contactsArray != NULL){
         User user;
-        user.setUId(cJSON_GetObjectItem(json_contactsArray, "uId")->valueint);
-        char *temp_uName = cJSON_GetObjectItem(json_contactsArray, "uName")->valuestring;
+        user.setUId(cJSON_GetObjectItem(json_contactsArray, KEY_UID)->valueint);
+        char *temp_uName = cJSON_GetObjectItem(json_contactsArray, KEY_UNAME)->valuestring;
         char *uName = (char *)malloc((strlen(temp_uName)+1)*sizeof(char));
         strcpy(uName, temp_uName);
         user.setUName(uName);
-        user.setFIconFile(cJSON_GetObjectItem(json_contactsArray, "fIcon")->valueint);
+        user.setFIconFile(cJSON_GetObjectItem(json_contactsArray,KEY_FICON)->valueint);
         contactsArray->push_back(user);
         json_contactsArray = json_contactsArray->next;
     }
@@ -435,10 +433,10 @@ bool JsonUtils::parse_response_getMessages_json(char *s_json, int *messagesNumbe
         return false;
     }
 
-    cJSON *json_responseContent = cJSON_GetObjectItem(pJsonRoot, "responseContent");
-    cJSON *json_messages = cJSON_GetObjectItem(json_responseContent, "messages");
-    *messagesNumber = cJSON_GetObjectItem(json_messages, "messagesNumber")->valueint;
-    cJSON *json_messagesArray = cJSON_GetObjectItem(json_messages, "messagesArray")->child;
+    cJSON *json_responseContent = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
+    cJSON *json_messages = cJSON_GetObjectItem(json_responseContent, KEY_MESSAGES);
+    *messagesNumber = cJSON_GetObjectItem(json_messages, KEY_MESSAGES_NUMBER)->valueint;
+    cJSON *json_messagesArray = cJSON_GetObjectItem(json_messages, KEY_MESSAGES_ARRAY)->child;
 //    int messagesArraySize = cJSON_GetArraySize(json_messagesArray);
 //    cJSON *pMessagesArray = json_messagesArray->child;
 //    for(int i=0; i<messagesArraySize; i++, pMessagesArray = pMessagesArray->next){
@@ -450,13 +448,13 @@ bool JsonUtils::parse_response_getMessages_json(char *s_json, int *messagesNumbe
 
     while(json_messagesArray !=NULL){
         Message message;
-        message.setMId(cJSON_GetObjectItem(json_messagesArray, "mId")->valueint);
-        char *temp_mContent = cJSON_GetObjectItem(json_messagesArray, "mContent")->valuestring;
+        message.setMId(cJSON_GetObjectItem(json_messagesArray, KEY_MID)->valueint);
+        char *temp_mContent = cJSON_GetObjectItem(json_messagesArray, KEY_MCONTENT)->valuestring;
         char *mContent = (char *)malloc((strlen(temp_mContent)+1)*sizeof(char));
         strcpy(mContent, temp_mContent);
         message.setMContent(mContent);
-        message.setFId(cJSON_GetObjectItem(json_messagesArray, "fId")->valueint);
-        char *temp_mTime = cJSON_GetObjectItem(json_messagesArray, "mTime")->valuestring;
+        message.setFId(cJSON_GetObjectItem(json_messagesArray, KEY_FID)->valueint);
+        char *temp_mTime = cJSON_GetObjectItem(json_messagesArray, KEY_MTIME)->valuestring;
         char *mTime = (char *)malloc((strlen(temp_mTime)+1)*sizeof(char));
         strcpy(mTime, temp_mTime);
         message.setMTime(mTime);
@@ -486,10 +484,12 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, int *mId) {
         return false;
     }
 
-    pSubJson = cJSON_GetObjectItem(pJsonRoot, "responseContent");
-    *mId = cJSON_GetObjectItem(pSubJson, "mId")->valueint;
+    pSubJson = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
+    *mId = cJSON_GetObjectItem(pSubJson, KEY_MID)->valueint;
 
     cJSON_Delete(pJsonRoot);
 //    cJSON_Delete(pSubJson);
     return true;
 }
+
+

@@ -64,18 +64,16 @@ bool JsonUtils::parse_request_register_json(char *s_json, char *&username, char 
 }
 //checked
 //checked
-bool JsonUtils::parse_request_login_json(char *s_json, char *&username, char *&password) {
+bool JsonUtils::parse_request_login_json(char *s_json, int *uId, char *&password) {
     cJSON *json_root;
     cJSON *json_requestContent;
 
     json_root = cJSON_Parse(s_json);
     json_requestContent = cJSON_GetObjectItem(json_root, KEY_REQUEST_CONTENT);
 
-    char * char_temp = cJSON_GetObjectItem(json_requestContent, KEY_USERNAME)->valuestring;
-    username = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
-    strcpy(username,char_temp);
+    (*uId) = cJSON_GetObjectItem(json_requestContent, KEY_UID)->valueint;
 
-    char_temp = cJSON_GetObjectItem(json_requestContent, KEY_PASSWORD)->valuestring;
+    char * char_temp = cJSON_GetObjectItem(json_requestContent, KEY_PASSWORD)->valuestring;
     password = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
     strcpy(password,char_temp);
 
