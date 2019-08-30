@@ -149,7 +149,7 @@ char *JsonUtils::make_response_register_json(char *result, int uId) {
 }
 
 //check
-char *JsonUtils::make_response_login_json(char *result, int uId) {
+char *JsonUtils::make_response_login_json(char *result, char *username) {
     char *s_json;
 
     cJSON *json_root = cJSON_CreateObject();
@@ -160,7 +160,7 @@ char *JsonUtils::make_response_login_json(char *result, int uId) {
     cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
     cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
 
-    cJSON_AddNumberToObject(json_responseContent,KEY_UID,uId);
+    cJSON_AddStringToObject(json_responseContent,KEY_USERNAME,username);
     cJSON_AddStringToObject(json_responseContent,KEY_PUBLIC_KEY,NULL_CONTENT);
     cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
 

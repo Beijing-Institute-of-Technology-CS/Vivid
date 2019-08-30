@@ -6,9 +6,6 @@
 
 Message::Message() {}
 
-Message::Message(int mId, char *mContent, int fId, char *mTime) : mId(mId), mContent(mContent), fId(fId),
-                                                                  mTime(mTime) {}
-
 int Message::getMId() const {
 
 }
@@ -56,3 +53,6 @@ int Message::getToId() const {
 void Message::setToId(int toId) {
     Message::toId = toId;
 }
+
+Message::Message(int mId, char *mContent, int fId, char *mTime) : mId(mId), mContent(mContent), fId(fId),
+                                                                  mTime(mTime) {}

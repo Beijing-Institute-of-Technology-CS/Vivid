@@ -45,7 +45,7 @@
  * @param password
  * @return
  */
-char* JsonUtils::make_request_reqister_json(char *username, char *password, char *uId, char *uPwd) {
+char* JsonUtils::make_request_reqister_json(char *username, char *password) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;

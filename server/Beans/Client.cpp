@@ -4,7 +4,10 @@
 
 #include "Client.h"
 
-Client::Client() {}
+Client::Client() {
+    fd = 0;
+    uId = 0;
+}
 
 int Client::getFd() const {
     return fd;

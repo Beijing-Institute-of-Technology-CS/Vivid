@@ -27,7 +27,7 @@ public:
 
     static char * make_response_register_json(char *result, int uId);
 
-    static char * make_response_login_json(char *result, int uId);
+    static char * make_response_login_json(char *result, char * username);
 
     static char * make_response_getInfo_json(char *result, int fIcon, std::vector<User> & contactsArray);
 

@@ -18,6 +18,8 @@
 #include "NetworkUtils.h"
 #include "../../Constants.h"
 #include "../Beans/User.h"
+#include "../Beans/Client.h"
+#include "../Beans/Message.h"
 #include "../Utils/ThreadPool.h"
 #include "../JsonUtils/JsonUtils.h"
 
@@ -85,11 +87,11 @@ void NetworkUtils::start_server() {
 
     fd_set read_fds;
 
-//    User users[USERS_SIZE];
-
+    User users[USERS_SIZE];
+    Client clients[USERS_SIZE];
 
     for(int i=0;i<USERS_SIZE;i++){
-        users[i].setFd(0);
+        clients[i].setFd(0);
     }
 
     int max_fd = master_socket;
@@ -111,7 +113,7 @@ void NetworkUtils::start_server() {
         int fd;
 
         for(int i=0;i<USERS_SIZE;i++) {
-            fd = users[i].getFd();
+            fd = clients[i].getFd();
 
             if (fd > 0) {
                 FD_SET(fd, &read_fds);
@@ -157,8 +159,8 @@ void NetworkUtils::start_server() {
              */
             for(int i=0;i<USERS_SIZE;i++){
 
-                if(users[i].getFd() == 0){
-                    users[i].setFd(new_socket);
+                if(clients[i].getFd() == 0){
+                    clients[i].setFd(new_socket);
 
                     /**
                      * fist time add to users, set fd
@@ -175,7 +177,7 @@ void NetworkUtils::start_server() {
          * else handling some IO operation on other socket
          */
         for(int i=0;i<USERS_SIZE;i++){
-            fd = users[i].getFd();
+            fd = clients[i].getFd();
 
             if(FD_ISSET(fd,&read_fds)){
                 /**
@@ -191,7 +193,7 @@ void NetworkUtils::start_server() {
                     getpeername(fd,(sockaddr *)&address,(socklen_t *)&addrlen);
                     std::cout << "host disconnected " << " ip " << inet_ntoa(address.sin_addr) << " port " << ntohs(address.sin_port) << std::endl;
                     close(fd);
-                    users[i].setFd(0);
+                    clients[i].setFd(0);
                 }
                 else{
                     /**
@@ -202,23 +204,30 @@ void NetworkUtils::start_server() {
                      * verifying token
                      */
 
+                    char * requestType;
+                    JsonUtils::parse_request_type(buffer,requestType);
+
+                    if(strcmp(requestType,TYPE_REGISTER)==0){
+                        //todo save username,password to db,
+                        //send uId,publicKey,
+
+                    }else if(strcmp(requestType,TYPE_LOGIN)==0){
+                        /**
+                         * online
+                         */
+                        users[uId].setInUse(true);
+
+                    }
+
                     int uId;
                     char * uPwdFromJson;
                     JsonUtils::parse_request_token(buffer,&uId,uPwdFromJson);
 
                     //todo check from database
                     if(1){
-                        char * requestType;
-                        JsonUtils::parse_request_type(buffer,requestType);
-
-                        char * uId;
 
 
-                        if(strcmp(requestType,TYPE_REGISTER)==0){
-
-                        }else if(strcmp(requestType,TYPE_LOGIN)==0){
-
-                        }else if(strcmp(requestType,TYPE_GET_INFO)==0){
+                        else if(strcmp(requestType,TYPE_GET_INFO)==0){
 
                         }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
 

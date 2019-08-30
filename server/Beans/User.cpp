@@ -55,3 +55,6 @@ void User::setInUse(bool inUse) {
     User::inUse = inUse;
 }
 
+User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
+                                                                   fIconFile(fIconFile) {}
+

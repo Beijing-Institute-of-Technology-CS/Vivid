@@ -10,6 +10,8 @@ class User {
 public:
     User();
 
+    User(int uId, char *uName, char *uPassword, int fIconFile);
+
     int getUId() const;
 
     void setUId(int uId);
