@@ -5,6 +5,10 @@
 #include "MainView.h"
 #include <gtk/gtk.h>
 
+void test_callback(GtkWidget * button, gpointer data) {
+    printf("TEST_CALLBACK");
+}
+
 void MainView::show_main_view() {
     /**
      * 创建构件
@@ -19,7 +23,7 @@ void MainView::show_main_view() {
      * 信号连接
      */
      g_signal_connect(G_OBJECT(window), "delete_event",
-             G_CALLBACK(gtk_main_quit), NULL);
+             G_CALLBACK(test_callback), NULL);
 
      g_signal_connect(G_OBJECT(button), "clicked",
              G_CALLBACK(buttonClickedCallback), NULL);

@@ -106,7 +106,7 @@ char* JsonUtils::make_request_login_json(int uId, char *password) {
     pSubJson = cJSON_CreateObject();
     cJSON_AddStringToObject(pSubJson, KEY_UID, NULL_CONTENT);
     cJSON_AddStringToObject(pSubJson, KEY_PASSWORD, NULL_CONTENT);
-    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN pSubJson);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_TOKEN, pSubJson);
 
     pSubJson = cJSON_CreateObject();
     if(NULL == pSubJson)
@@ -146,7 +146,7 @@ char* JsonUtils::make_request_getInfo_json(int uId, char *uPwd) {
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_GET_INFO;
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_GET_INFO);
 
     pSubJson = cJSON_CreateObject();
     cJSON_AddNumberToObject(pSubJson, KEY_UID, uId);
