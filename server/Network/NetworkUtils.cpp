@@ -152,7 +152,6 @@ void NetworkUtils::start_server() {
 //            if(send(new_socket,welcome,strlen(welcome),0)<=0){
 //                perror("send failed");
 //            }
-//
 
             /**
              * adding new_socket to client_sockets
@@ -161,6 +160,10 @@ void NetworkUtils::start_server() {
 
                 if(users[i].getFd() == 0){
                     users[i].setFd(new_socket);
+
+                    /**
+                     * fist time add to users, set fd
+                     */
                     std::cout << "adding to list of sockets as "<< i <<std::endl;
 
                     break;
@@ -192,6 +195,22 @@ void NetworkUtils::start_server() {
                     /**
                      * json parsing
                      */
+
+                    /**
+                     * verifying token
+                     */
+                    
+                    int uId;
+                    char * uPwdFromJson;
+                    JsonUtils::parse_request_token(buffer,&uId,uPwdFromJson);
+
+                    //todo check
+
+                    if(1){
+
+                    }else{
+                        perror("wrong token!");
+                    }
                      char * json_requestType;
                      JsonUtils::parse_request_type(buffer,json_requestType);
 
