@@ -7,7 +7,9 @@
 
 
 class NetworkUtils {
-
+private:
+public:
+    static void start_server();
 };
 
 
