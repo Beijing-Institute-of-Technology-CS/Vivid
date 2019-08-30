@@ -6,6 +6,8 @@
 #define CLIENT_MAINVIEW_H
 
 
+#include <gtk/gtk.h>
+
 class MainView {
 public:
     /**
@@ -13,14 +15,10 @@ public:
      */
     void show_main_view();
 
-    /**
-     * 设置回调
-     * @param callback
-     */
-    void set_button_callback(void (* callback)());
-
 private:
-    void (* button_clicked_callback)();
+    static void buttonClickedCallback(GtkWidget * button, gpointer data) {
+        printf("Hey!\n");
+    }
 };
 
 

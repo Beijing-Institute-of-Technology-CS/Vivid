@@ -30,8 +30,8 @@ void LoginView::create() {
     reg_button = gtk_button_new_with_label("register");
     login_button = gtk_button_new_with_label("login");
 
-    g_signal_connect(G_OBJECT(login_window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
-    g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(button_login_clicked_callback), this);
+    g_signal_connect(G_OBJECT(login_window),"destroy", NULL, NULL);
+    g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(onButtonLoginClicked), this);
 
     gtk_window_set_title(GTK_WINDOW(login_window),"login");
     gtk_window_set_default_size(GTK_WINDOW(login_window),500,400);
@@ -62,9 +62,6 @@ void LoginView::create() {
     gtk_box_pack_end(GTK_BOX(button_box),login_button,FALSE,FALSE,5);
 }
 
-void LoginView::set_login_callback(void (* callback)(GtkWidget* button,gpointer data)) {
-    this->button_login_clicked_callback = callback;
-}
 
 void LoginView::get_input_login_content(const char *&username, const char *&password) {
     username = gtk_entry_get_text(GTK_ENTRY(name_entry));
@@ -73,4 +70,16 @@ void LoginView::get_input_login_content(const char *&username, const char *&pass
 
 void LoginView::show() {
     gtk_widget_show_all(login_window);
+}
+
+void LoginView::destroy() {
+    gtk_widget_destroy(login_window);
+}
+
+void LoginView::onButtonLoginClicked(GtkWidget *button, gpointer data) {
+    ((LoginView *) data)->loginClickedCallback->onButtonLoginClicked();
+}
+
+void LoginView::setLoginClickedCallback(OnButtonLoginClickedCallback *loginClickedCallback) {
+    LoginView::loginClickedCallback = loginClickedCallback;
 }
