@@ -47,6 +47,7 @@ int insert_message(int message_id, int from_id, int to_id, char * content,
 //nrow和ncol分别为返回结果的行数和列数
 int show_message(int id, char *** resValue, int * nrow, int *col);
 
+#endif
 /*
 接口使用示例：
 char ** resValue;
