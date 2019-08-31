@@ -7,7 +7,7 @@
 Message::Message() {}
 
 int Message::getMId() const {
-
+    return mId;
 }
 
 void Message::setMId(int mId) {
