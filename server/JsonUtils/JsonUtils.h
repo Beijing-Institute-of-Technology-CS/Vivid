@@ -34,6 +34,8 @@ public:
     static char * make_response_getMessages_json(char *result, std::vector<Message> & messagesArray);
 
     static char * make_response_sendMessages_json(char *result, int mId);
+
+    static char * make_response_receiveMessages_json(char *result, int mId, char * mContent, int uFromId);
 };
 
 

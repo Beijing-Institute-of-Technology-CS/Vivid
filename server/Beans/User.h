@@ -32,6 +32,10 @@ public:
 
     void setInUse(bool inUse);
 
+    int getClientIndex() const;
+
+    void setClientIndex(int clientIndex);
+
     char * uName;
     char * uPassword;
 
@@ -40,6 +44,8 @@ private:
 
     int fIconFile;
     int fd;
+
+    int client_index;
     bool inUse;
 };
 

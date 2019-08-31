@@ -2,7 +2,6 @@
 // Created by YichengChen on 8/29/19.
 //
 
-#include <iostream>
 #include "JsonUtils.h"
 #include "../Utils/cJSON.h"
 #include "../../Constants.h"
@@ -16,7 +15,7 @@ bool JsonUtils::parse_request_token(char *s_json, int *uId, char *&uPwd) {
     cJSON * json_requestToken;
 
     json_root = cJSON_Parse(s_json);
-    json_requestToken = cJSON_GetObjectItem(json_root,KEY_REQUEST_CONTENT);
+    json_requestToken = cJSON_GetObjectItem(json_root,KEY_REQUEST_TOKEN);
 
     (*uId) = cJSON_GetObjectItem(json_requestToken,KEY_UID)->valueint;
 
@@ -261,6 +260,30 @@ char *JsonUtils::make_response_sendMessages_json(char *result, int mId) {
 
     cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
     cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
+    cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
+
+    s_json = cJSON_Print(json_root);
+
+    cJSON_Delete(json_root);
+
+    return s_json;
+}
+
+char *JsonUtils::make_response_receiveMessages_json(char *result, int mId, char *mContent, int uFromId) {
+    char *s_json;
+
+    cJSON * json_root = cJSON_CreateObject();
+    char * json_responseType = TYPE_RECEIVE_MESSAGES;
+    char * json_result = result;
+    cJSON * json_responseContent = cJSON_CreateObject();
+
+    cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
+    cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
+
+    cJSON_AddNumberToObject(json_responseContent,KEY_MID,mId);
+    cJSON_AddStringToObject(json_responseContent,KEY_MCONTENT,mContent);
+    cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,uFromId);
+
     cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
 
     s_json = cJSON_Print(json_root);

@@ -3,7 +3,7 @@
 //
 
 #include "JsonUtils.h"
-#include "../../Constants.h"
+#include "../Constants.h"
 /**
  * make request json
  */
@@ -489,6 +489,22 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, int *mId) {
 
     cJSON_Delete(pJsonRoot);
 //    cJSON_Delete(pSubJson);
+    return true;
+}
+
+bool JsonUtils::parse_response_receiveMessages_json(char *s_json, char *&mId, char *&mContent, int *uFromId) {
+    cJSON *json_root = cJSON_Parse(s_json);
+    cJSON *json_responseContent = cJSON_GetObjectItem(json_root,KEY_RESPONSE_CONTENT);
+
+    *mId = cJSON_GetObjectItem(json_responseContent,KEY_MID)->valueint;
+
+    char * char_temp = cJSON_GetObjectItem(json_responseContent,KEY_MCONTENT)->valuestring;
+    mContent = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
+    strcpy(mContent,char_temp);
+
+    *uFromId = cJSON_GetObjectItem(json_responseContent,KEY_UFROMID)->valueint;
+
+    cJSON_Delete(json_root);
     return true;
 }
 

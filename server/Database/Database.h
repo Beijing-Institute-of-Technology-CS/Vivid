@@ -17,7 +17,7 @@ public:
      * 注册用户
      * @param username
      * @param password
-     * @return 返回用户id，为-1表示失败
+     * @return 返回用户uId，为-1表示失败
      */
     static int doRegister(const char * username, const char * password);
 

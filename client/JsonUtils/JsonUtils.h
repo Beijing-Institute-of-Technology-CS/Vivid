@@ -55,6 +55,8 @@ public:
 
     static bool parse_response_sendMessages_json(char * s_json, int *mId);
 
+    static bool parse_response_receiveMessages_json(char *s_json, char *&mId, char *&mContent, int *uFromId);
+
 };
 
 

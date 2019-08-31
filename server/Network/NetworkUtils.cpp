@@ -30,7 +30,7 @@ void NetworkUtils::start_server() {
     /**
      * server socket starting
      */
-    std::cout << "server starting" << std::endl;
+    std::cout << "server starting..." << std::endl;
 
     int master_socket;
 
@@ -99,6 +99,8 @@ void NetworkUtils::start_server() {
     int activity;
 
     char buffer[BUFFER_SIZE+1];
+
+    std::cout << "server started" << std::endl;
 
     while(true){
         FD_ZERO(&read_fds);
@@ -192,16 +194,25 @@ void NetworkUtils::start_server() {
                      * close this socket
                      */
 
+                    getpeername(fd,(sockaddr *)&address,(socklen_t *)&addrlen);
+                    std::cout << "host disconnected " << " ip " << inet_ntoa(address.sin_addr) << " port " << ntohs(address.sin_port) << std::endl;
+                    close(fd);
+
                     /**
                     * disconnected
                     */
 
-                    getpeername(fd,(sockaddr *)&address,(socklen_t *)&addrlen);
-                    std::cout << "host disconnected " << " ip " << inet_ntoa(address.sin_addr) << " port " << ntohs(address.sin_port) << std::endl;
-                    close(fd);
+                    users[clients[i].getUId()].setInUse(false);
+
                     clients[i].setFd(0);
+                    clients[i].setUId(0);
                 }
                 else{
+                    /**
+                     * logging
+                     */
+                    std::cout << buffer << std::endl;
+
                     /**
                      * json parsing
                      */
@@ -234,49 +245,116 @@ void NetworkUtils::start_server() {
 
                         //todo db_check
                         if(1){
+                            /**
+                             * login online
+                             */
+
+                            /**
+                             * users
+                             */
                             users[uId].setInUse(true);
+
                             users[uId].uPassword = (char *)malloc((strlen(password)+1)*sizeof(char));
                             strcpy(users[uId].uPassword,password);
+
+                            users[uId].setClientIndex(i);
+
+                            /**
+                             * clients
+                             */
+                            clients[i].setUId(uId);
 
                             //todo read username from db;
                             char *username = "cyc";
                             char *s_json = JsonUtils::make_response_login_json(TRUE_CONTENT,username);
+                            send(fd,s_json,strlen(s_json),0);
                         }else{
-
                             char *s_json = JsonUtils::make_response_login_json(FALSE_CONTENT,NULL_CONTENT);
                             send(fd,s_json,strlen(s_json),0);
                         }
                     }
+                    /**
+                     * verifying token
+                     */
+                     else{
+                        int uId;
+                        char * uPwd;
+                        JsonUtils::parse_request_token(buffer,&uId,uPwd);
 
-                    int uId;
-                    char * uPwd;
-                    JsonUtils::parse_request_token(buffer,&uId,uPwd);
+                        //todo check from database
+                        if(1){
+                            if(strcmp(requestType,TYPE_GET_INFO)==0){
+                                //todo read contacts(v) from db
+                                //todo read fIcon from db
 
-                    //todo check from database
-                    if(1){
-                        if(strcmp(requestType,TYPE_GET_INFO)==0){
+                                int fIcon = 9;
+                                std::vector<User> v_users;
+                                char * s_json = JsonUtils::make_response_getInfo_json(TRUE_CONTENT, fIcon, v_users);
 
-                        }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
+                                send(fd, s_json, strlen(s_json), 0);
 
-                        }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
-                            int uToId;
-                            char * mContent;
+                            }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
+                                //todo read contacts(v) from db
+                                 std::vector<Message> v_messages;
+                                 char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,v_messages);
 
-                            JsonUtils::parse_request_sendMessages_json(buffer,&uToId,mContent);
+                                 send(fd,s_json,strlen(s_json),0);
 
-                            std::cout << "send to " << uToId;
+                            }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
+                                int uToId;
+                                char * mContent;
+
+                                JsonUtils::parse_request_sendMessages_json(buffer,&uToId,mContent);
+
+                                int uFromId = clients[i].getUId();
+
+                                std::cout << uFromId << " send to " << uToId << " content: " << mContent <<std::endl;
+
+                                //todo save message to db
+                                //todo get a mId
+
+                                int mId = 1;
+
+                                /**
+                                 * to sender
+                                 */
+                                {
+                                    char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,mId);
+                                    send(fd,s_json,strlen(s_json),0);
+                                }
+
+                                /**
+                                 * to receiver
+                                 */
+                                {
+                                    /**
+                                     * receiver is online
+                                     */
+                                    if(users[uToId].isInUse()){
+//                                        for(int j=0;j<USERS_SIZE;j++){
+//                                            if(clients[j].getUId()==uToId){
+//                                                char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,mId,mContent,uFromId);
+//                                                send(clients[j].getFd(),s_json,strlen(s_json),0);
+//                                                break;
+//                                            }
+//                                        }
+
+                                        int clientIndex = users[uToId].getClientIndex();
+
+                                        char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,mId,mContent,uFromId);
+                                        send(clients[clientIndex].getFd(),s_json,strlen(s_json),0);
+                                    }
+                                    /**
+                                     * receiver is not online
+                                     */
+                                    else{
+                                        //do nothing?
+                                    }
+                                }
+                            }
+                        }else{
+                            perror("wrong token!");
                         }
-                    }else{
-                        perror("wrong token!");
-                    }
-                     char * json_requestType;
-                     JsonUtils::parse_request_type(buffer,json_requestType);
-
-
-
-                    buffer[val_read]='\0';
-                    if(send(fd,buffer,strlen(buffer),0)<=0){
-                        perror("send failed!");
                     }
                 }
             }

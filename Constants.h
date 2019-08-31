@@ -29,6 +29,7 @@
 #define TYPE_GET_INFO "getInfo"
 #define TYPE_GET_MESSAGES "getMessages"
 #define TYPE_SEND_MESSAGES "sendMessages"
+#define TYPE_RECEIVE_MESSAGES "receiveMessages"
 
 #define KEY_UID "uId"
 #define KEY_UNAME "uName"
@@ -44,6 +45,7 @@
 #define KEY_LAST_CALLED_MESSAGE "lastCalledMessage"
 
 #define KEY_UTOID "uToId"
+#define KEY_UFROMID "uFromId"
 #define KEY_CONTENT "content"
 
 /**

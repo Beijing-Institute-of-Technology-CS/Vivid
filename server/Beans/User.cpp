@@ -50,3 +50,11 @@ void User::setInUse(bool inUse) {
 User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
                                                                    fIconFile(fIconFile) {}
 
+int User::getClientIndex() const {
+    return client_index;
+}
+
+void User::setClientIndex(int clientIndex) {
+    client_index = clientIndex;
+}
+
