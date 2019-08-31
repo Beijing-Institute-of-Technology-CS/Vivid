@@ -62,7 +62,6 @@ void LoginView::create() {
     gtk_box_pack_end(GTK_BOX(button_box),login_button,FALSE,FALSE,5);
 }
 
-
 void LoginView::get_input_login_content(const char *&username, const char *&password) {
     username = gtk_entry_get_text(GTK_ENTRY(name_entry));
     password = gtk_entry_get_text(GTK_ENTRY(psw_entry));
