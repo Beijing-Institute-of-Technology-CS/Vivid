@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include "sqlite3.h"
 #include <string.h>
+#include "database.h"
 #define SQL_OK 0
 
 sqlite3 *db;
 
 void init_db()
 {
-	int rc=sqlite3_open("database.db", &db);
+	int rc=sqlite3_open("data/database.db", &db);
 	if (rc != SQL_OK)
 	{
 		printf("数据库连接失败，请重试！\n");
