@@ -7,6 +7,9 @@
 
 void TestView::exit_callback(GtkWidget * button, gpointer data) {
     printf("TEST_CALLBACK");
+    if (((TestView *)data)->exitCallback == nullptr) {
+        return;
+    }
     ((TestView *)data)->exitCallback->onTestViewExit();
 }
 

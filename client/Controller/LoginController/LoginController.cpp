@@ -4,9 +4,10 @@
 
 #include "LoginController.h"
 
-LoginController::LoginController() {
+LoginController::LoginController() : loginFailedTip("用户名或密码错误") {
     loginView.setLoginClickedCallback(this);
     loginView.setCloseCallback(this);
+    loginFailedTip.setTipViewCallback(loginFailedTipViewCallback);
 }
 
 void LoginController::showLoginView() {
@@ -32,12 +33,16 @@ bool LoginController::checkLogin(const char *username, const char *password) {
 void LoginController::onLoginSuccess() {
     isLoginSuccess = true;
     printf("Login Success!\n");
+    if (loginSuccessCallback == nullptr) {
+        return;
+    }
     loginSuccessCallback->onLoginSuccessCallback();
 }
 
 void LoginController::onLoginFailed() {
     isLoginSuccess = false;
     printf("Login Failed!\n");
+    loginFailedTip.show();
 }
 
 void LoginController::onButtonLoginClicked() {
@@ -58,10 +63,19 @@ void LoginController::setLoginSuccessCallback(OnLoginSuccessCallback *loginSucce
 void LoginController::onLoginWindowClose() {
     printf("LOGIN WINDOW CLOSE CALLBACK\n");
     if (!isLoginSuccess) {
+        if (loginWindowCloseCallback == nullptr) {
+            return;
+        }
         loginWindowCloseCallback->onLoginWindowClose();
     }
 }
 
 void LoginController::setLoginWindowCloseCallback(OnLoginWindowCloseCallback *loginWindowCloseCallback) {
     LoginController::loginWindowCloseCallback = loginWindowCloseCallback;
+}
+
+void LoginController::LoginFailedTipViewCallback::onPosClick() {
+}
+
+void LoginController::LoginFailedTipViewCallback::onNegClick() {
 }
