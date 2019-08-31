@@ -3,7 +3,7 @@
 //
 
 #include "MainController.h"
-#include "../View/TestView/TestView.h"
+#include "../View/MainView/MainView.h"
 
 MainController::MainController() {
     //设置回调
@@ -15,7 +15,8 @@ MainController::MainController() {
 void MainController::onLoginSuccessCallback() {
     loginController.dismissLoginView();
     //todo: 只是为了演示 实际会有controller
-    testView.show_main_view();
+    MainView mainView;
+    mainView.show();
 }
 
 void MainController::start() {
