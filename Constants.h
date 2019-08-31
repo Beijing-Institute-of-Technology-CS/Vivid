@@ -13,7 +13,8 @@
 
 #define LOCALHOST "127.0.0.1"
 #define MYSQL_USERNAME "root"
-#define MYSQL_PASSWORD "lp13688421885"
+//#define MYSQL_PASSWORD "lp13688421885"
+#define MYSQL_PASSWORD "bluebirds"
 #define MYSQL_DATABASE_NAME "Vivid"
 #define MYSQL_PORT 3306
 
@@ -34,16 +35,19 @@
 #define KEY_UID "uId"
 #define KEY_UNAME "uName"
 #define KEY_UPWD "uPwd"
+#define KEY_UPASSWORD  "uPassword"
 #define KEY_USERNAME "username"
 #define KEY_PASSWORD "password"
 
 #define KEY_MID "mId"
 #define KEY_MCONTENT "mContent"
 #define KEY_FID "fId"
+#define KEY_FFILE "fFile"
 #define KEY_MTIME "mTime"
 
 #define KEY_LAST_CALLED_MESSAGE "lastCalledMessage"
 
+#define KEY_UFROMID "uFromId"
 #define KEY_UTOID "uToId"
 #define KEY_UFROMID "uFromId"
 #define KEY_CONTENT "content"

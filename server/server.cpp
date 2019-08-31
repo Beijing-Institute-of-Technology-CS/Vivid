@@ -13,18 +13,35 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-//#include <mysql/mysql.h>
+//#include <mysql.h>
 
-#include "TestUtils/JsonTesting.h"
-#include "Utils/ThreadPool.h"
+//#include "TestUtils/JsonTesting.h"
+//#include "Utils/ThreadPool.h"
 #include "Beans/User.h"
+#include "Beans/Message.h"
+#include "Beans/Message.cpp"
 #include "Database/Database.h"
-#include "Network/NetworkUtils.h"
+#include "Database/Database.cpp"
+//#include "Network/NetworkUtils.h"
 
 #include "../Constants.h"
 
 int main() {
-    Database::mql_connect();
+//    Database::mql_connect();
+//    int id = Database::doRegister("hello", "psd");
+//    std::cout << id << std::endl;
+//    std::cout << Database::checkId(1) << std::endl;
+//    std::cout << Database::checkPassword(1, "psd") << std::endl;
+//    Message message(NULL, "another content", NULL, "18:15");
+//    std::cout << Database::saveMessage(message) << std::endl;
+//    Message message;
+//    std::cout << Database::getMessage(1, message) << std::endl;
+//    std::cout << message.getMId() << " " << message.getMContent() << " " << message.getFId() << " " << message.getFromId() << " " << message.getToId() << " " << message.getMTime() << std::endl;
+//    std::vector<Message> messages;
+//    Database::getMessage(1, 1, messages);
+//    for(auto message :messages){
+//        std::cout << message.getMId() << " " << message.getMContent() << " " << message.getFId() << " " << message.getFromId() << " " << message.getToId() << " " << message.getMTime() << std::endl;
+//    }
 
 //    JsonTesting::json_parse_request_testing();
 //    JsonTesting::json_make_response_testing();
