@@ -8,10 +8,13 @@
 
 #include <vector>
 #include "../Beans/Message.h"
+#include <mysql.h>
+#include "../../Constants.h"
+#include <iostream>
 
 class Database {
 public:
-    static void mql_connect();
+    static void mql_connect(MYSQL &mysql_sock);
 
     /**
      * 注册用户
