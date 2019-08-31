@@ -10,7 +10,7 @@ void TestView::exit_callback(GtkWidget * button, gpointer data) {
     if (((TestView *)data)->exitCallback == nullptr) {
         return;
     }
-    ((TestView *)data)->exitCallback->onTestViewExit();
+    ((TestView *)data)->exitCallback->exitApplication();
 }
 
 void TestView::show_main_view() {
@@ -54,7 +54,8 @@ void TestView::show_main_view() {
      gtk_widget_show(window);
 }
 
-void TestView::setExitCallback(TestViewExitCallback *exitCallback) {
+void TestView::setExitCallback(ApplicationExitCallback *exitCallback) {
     TestView::exitCallback = exitCallback;
 }
+
 

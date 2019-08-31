@@ -8,7 +8,7 @@
 MainController::MainController() {
     //设置回调
     loginController.setLoginSuccessCallback(this);
-    loginController.setLoginWindowCloseCallback(this);
+    loginController.setApplicationExitCallback(this);
     testView.setExitCallback(this);
 }
 
@@ -26,10 +26,8 @@ void MainController::setExitApplicationFunc(void (*exitApplication)()) {
     exit_application = exitApplication;
 }
 
-void MainController::onTestViewExit() {
-    exit_application();
-}
-
-void MainController::onLoginWindowClose() {
-    exit_application();
+void MainController::exitApplication() {
+    if (exit_application != nullptr) {
+        exit_application();
+    }
 }

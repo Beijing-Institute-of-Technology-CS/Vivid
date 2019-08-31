@@ -62,13 +62,14 @@ void LoginController::setLoginSuccessCallback(OnLoginSuccessCallback *loginSucce
 void LoginController::onLoginWindowClose() {
     printf("LOGIN WINDOW CLOSE CALLBACK\n");
     if (!isLoginSuccess) {
-        if (loginWindowCloseCallback == nullptr) {
+        if (applicationExitCallback == nullptr) {
             return;
         }
-        loginWindowCloseCallback->onLoginWindowClose();
+        applicationExitCallback->exitApplication();
     }
 }
 
-void LoginController::setLoginWindowCloseCallback(OnLoginWindowCloseCallback *loginWindowCloseCallback) {
-    LoginController::loginWindowCloseCallback = loginWindowCloseCallback;
+void LoginController::setApplicationExitCallback(ApplicationExitCallback *applicationExitCallback) {
+    LoginController::applicationExitCallback = applicationExitCallback;
 }
+

@@ -15,6 +15,6 @@ add_executable(client main.cpp View/TestView/TestView.cpp View/TestView/TestView
         View/LoginView/LoginView.h Controller/LoginController/LoginController.cpp
         Controller/LoginController/LoginController.h Controller/MainController.cpp Controller/MainController.h
         ../Constants.h JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp Utils/cJSON.c Utils/cJSON.h
-        Beans/Message.cpp Beans/Message.h Beans/User.cpp Beans/User.h View/TipView/TipView.cpp View/TipView/TipView.h View/RegisterView/RegisterView.cpp View/RegisterView/RegisterView.h)
+        Beans/Message.cpp Beans/Message.h Beans/User.cpp Beans/User.h View/TipView/TipView.cpp View/TipView/TipView.h View/RegisterView/RegisterView.cpp View/RegisterView/RegisterView.h Controller/ApplicationExitCallback.h)
 
 target_link_libraries(client ${GTK3_LIBRARIES})

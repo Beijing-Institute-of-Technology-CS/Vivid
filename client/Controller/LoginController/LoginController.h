@@ -8,6 +8,7 @@
 
 #include "../../View/LoginView/LoginView.h"
 #include "../../View/TipView/TipView.h"
+#include "../ApplicationExitCallback.h"
 
 class OnLoginSuccessCallback;
 
@@ -31,10 +32,10 @@ public:
     void setLoginSuccessCallback(OnLoginSuccessCallback *loginSuccessCallback);
 
     /**
-     * 设置登录窗口关闭回调
-     * @param loginWindowCloseCallback
+     * 设置程序退出回调
+     * @param applicationExitCallback
      */
-    void setLoginWindowCloseCallback(OnLoginWindowCloseCallback *loginWindowCloseCallback);
+    void setApplicationExitCallback(ApplicationExitCallback *applicationExitCallback);
 
     //登录相关回调
     void onButtonLoginClicked() override;
@@ -64,8 +65,7 @@ private:
 
     //回调
     OnLoginSuccessCallback * loginSuccessCallback = nullptr;
-    OnLoginWindowCloseCallback * loginWindowCloseCallback = nullptr;
-
+    ApplicationExitCallback * applicationExitCallback = nullptr;
 };
 
 //登录成功回调

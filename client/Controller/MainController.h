@@ -7,9 +7,10 @@
 
 
 #include "LoginController/LoginController.h"
+#include "ApplicationExitCallback.h"
 #include "../View/TestView/TestView.h"
 
-class MainController : OnLoginSuccessCallback, TestViewExitCallback, OnLoginWindowCloseCallback {
+class MainController : OnLoginSuccessCallback, ApplicationExitCallback {
 public:
     /**
      * 初始构造函数
@@ -30,11 +31,8 @@ public:
     //登录成功回调
     void onLoginSuccessCallback() override;
 
-    //登录窗口关闭回调
-    void onLoginWindowClose() override;
-
-    //TestView 退出回调
-    void onTestViewExit() override;
+    //程序退出回调
+    void exitApplication() override;
 
 private:
     //Controller
@@ -44,8 +42,7 @@ private:
     TestView testView;
 
     //退出函数指针
-    void (* exit_application)();
+    void (* exit_application)() = nullptr;
 };
-
 
 #endif //CLIENT_MAINCONTROLLER_H

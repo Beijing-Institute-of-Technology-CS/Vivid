@@ -7,8 +7,7 @@
 
 
 #include <gtk/gtk.h>
-
-class TestViewExitCallback;
+#include "../../Controller/ApplicationExitCallback.h"
 
 class TestView {
 public:
@@ -17,11 +16,7 @@ public:
      */
     void show_main_view();
 
-    /**
-     * 设置退出回调
-     * @param exitCallback
-     */
-    void setExitCallback(TestViewExitCallback *exitCallback);
+    void setExitCallback(ApplicationExitCallback *exitCallback);
 
 private:
     static void buttonClickedCallback(GtkWidget * button, gpointer data) {
@@ -30,12 +25,7 @@ private:
 
     static void exit_callback(GtkWidget * button, gpointer data);
 
-    TestViewExitCallback * exitCallback = nullptr;
-};
-
-class TestViewExitCallback {
-public:
-    virtual void onTestViewExit() = 0;
+    ApplicationExitCallback * exitCallback = nullptr;
 };
 
 
