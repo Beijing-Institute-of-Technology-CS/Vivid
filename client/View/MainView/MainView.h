@@ -16,6 +16,7 @@ public:
     /**
      * 展示主界面
      */
+    void create();
     void show();
     void destroy();
     //给历史消息列表加入一行新消息，消息id号，姓名，最后一条消息
@@ -28,8 +29,8 @@ private:
     GtkWidget *vbox;
     message_list mlist;
     friend_list  flist;
-    //void ChangeToMessage(GtkWidget *widget,  gpointer data);
-    //void ChangeToFriend(GtkWidget *widget,  gpointer data);
+    static void ChangeToMessage(GtkWidget *widget,  gpointer data);
+    static void ChangeToFriend(GtkWidget *widget,  gpointer data);
     static void buttonClickedCallback(GtkWidget * button, gpointer data) {
         printf("Hey!\n");
     }

@@ -51,7 +51,6 @@ private:
     //View
     LoginView loginView;
     RegisterView registerView;
-    TipView loginFailedTip;
 
     /**
      * 检查登录信息

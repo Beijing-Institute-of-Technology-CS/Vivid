@@ -9,14 +9,11 @@ MainController::MainController() {
     //设置回调
     loginController.setLoginSuccessCallback(this);
     loginController.setApplicationExitCallback(this);
-    testView.setExitCallback(this);
 }
 
 void MainController::onLoginSuccessCallback() {
     loginController.dismissLoginView();
-    //todo: 只是为了演示 实际会有controller
-    MainView mainView;
-    mainView.show();
+    startMainView();
 }
 
 void MainController::start() {
@@ -31,4 +28,9 @@ void MainController::exitApplication() {
     if (exit_application != nullptr) {
         exit_application();
     }
+}
+
+void MainController::startMainView() {
+    mainView.create();
+    mainView.show();
 }
