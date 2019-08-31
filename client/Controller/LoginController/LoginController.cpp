@@ -7,7 +7,6 @@
 LoginController::LoginController() : loginFailedTip("用户名或密码错误") {
     loginView.setLoginClickedCallback(this);
     loginView.setCloseCallback(this);
-    loginFailedTip.setTipViewCallback(loginFailedTipViewCallback);
 }
 
 void LoginController::showLoginView() {
@@ -72,10 +71,4 @@ void LoginController::onLoginWindowClose() {
 
 void LoginController::setLoginWindowCloseCallback(OnLoginWindowCloseCallback *loginWindowCloseCallback) {
     LoginController::loginWindowCloseCallback = loginWindowCloseCallback;
-}
-
-void LoginController::LoginFailedTipViewCallback::onPosClick() {
-}
-
-void LoginController::LoginFailedTipViewCallback::onNegClick() {
 }

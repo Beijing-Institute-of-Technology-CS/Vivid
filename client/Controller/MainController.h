@@ -11,20 +11,39 @@
 
 class MainController : OnLoginSuccessCallback, TestViewExitCallback, OnLoginWindowCloseCallback {
 public:
+    /**
+     * 初始构造函数
+     */
     MainController();
+
+    /**
+     * 程序开始
+     */
     void start();
 
-    void onLoginSuccessCallback() override;
-
+    /**
+     * 设置程序退出方法
+     * @param exitApplication
+     */
     void setExitApplicationFunc(void (*exitApplication)());
 
-    void onTestViewExit() override;
+    //登录成功回调
+    void onLoginSuccessCallback() override;
+
+    //登录窗口关闭回调
     void onLoginWindowClose() override;
 
+    //TestView 退出回调
+    void onTestViewExit() override;
+
 private:
+    //Controller
     LoginController loginController;
+
+    //View
     TestView testView;
 
+    //退出函数指针
     void (* exit_application)();
 };
 

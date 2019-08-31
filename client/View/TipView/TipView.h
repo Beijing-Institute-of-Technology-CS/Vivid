@@ -11,20 +11,40 @@ class TipViewCallback;
 
 class TipView {
 public:
-    TipView(const char *msg);
+    /**
+     * 构造函数
+     * @param msg 展示消息
+     */
+    explicit TipView(const char *msg);
+
+    /**
+     * 展示与销毁
+     */
     void show();
     void destroy();
 
+    /**
+     * 设置回调
+     * @param tipViewCallback
+     */
     void setTipViewCallback(TipViewCallback *tipViewCallback);
 
 private:
+    //消息信息
     const char * msg;
+
+    //回调
     TipViewCallback * tipViewCallback = nullptr;
+
+    //主窗口
     GtkWidget *window;
+
+    //GTK回调
     static void onPosClickCallback(GtkWidget * button, gpointer data);
     static void onNegClickCallback(GtkWidget * button, gpointer data);
 };
 
+//回调
 class TipViewCallback {
 public:
     virtual void onPosClick() = 0;

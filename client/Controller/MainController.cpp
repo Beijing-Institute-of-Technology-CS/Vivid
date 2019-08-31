@@ -6,6 +6,7 @@
 #include "../View/TestView/TestView.h"
 
 MainController::MainController() {
+    //设置回调
     loginController.setLoginSuccessCallback(this);
     loginController.setLoginWindowCloseCallback(this);
     testView.setExitCallback(this);

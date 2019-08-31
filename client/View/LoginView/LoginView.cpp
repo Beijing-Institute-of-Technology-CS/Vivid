@@ -6,6 +6,7 @@
 
 void LoginView::create() {
 
+    //构造控件
     GtkWidget *main_box;
     GtkWidget *fixed;
     GtkWidget *button_box;
@@ -30,9 +31,11 @@ void LoginView::create() {
     reg_button = gtk_button_new_with_label("register");
     login_button = gtk_button_new_with_label("login");
 
+    //连接
     g_signal_connect(G_OBJECT(login_window),"destroy", G_CALLBACK(onWindowClose), this);
     g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(onButtonLoginClicked), this);
 
+    //设置参数
     gtk_window_set_title(GTK_WINDOW(login_window),"login");
     gtk_window_set_default_size(GTK_WINDOW(login_window),500,400);
     gtk_window_set_position(GTK_WINDOW(login_window),GTK_WIN_POS_CENTER);
@@ -77,6 +80,9 @@ void LoginView::destroy() {
 }
 
 void LoginView::onButtonLoginClicked(GtkWidget *button, gpointer data) {
+    if (((LoginView *) data)->loginClickedCallback == nullptr) {
+        return;
+    }
     ((LoginView *) data)->loginClickedCallback->onButtonLoginClicked();
 }
 
@@ -85,6 +91,9 @@ void LoginView::setLoginClickedCallback(OnButtonLoginClickedCallback *loginClick
 }
 
 void LoginView::onWindowClose(GtkWidget *widget, gpointer data) {
+    if (((LoginView *)data)->closeCallback == nullptr) {
+        return;
+    }
     ((LoginView *) data)->closeCallback->onLoginWindowClose();
 }
 

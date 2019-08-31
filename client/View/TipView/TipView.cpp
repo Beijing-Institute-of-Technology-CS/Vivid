@@ -9,11 +9,8 @@ TipView::TipView(const char *msg) : msg(msg) {}
 
 void TipView::show() {
     /**
-
      * 创建构件
-
      */
-
     GtkWidget *vbox;
     GtkWidget *hbox;
     GtkWidget *bbox;
@@ -23,11 +20,8 @@ void TipView::show() {
     GtkWidget *sep;
 
     /**
-
      * 设定window属性
-
      */
-
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     g_signal_connect(G_OBJECT(window),"destroy", G_CALLBACK(onNegClickCallback), this);
     gtk_window_set_title(GTK_WINDOW(window),"Tip");
@@ -49,9 +43,7 @@ void TipView::show() {
     gtk_box_pack_start(GTK_BOX(vbox),bbox,FALSE,FALSE,5);
 
     /**
-
      * 信号连接
-
      */
     button = gtk_button_new_from_stock(GTK_STOCK_OK);
     g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(onPosClickCallback),this);
@@ -63,12 +55,8 @@ void TipView::show() {
     gtk_box_pack_start(GTK_BOX(bbox),button,FALSE,FALSE,0);
 
     /**
-
      * 显示构件
-
      */
-
-
     gtk_widget_show_all(window);
 }
 

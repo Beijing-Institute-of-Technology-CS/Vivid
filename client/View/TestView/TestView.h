@@ -13,10 +13,14 @@ class TestViewExitCallback;
 class TestView {
 public:
     /**
-     * 展示主界面
+     * 展示界面
      */
     void show_main_view();
 
+    /**
+     * 设置退出回调
+     * @param exitCallback
+     */
     void setExitCallback(TestViewExitCallback *exitCallback);
 
 private:
