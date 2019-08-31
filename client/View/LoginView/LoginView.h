@@ -50,6 +50,7 @@ private:
 
     //GTK回调
     static void onButtonLoginClicked(GtkWidget* button, gpointer data);
+    static void onButtonRegisterClicked(GtkWidget* button, gpointer data);
     static void onWindowClose(GtkWidget * widget, gpointer data);
 };
 
@@ -57,6 +58,7 @@ private:
 class OnButtonLoginClickedCallback {
 public:
     virtual void onButtonLoginClicked() = 0;
+    virtual void onButtonRegisterClicked() = 0;
 };
 
 //窗口关闭回调

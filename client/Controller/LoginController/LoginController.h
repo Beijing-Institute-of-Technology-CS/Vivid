@@ -9,10 +9,11 @@
 #include "../../View/LoginView/LoginView.h"
 #include "../../View/TipView/TipView.h"
 #include "../ApplicationExitCallback.h"
+#include "../../View/RegisterView/RegisterView.h"
 
 class OnLoginSuccessCallback;
 
-class LoginController : OnButtonLoginClickedCallback, OnLoginWindowCloseCallback {
+class LoginController : OnButtonLoginClickedCallback, OnLoginWindowCloseCallback, OnRegisterSubmitClickCallback {
 public:
     /**
      * 初始构造函数
@@ -39,7 +40,9 @@ public:
 
     //登录相关回调
     void onButtonLoginClicked() override;
+    void onButtonRegisterClicked() override;
     void onLoginWindowClose() override;
+    void onRegisterSubmit(const char * username, const char * password) override;
 
 private:
     //是否登录成功
@@ -47,13 +50,14 @@ private:
 
     //View
     LoginView loginView;
+    RegisterView registerView;
     TipView loginFailedTip;
 
     /**
      * 检查登录信息
      * @param username
      * @param password
-     * @return
+     * @return 是否成功
      */
     bool checkLogin(const char * username, const char * password);
 
@@ -62,6 +66,20 @@ private:
      */
     void onLoginSuccess();
     void onLoginFailed();
+
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @return 是否成功
+     */
+    bool doRegister(const char * username, const char * password);
+
+    /**
+     * 登录成功、失败操作
+     */
+    void onRegisterSuccess(int id);
+    void onRegisterFailed();
 
     //回调
     OnLoginSuccessCallback * loginSuccessCallback = nullptr;

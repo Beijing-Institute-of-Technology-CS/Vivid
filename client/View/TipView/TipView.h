@@ -12,6 +12,13 @@ class TipViewCallback;
 class TipView {
 public:
     /**
+     * 展示简单Tip
+     * 仅含有信息及一个确定按钮
+     * @param msg
+     */
+    static void showSimpleTipView(const char * msg);
+
+    /**
      * 构造函数
      * @param msg 展示消息
      */

@@ -3,10 +3,13 @@
 //
 
 #include "LoginController.h"
+#include <string>
 
-LoginController::LoginController() : loginFailedTip("用户名或密码错误") {
+LoginController::LoginController() :
+    loginFailedTip("用户名或密码错误") {
     loginView.setLoginClickedCallback(this);
     loginView.setCloseCallback(this);
+    registerView.setSubmitCallback(this);
 }
 
 void LoginController::showLoginView() {
@@ -71,5 +74,33 @@ void LoginController::onLoginWindowClose() {
 
 void LoginController::setApplicationExitCallback(ApplicationExitCallback *applicationExitCallback) {
     LoginController::applicationExitCallback = applicationExitCallback;
+}
+
+void LoginController::onButtonRegisterClicked() {
+    registerView.show();
+}
+
+void LoginController::onRegisterSubmit(const char *username, const char *password) {
+    doRegister(username, password);
+}
+
+bool LoginController::doRegister(const char *username, const char *password) {
+    //todo: 注册
+    if (strlen(username) < 5) {
+        onRegisterSuccess(strlen(username));
+        return true;
+    }
+    onRegisterFailed();
+    return false;
+}
+
+void LoginController::onRegisterSuccess(int id) {
+    registerView.destroy();
+    std::string s = "注册成功\n您的id是: " + std::to_string(id);
+    TipView::showSimpleTipView(s.c_str());
+}
+
+void LoginController::onRegisterFailed() {
+    TipView::showSimpleTipView("注册失败\n请重试");
 }
 

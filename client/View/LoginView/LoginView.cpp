@@ -34,6 +34,7 @@ void LoginView::create() {
     //连接
     g_signal_connect(G_OBJECT(login_window),"destroy", G_CALLBACK(onWindowClose), this);
     g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(onButtonLoginClicked), this);
+    g_signal_connect(G_OBJECT(reg_button), "clicked", G_CALLBACK(onButtonRegisterClicked), this);
 
     //设置参数
     gtk_window_set_title(GTK_WINDOW(login_window),"login");
@@ -99,4 +100,11 @@ void LoginView::onWindowClose(GtkWidget *widget, gpointer data) {
 
 void LoginView::setCloseCallback(OnLoginWindowCloseCallback *closeCallback) {
     LoginView::closeCallback = closeCallback;
+}
+
+void LoginView::onButtonRegisterClicked(GtkWidget *button, gpointer data) {
+    if (((LoginView *) data)->loginClickedCallback == nullptr) {
+        return;
+    }
+    ((LoginView *) data)->loginClickedCallback->onButtonRegisterClicked();
 }
