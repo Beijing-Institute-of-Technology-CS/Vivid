@@ -147,16 +147,6 @@ void NetworkUtils::start_server() {
                       << inet_ntoa(address.sin_addr) << " port is " << ntohs(address.sin_port) <<std::endl;
 
             /**
-             * sending or reading
-             */
-
-//            char * welcome = "welcome!\n";
-//
-//            if(send(new_socket,welcome,strlen(welcome),0)<=0){
-//                perror("send failed");
-//            }
-
-            /**
              * adding new_socket to client_sockets
              */
             for(int i=0;i<USERS_SIZE;i++){
@@ -331,13 +321,6 @@ void NetworkUtils::start_server() {
                                      * receiver is online
                                      */
                                     if(users[uToId].isInUse()){
-//                                        for(int j=0;j<USERS_SIZE;j++){
-//                                            if(clients[j].getUId()==uToId){
-//                                                char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,mId,mContent,uFromId);
-//                                                send(clients[j].getFd(),s_json,strlen(s_json),0);
-//                                                break;
-//                                            }
-//                                        }
 
                                         int clientIndex = users[uToId].getClientIndex();
 

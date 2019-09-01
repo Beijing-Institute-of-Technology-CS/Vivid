@@ -9,7 +9,7 @@
 #define QUEUE_SIZE 5
 #define POOL_SIZE 10
 #define BUFFER_SIZE 1024
-#define USERS_SIZE 2
+#define USERS_SIZE 3
 
 #define LOCALHOST "127.0.0.1"
 #define MYSQL_USERNAME "root"

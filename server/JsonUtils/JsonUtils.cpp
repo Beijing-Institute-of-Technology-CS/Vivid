@@ -256,7 +256,7 @@ char *JsonUtils::make_response_sendMessages_json(char *result, int mId) {
     char * json_result = result;
     cJSON * json_responseContent = cJSON_CreateObject();
 
-    cJSON_AddNumberToObject(json_responseContent,KEY_MID,90);
+    cJSON_AddNumberToObject(json_responseContent,KEY_MID,mId);
 
     cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
     cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
