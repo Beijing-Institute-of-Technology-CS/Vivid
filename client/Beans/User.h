@@ -8,6 +8,9 @@
 
 class User {
 public:
+    char *uName;
+    char *uPassword;
+
     User();
     User(int uId, char *uName, char *uPassword, int fIconFile);
 
@@ -17,11 +20,7 @@ public:
 
     char *getUName() const;
 
-    void setUName(char *uName);
-
     char *getUPassword() const;
-
-    void setUPassword(char *uPassword);
 
     int getFIconFile() const;
 
@@ -29,8 +28,6 @@ public:
 
 private:
     int uId;
-    char * uName;
-    char * uPassword;
     int fIconFile;
 };
 

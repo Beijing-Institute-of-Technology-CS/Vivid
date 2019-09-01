@@ -8,8 +8,18 @@
 
 class Message {
 public:
+    char *uFromUsername;
+
+    char *mContent;
+
+    //todo: bool getMType()   (strcmp)
+    char *mType;
+
+    char *mTime;
+
     Message();
 
+    //mType must be initialed
     Message(int mId, char *mContent, int fId, char *mTime);
 
     int getMId() const;
@@ -18,7 +28,17 @@ public:
 
     char *getMContent() const;
 
-    void setMContent(char *mContent);
+    char *getMType() const;
+
+    int getGFromId() const;
+
+    void setGFromId(int gFromId);
+
+    int getUFromId() const;
+
+    void setUFromId(int uFromId);
+
+    char *getUFromusername() const;
 
     int getFId() const;
 
@@ -26,14 +46,12 @@ public:
 
     char *getMTime() const;
 
-    void setMTime(char *mTime);
-
 private:
     int mId;
-    char * mContent;
+    int gFromId;
+    int uFromId;
     int fId;
-    char * mTime;
-};
+};//todo: toId...
 
 
 #endif //SERVER_MESSAGE_H
