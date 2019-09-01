@@ -2,6 +2,9 @@
 // Created by YichengChen on 8/29/19.
 //
 
+#include <cstdlib>
+#include <cstring>
+
 #include "JsonUtils.h"
 #include "../Utils/cJSON.h"
 #include "../../Constants.h"
