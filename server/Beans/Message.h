@@ -26,9 +26,9 @@ public:
 
     void setUFromId(int uFromId);
 
-    int getUUoId() const;
+    int getUToId() const;
 
-    void setUUoId(int uUoId);
+    void setUToId(int uToId);
 
     bool isGroupMessage() const;
 
@@ -37,7 +37,6 @@ public:
     int getGId() const;
 
     void setGId(int gId);
-
 
     char * mContent;
 
@@ -50,7 +49,7 @@ private:
     int fId;
 
     int uFromId;
-    int uUoId;
+    int uToId;
 
     /**
      * should be the same

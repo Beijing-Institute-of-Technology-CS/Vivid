@@ -54,10 +54,11 @@ void Message::setUFromId(int uFromId) {
     Message::uFromId = uFromId;
 }
 
-int Message::getUUoId() const {
-    return uUoId;
+int Message::getUToId() const {
+    return uToId;
 }
 
-void Message::setUUoId(int uUoId) {
-    Message::uUoId = uUoId;
+void Message::setUToId(int uToId) {
+    Message::uToId = uToId;
 }
+

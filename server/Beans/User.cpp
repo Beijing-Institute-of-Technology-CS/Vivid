@@ -31,14 +31,6 @@ void User::setFIconFile(int fIconFile) {
     User::fIconFile = fIconFile;
 }
 
-int User::getFd() const {
-    return fd;
-}
-
-void User::setFd(int fd) {
-    User::fd = fd;
-}
-
 bool User::isInUse() const {
     return inUse;
 }

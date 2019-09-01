@@ -86,13 +86,13 @@
 #define KEY_GFROMID "gFromId"
 
 #define KEY_GROUPS "groups"
-#define KEY_GROUPSNUMBER "groupsNumber"
-#define KEY_GROUPSARRAY "groupsArray"
+#define KEY_GROUPS_NUMBER "groupsNumber"
+#define KEY_GROUPS_ARRAY "groupsArray"
 
-#define TYPE_USERMESSAGE "userMessage"
-#define TYPE_GROUPMESSAGE "groupMessage"
+#define TYPE_USER_MESSAGE "userMessage"
+#define TYPE_GROUP_MESSAGE "groupMessage"
 
-#define TYPE_ADDTOGROUP "addToGroup"
+#define TYPE_ADD_TO_GROUP "addToGroup"
 
 
 

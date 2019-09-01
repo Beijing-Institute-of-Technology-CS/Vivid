@@ -14,14 +14,15 @@
 #include <vector>
 #include <thread>
 #include <arpa/inet.h>
+#include <ctime>
 
 #include "NetworkUtils.h"
 #include "../../Constants.h"
 #include "../Beans/User.h"
 #include "../Beans/Client.h"
 #include "../Beans/Message.h"
-#include "../Utils/ThreadPool.h"
 #include "../JsonUtils/JsonUtils.h"
+#include "../DatabaseUtils/DatabaseUtils.h"
 
 
 #pragma clang diagnostic push
@@ -215,15 +216,16 @@ void NetworkUtils::start_server() {
                     JsonUtils::parse_request_type(buffer,requestType);
 
                     if(strcmp(requestType,TYPE_REGISTER)==0){
-                        //todo save username,password to db,
-                        //todo send uId,publicKey,
-
                         char *username;
                         char *password;
 
                         JsonUtils::parse_request_register_json(buffer,username,password);
 
+                        int uId = DatabaseUtils::doRegister(username,password);
 
+                        char *s_json = JsonUtils::make_response_register_json(TRUE_CONTENT,uId);
+
+                        send(fd,s_json,strlen(s_json),0);
                     }else if(strcmp(requestType,TYPE_LOGIN)==0){
                         /**
                          * online
@@ -233,8 +235,7 @@ void NetworkUtils::start_server() {
 
                         JsonUtils::parse_request_login_json(buffer,&uId,password);
 
-                        //todo db_check
-                        if(1){
+                        if(DatabaseUtils::checkPassword(uId,password)){
                             /**
                              * login online
                              */
@@ -254,10 +255,13 @@ void NetworkUtils::start_server() {
                              */
                             clients[i].setUId(uId);
 
-                            //todo read username from db;
-                            char *username = "cyc";
+                            User user_for_username;
+                            DatabaseUtils::getUser(uId, user_for_username);
+                            char *username = user_for_username.getUName();
+
                             char *s_json = JsonUtils::make_response_login_json(TRUE_CONTENT,username);
                             send(fd,s_json,strlen(s_json),0);
+
                         }else{
                             char *s_json = JsonUtils::make_response_login_json(FALSE_CONTENT,NULL_CONTENT);
                             send(fd,s_json,strlen(s_json),0);
@@ -271,52 +275,106 @@ void NetworkUtils::start_server() {
                         char * uPwd;
                         JsonUtils::parse_request_token(buffer,&uId,uPwd);
 
-                        //todo check from database
-                        if(1){
+                        if(DatabaseUtils::checkPassword(uId,uPwd)){
                             if(strcmp(requestType,TYPE_GET_INFO)==0){
-                                //todo read contacts(v) from db
-                                //todo read fIcon from db
 
-                                int fIcon = 9;
-                                std::vector<User> v_users;
-//                                char * s_json = JsonUtils::make_response_getInfo_json(TRUE_CONTENT, fIcon, v_users);
+                                int fIcon = 0;
 
-//                                send(fd, s_json, strlen(s_json), 0);
+                                std::vector<User> contacts;
+                                DatabaseUtils::getUsers(uId,contacts);
+
+                                std::vector<Group> groups;
+                                DatabaseUtils::getGroups(uId,groups);
+
+                                char * s_json = JsonUtils::make_response_getInfo_json(TRUE_CONTENT, fIcon, contacts,groups);
+
+                                send(fd, s_json, strlen(s_json), 0);
 
                             }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
-                                //todo read messages(v) from db
-                                 std::vector<Message> v_messages;
-                                 char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,v_messages);
+                                int lastCalledMessage;
 
-                                 send(fd,s_json,strlen(s_json),0);
+                                JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
+
+                                std::vector<Message> messages;
+                                DatabaseUtils::getMessages(uId,lastCalledMessage,messages);
+
+                                char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
+
+                                send(fd,s_json,strlen(s_json),0);
 
                             }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
                                 int uToId;
+                                int gToId;
+                                char * mType;
                                 char * mContent;
 
-//                                JsonUtils::parse_request_sendMessages_json(buffer,&uToId,mContent);
+                                JsonUtils::parse_request_sendMessages_json(buffer,&uToId,&gToId,mType,mContent);
 
+                                /**
+                                 * uFromId should be equal to uId
+                                 */
                                 int uFromId = clients[i].getUId();
 
                                 std::cout << uFromId << " send to " << uToId << " content: " << mContent <<std::endl;
 
-                                //todo save message to db
-                                //todo get a mId
+                                Message message;
+                                message.setUFromId(uFromId);
+                                message.setUToId(uToId);
+                                message.setGId(gToId);
 
-                                int mId = 1;
+                                message.mContent = (char *)malloc(sizeof(char)*(strlen(mContent)+1));
+                                strcpy(message.mContent,mContent);
+
+                                if(strcmp(mType,TYPE_GROUP_MESSAGE)==0){
+                                    message.setGroupMessage(true);
+                                }else{
+                                    message.setGroupMessage(false);
+                                }
+
+                                /**
+                                 * generate time
+                                 */
+                                time_t now = time(0);
+                                tm *ltm = localtime(&now);
+
+                                std::string time_s = std::to_string(ltm->tm_hour);
+                                time_s += " ";
+                                time_s += std::to_string(ltm->tm_min);
+                                time_s += " ";
+                                time_s += std::to_string(ltm->tm_sec);
+
+                                message.mTime = (char *)malloc(sizeof(char)* (time_s.length()+1));
+                                strcpy(message.mTime,time_s.c_str());
 
                                 /**
                                  * to sender
                                  */
                                 {
-//                                    char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,mId);
-//                                    send(fd,s_json,strlen(s_json),0);
+                                    char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,message);
+                                    send(fd,s_json,strlen(s_json),0);
                                 }
 
                                 /**
                                  * to receiver
                                  */
-                                {
+                                if(message.isGroupMessage()){
+                                    std::vector<User> groupContacts;
+                                    for(int j=0;j<groupContacts.size();j++){
+                                        int uToId_groupMessage = groupContacts.at(j).getUId();
+                                        if(users[uToId_groupMessage].isInUse()){
+
+                                            int clientIndex = users[uToId_groupMessage].getClientIndex();
+                                            int fd = clients[clientIndex].getFd();
+
+                                            char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,message);
+                                            send(fd,s_json,strlen(s_json),0);
+
+                                        }else{
+                                            //todo do nothing
+                                        }
+                                    }
+                                }
+                                else{
                                     /**
                                      * receiver is online
                                      */
@@ -324,16 +382,25 @@ void NetworkUtils::start_server() {
 
                                         int clientIndex = users[uToId].getClientIndex();
 
-//                                        char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,mId,mContent,uFromId);
-//                                        send(clients[clientIndex].getFd(),s_json,strlen(s_json),0);
+                                        char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,message);
+                                        send(clients[clientIndex].getFd(),s_json,strlen(s_json),0);
                                     }
                                     /**
                                      * receiver is not online
                                      */
                                     else{
-                                        //do nothing?
+                                        //todo do nothing?
                                     }
                                 }
+                            }else if(strcmp(requestType,TYPE_ADD_TO_GROUP)==0){
+                                    int uId;
+                                    int gId;
+
+                                    JsonUtils::parse_request_adduIdToGroup_json(buffer,&uId,&gId);
+
+                                    DatabaseUtils::addUIdToGroup(uId,gId);
+
+                                    char *s_json = JsonUtils::make_response_adduIdToGroup_json(TRUE_CONTENT);
                             }
                         }else{
                             perror("wrong token!");
