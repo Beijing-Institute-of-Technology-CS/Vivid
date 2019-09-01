@@ -7,10 +7,12 @@
 
 
 #include <vector>
-#include "../Beans/Message.h"
 #include <mysql.h>
-#include "../../Constants.h"
 #include <iostream>
+
+#include "../Beans/Message.h"
+#include "../../Constants.h"
+#include "../Beans/User.h"
 
 class Database {
 public:
@@ -26,18 +28,18 @@ public:
 
     /**
      * 检查密码
-     * @param id
+     * @param uId
      * @param password
      * @return 密码是否正确
      */
-    static bool checkPassword(int id, const char * password);
+    static bool checkPassword(int uId, const char * password);
 
     /**
      * 检查id是否存在
-     * @param id
+     * @param uId
      * @return 是否存在
      */
-    static bool checkId(int id);
+    static bool checkId(int uId);
 
     /**
      * 保存消息
@@ -49,20 +51,25 @@ public:
     /**
      * 获取消息
      * 根据指定消息id获取消息
-     * @param msgId
+     * @param mId
      * @param message 向该引用对象中插入查询到的消息相关信息
      * @return 是否成功
      */
-    static bool getMessage(int msgId, Message & message);
+    static bool getMessage(int mId, Message & message);
 
     /**
      * 获取消息
      * 获取指定接受者，指定消息ID之后的全部消息
-     * @param receiverId
-     * @param msgId
+     * @param uToId
+     * @param lastCalledMessage
      * @param messages 返回数据添加至vector中
      */
-    static void getMessage(int receiverId, int msgId, std::vector<Message> & messages);
+    static void getMessages(int uToId, int lastCalledMessage, std::vector<Message> & messages);
+
+
+    static void getUser(int uId,User &user);
+
+    static void getUsers(int uId,std::vector<User> &users);
 };
 
 

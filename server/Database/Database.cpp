@@ -78,13 +78,13 @@ int Database::doRegister(const char *username, const char *password) {
     return uId;
 }
 
-bool Database::checkPassword(int id, const char *password) {
+bool Database::checkPassword(int uId, const char *password) {
     MYSQL mysql_sock ;
     mql_connect(mysql_sock);
     char query_sql[2048];
     bool flag = false;
 
-    sprintf(query_sql, "SELECT %s FROM User WHERE %s = %d", KEY_UPASSWORD, KEY_UID, id);
+    sprintf(query_sql, "SELECT %s FROM User WHERE %s = %d", KEY_UPASSWORD, KEY_UID, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("query failed");
     }else{
@@ -103,13 +103,13 @@ bool Database::checkPassword(int id, const char *password) {
     return flag;
 }
 
-bool Database::checkId(int id) {
+bool Database::checkId(int uId) {
     MYSQL mysql_sock ;
     mql_connect(mysql_sock);
     char query_sql[2048];
     bool flag = false;
 
-    sprintf(query_sql, "SELECT * FROM User WHERE %s = %d", KEY_UID, id);
+    sprintf(query_sql, "SELECT * FROM User WHERE %s = %d", KEY_UID, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("query failed");
     }else{
@@ -148,13 +148,13 @@ int Database::saveMessage(const Message &message) {
     return mId;
 }
 
-bool Database::getMessage(int msgId, Message &message) {
+bool Database::getMessage(int mId, Message &message) {
     MYSQL mysql_sock ;
     mql_connect(mysql_sock);
     char query_sql[2048];
     bool flag = false;
 
-    sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d", KEY_MID, msgId);
+    sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d", KEY_MID, mId);
     printf("%s\n",query_sql);
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("query failed");
@@ -166,7 +166,7 @@ bool Database::getMessage(int msgId, Message &message) {
         else{
             MYSQL_ROW row;
             if((row = mysql_fetch_row(mysql_results))) {
-                message.setMId(msgId);
+                message.setMId(mId);
                 message.setMContent(row[1]);
                 message.setFId(atoi(row[2]));
                 message.setFromId(atoi(row[3]));
@@ -185,12 +185,12 @@ bool Database::getMessage(int msgId, Message &message) {
     return flag;
 }
 
-void Database::getMessage(int receiverId, int msgId, std::vector<Message> &messages) {
+void Database::getMessages(int uToId, int lastCalledMessage, std::vector<Message> &messages) {
     MYSQL mysql_sock ;
     mql_connect(mysql_sock);
     char query_sql[2048];
 
-    sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d AND %s > %d", KEY_UTOID, receiverId, KEY_MID, msgId);
+    sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d AND %s > %d", KEY_UTOID, uToId, KEY_MID, lastCalledMessage);
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("query failed");
     }else{
