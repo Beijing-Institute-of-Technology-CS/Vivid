@@ -13,16 +13,10 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-//#include <mysql.h>
 
-//#include "TestUtils/JsonTesting.h"
-//#include "Utils/ThreadPool.h"
 
-#include "Beans/User.h"
-#include "Beans/Message.h"
 #include "Database/Database.h"
-#include "Network/NetworkUtils.h"
-#include "../Constants.h"
+#include "NetworkUtils/NetworkUtils.h"
 
 int main() {
 //    Database::mql_connect();
