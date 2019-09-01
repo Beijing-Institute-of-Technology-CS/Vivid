@@ -40,11 +40,19 @@ int main() {
 //    for(auto message :messages){
 //        std::cout << message.getMId() << " " << message.getMContent() << " " << message.getFId() << " " << message.getFromId() << " " << message.getToId() << " " << message.getMTime() << std::endl;
 //    }
+//    User user;
+//    Database::getUser(3, user);
+//    std::cout << user.getUId() << " " << user.getUName() << " " << user.getUPassword() << " " << user.getFIconFile() << std::endl;
+//    std::vector<User> users;
+//    Database::getUsers(3, users);
+//    for(auto user: users){
+//        std::cout << user.getUId() << " " << user.getUName() << " " << user.getUPassword() << " " << user.getFIconFile() << std::endl;
+//    }
 
 //    JsonTesting::json_parse_request_testing();
 //    JsonTesting::json_make_response_testing();
 
-    NetworkUtils::start_server();
+//    NetworkUtils::start_server();
 
     return 0;
 }
