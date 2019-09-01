@@ -11,7 +11,11 @@ link_directories(${GTK3_LIBRARY_DIRS})
 
 add_definitions(${GTK3_CFLAGS_OTHER})
 
-add_executable(client main.cpp  View/TestView/TestView.cpp View/TestView/TestView.h View/LoginView/LoginView.cpp
+
+link_libraries(pthread)
+link_libraries(dl)
+
+add_executable(client main.cpp View/TestView/TestView.cpp View/TestView/TestView.h View/LoginView/LoginView.cpp
         View/LoginView/LoginView.h Controller/LoginController/LoginController.cpp
         Controller/LoginController/LoginController.h Controller/MainController.cpp Controller/MainController.h
         ../Constants.h JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp Utils/cJSON.c Utils/cJSON.h

@@ -13,16 +13,10 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-//#include <mysql.h>
 
-//#include "TestUtils/JsonTesting.h"
-//#include "Utils/ThreadPool.h"
 
-#include "Beans/User.h"
-#include "Beans/Message.h"
 #include "Database/Database.h"
-#include "Network/NetworkUtils.h"
-#include "../Constants.h"
+#include "NetworkUtils/NetworkUtils.h"
 
 int main() {
 //    Database::mql_connect();
@@ -52,7 +46,7 @@ int main() {
 //    JsonTesting::json_parse_request_testing();
 //    JsonTesting::json_make_response_testing();
 
-//    NetworkUtils::start_server();
+    NetworkUtils::start_server();
 
     return 0;
 }

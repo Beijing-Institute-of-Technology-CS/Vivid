@@ -52,7 +52,7 @@ public:
 
     static bool parse_response_register_json(char * s_json, int *uId, char *&publicKey);
 
-    static bool parse_response_login_json(char * s_json, int *uId, char *&publicKey);
+    static bool parse_response_login_json(char * s_json, char *&username, char *&publicKey);
 
     static bool parse_response_getInfo_json(char * s_json, int *fIcon, int *contactsNumber, std::vector<User> *contactsArray, int *groupsNumber, std::vector<Group> *groupsArray);
 
