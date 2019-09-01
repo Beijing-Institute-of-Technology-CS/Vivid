@@ -10,7 +10,7 @@ Message::Message(int mId, char *mContent, int fId, char *mTime) : mId(mId), mCon
                                                                   mTime(mTime) {}
 
 int Message::getMId() const {
-
+    return mId;
 }
 
 void Message::setMId(int mId) {
