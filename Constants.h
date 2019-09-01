@@ -48,9 +48,8 @@
 #define KEY_LAST_CALLED_MESSAGE "lastCalledMessage"
 
 #define KEY_UFROMID "uFromId"
+#define KEY_UFROMUSERNAME "uFromUsername"
 #define KEY_UTOID "uToId"
-#define KEY_UFROMID "uFromId"
-#define KEY_CONTENT "content"
 
 /**
  * response
@@ -74,6 +73,22 @@
 #define KEY_MESSAGES "messages"
 #define KEY_MESSAGES_NUMBER "messagesNumber"
 #define KEY_MESSAGES_ARRAY "messagesArray"
+
+#define KEY_MTYPE "mType"
+#define KEY_GID "gId"
+#define KEY_GTOID "gToId"
+#define KEY_GFROMID "gFromId"
+
+#define KEY_GROUPS "groups"
+#define KEY_GROUPSNUMBER "groupsNumber"
+#define KEY_GROUPSARRAY "groupsArray"
+
+#define TYPE_USERMESSAGE "userMessage"
+#define TYPE_GROUPMESSAGE "groupMessage"
+
+#define TYPE_ADDTOGROUP "addToGroup"
+
+
 
 
 #endif //SERVER_CONSTANTS_H
