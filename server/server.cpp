@@ -52,7 +52,7 @@ int main() {
 //    JsonTesting::json_parse_request_testing();
 //    JsonTesting::json_make_response_testing();
 
-//    NetworkUtils::start_server();
+    NetworkUtils::start_server();
 
     return 0;
 }

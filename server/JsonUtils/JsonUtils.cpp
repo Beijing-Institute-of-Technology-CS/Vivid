@@ -111,7 +111,7 @@ bool JsonUtils::parse_request_sendMessages_json(char *s_json, int *uToId, char *
 
     (*uToId) = cJSON_GetObjectItem(json_requestContent, KEY_UTOID)->valueint;
 
-    char * char_temp = cJSON_GetObjectItem(json_requestContent, KEY_CONTENT)->valuestring;
+    char * char_temp = cJSON_GetObjectItem(json_requestContent, KEY_MCONTENT)->valuestring;
     content = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
     strcpy(content,char_temp);
 
