@@ -154,8 +154,9 @@ bool Database::getMessage(int mId, Message &message) {
     char query_sql[2048];
     bool flag = false;
 
+
     sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d", KEY_MID, mId);
-    printf("%s\n",query_sql);
+//    printf("%s\n",query_sql);
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("query failed");
     }else{
@@ -167,11 +168,13 @@ bool Database::getMessage(int mId, Message &message) {
             MYSQL_ROW row;
             if((row = mysql_fetch_row(mysql_results))) {
                 message.setMId(mId);
-                message.setMContent(row[1]);
+                message.mContent = (char *)malloc((strlen(row[1])+1)*sizeof(char));
+                strcpy(message.mContent, row[1]);
                 message.setFId(atoi(row[2]));
                 message.setFromId(atoi(row[3]));
                 message.setToId(atoi(row[4]));
-                message.setMTime(row[5]);
+                message.mTime = (char *)malloc((strlen(row[5])+1)*sizeof(char));
+                strcpy(message.mTime, row[5]);
                 flag = true;
             }
             else{
@@ -203,12 +206,70 @@ void Database::getMessages(int uToId, int lastCalledMessage, std::vector<Message
             while((row = mysql_fetch_row(mysql_results)) != NULL) {
                 Message temp_message;
                 temp_message.setMId(atoi(row[0]));
-                temp_message.setMContent(row[1]);
+                temp_message.mContent = (char *)malloc((strlen(row[1])+1)*sizeof(char));
+                strcpy(temp_message.mContent, row[1]);
                 temp_message.setFId(atoi(row[2]));
                 temp_message.setFromId(atoi(row[3]));
                 temp_message.setToId(atoi(row[4]));
-                temp_message.setMTime(row[5]);
+                temp_message.mContent = (char *)malloc((strlen(row[5])+1)*sizeof(char));
+                strcpy(temp_message.mContent, row[5]);
                 messages.push_back(temp_message);
+            }
+        }
+        mysql_free_result(mysql_results);
+    }
+
+    mysql_close(&mysql_sock);
+}
+
+//todo: error: atoi(NULL)
+void Database::getUser(int uId, User &user) {
+    MYSQL mysql_sock ;
+    mql_connect(mysql_sock);
+    char query_sql[2048];
+
+    sprintf(query_sql, "SELECT * FROM User WHERE %s = %d", KEY_UID, uId);
+    std::cout << query_sql << std::endl;
+    if(mysql_query(&mysql_sock, query_sql)!=0){
+        perror("query failed");
+    }else{
+        MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
+        MYSQL_ROW row = mysql_fetch_row(mysql_results);
+        user.setUId(atoi(row[0]));
+        user.uName = (char *)malloc(strlen(row[1]+1)*sizeof(char));
+        strcpy(user.uName, row[1]);
+        user.uPassword = (char *)malloc((strlen(row[2]+1)*sizeof(char)));
+        strcpy(user.uPassword, row[2]);
+//        user.setFIconFile(atoi(row[3]));
+    }
+
+    mysql_close(&mysql_sock);
+}
+
+void Database::getUsers(int uId, std::vector<User> &users) {
+    MYSQL mysql_sock ;
+    mql_connect(mysql_sock);
+    char query_sql[2048];
+
+    sprintf(query_sql, "SELECT * FROM User WHERE %s = (SELECT %s FROM Befriend WHERE %s = %d)", KEY_UID, KEY_UID2, KEY_UID1, uId);
+    if(mysql_query(&mysql_sock, query_sql)!=0){
+        perror("query failed");
+    }else{
+        MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
+        if(mysql_results == NULL){
+            ;
+        }
+        else{
+            MYSQL_ROW row;
+            while((row = mysql_fetch_row(mysql_results)) != NULL) {
+                User temp_user;
+                temp_user.setUId(atoi(row[0]));
+                temp_user.uName = (char *)malloc(strlen(row[1]+1)*sizeof(char));
+                strcpy(temp_user.uName, row[1]);
+                temp_user.uPassword = (char *)malloc((strlen(row[2]+1)*sizeof(char)));
+                strcpy(temp_user.uPassword, row[2]);
+//                temp_user.setFIconFile(atoi(row[3]));
+                users.push_back(temp_user);
             }
         }
         mysql_free_result(mysql_results);

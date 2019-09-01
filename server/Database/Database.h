@@ -66,9 +66,18 @@ public:
      */
     static void getMessages(int uToId, int lastCalledMessage, std::vector<Message> & messages);
 
-
+    /**
+     *
+     * @param uId
+     * @param user
+     */
     static void getUser(int uId,User &user);
 
+    /**
+     *
+     * @param uId
+     * @param users
+     */
     static void getUsers(int uId,std::vector<User> &users);
 };
 

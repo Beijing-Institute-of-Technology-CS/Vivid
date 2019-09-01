@@ -33,6 +33,8 @@
 #define TYPE_RECEIVE_MESSAGES "receiveMessages"
 
 #define KEY_UID "uId"
+#define KEY_UID1 "uId1"
+#define KEY_UID2 "uId2"
 #define KEY_UNAME "uName"
 #define KEY_UPWD "uPwd"
 #define KEY_UPASSWORD  "uPassword"
