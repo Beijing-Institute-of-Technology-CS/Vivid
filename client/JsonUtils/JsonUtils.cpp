@@ -2,6 +2,7 @@
 // Created by YichengChen on 8/29/19.
 //
 
+#include <stdio.h>
 #include "JsonUtils.h"
 #include "../../Constants.h"
 /**
