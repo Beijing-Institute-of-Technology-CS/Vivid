@@ -5,11 +5,15 @@
 #ifndef SERVER_JSONUTILS_H
 #define SERVER_JSONUTILS_H
 
-
+#include <iostream>
+#include <cstring>
+#include <cstdlib>
 #include <vector>
+#include "../../Constants.h"
 #include "../Utils/cJSON.h"
 #include "../Beans/User.h"
 #include "../Beans/Message.h"
+#include "../Beans/Group.h"
 
 
 
@@ -32,8 +36,9 @@ public:
      */
     static char * make_request_getMessages_json(int lastCalledMessage, int uId, char *uPwd);
 
-    static char * make_request_sendMessages_json(int uToId, char * content, int uId, char *uPwd);
+    static char * make_request_sendMessages_json(int uToId, int gToId, char *mType, char * mContent, int uId, char *uPwd);
 
+    static char * make_request_adduIdToGroup_json(int uId, int gId, char *uPwd);
 
     /**
      * parsing
@@ -49,14 +54,15 @@ public:
 
     static bool parse_response_login_json(char * s_json, int *uId, char *&publicKey);
 
-    static bool parse_response_getInfo_json(char * s_json, int *fIcon, int *contactsNumber, std::vector<User> *contactsArray);
+    static bool parse_response_getInfo_json(char * s_json, int *fIcon, int *contactsNumber, std::vector<User> *contactsArray, int *groupsNumber, std::vector<Group> *groupsArray);
 
     static bool parse_response_getMessages_json(char * s_json, int *messagesNumber, std::vector<Message> *messagesArray);
 
-    static bool parse_response_sendMessages_json(char * s_json, int *mId);
+    static bool parse_response_sendMessages_json(char * s_json, Message &message);
 
-    static bool parse_response_receiveMessages_json(char *s_json, char *&mId, char *&mContent, int *uFromId);
+    static bool parse_response_receiveMessages_json(char *s_json, Message &message);
 
+    static bool parse_response_adduIdToGroup(char *s_json);
 };
 
 
