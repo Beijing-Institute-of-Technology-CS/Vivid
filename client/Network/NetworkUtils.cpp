@@ -13,6 +13,7 @@
 #include "NetworkUtils.h"
 #include "../../Constants.h"
 #include "../JsonUtils/JsonUtils.h"
+#include "../Controller/NetworkController/NetworkController.h"
 
 
 int NetworkUtils::master_socket;
@@ -48,41 +49,41 @@ void NetworkUtils::listen_from_server() {
         if(strcmp(responseType, TYPE_REGISTER) == 0){
             sending_messages = false;
             if(strcmp(result,TRUE_CONTENT)==0){
-                //todo register succeed
+                NetworkController::netRegisterSuccess(buffer);
             }else if(strcmp(result,FALSE_CONTENT)==0){
-
+                NetworkController::netRegisterFailed();
             }
         }else if(strcmp(responseType, TYPE_LOGIN) == 0){
             sending_messages = false;
             if(strcmp(result,TRUE_CONTENT)==0){
-                //todo register succeed
+                NetworkController::netLoginSuccess(buffer);
             }else if(strcmp(result,FALSE_CONTENT)==0){
-
+                NetworkController::netLoginFailed();
             }
         }else if(strcmp(responseType, TYPE_GET_INFO)==0){
             sending_messages = false;
             if(strcmp(result,TRUE_CONTENT)==0){
-                //todo register succeed
+                NetworkController::netGetInfoSuccess(buffer);
             }else if(strcmp(result,FALSE_CONTENT)==0){
-
+                NetworkController::netGetInfoFailed();
             }
         }else if(strcmp(responseType, TYPE_GET_MESSAGES)==0){
             sending_messages = false;
             if(strcmp(result,TRUE_CONTENT)==0){
-                //todo register succeed
+                NetworkController::netGetMessageSuccess(buffer);
             }else if(strcmp(result,FALSE_CONTENT)==0){
-
+                NetworkController::netGetMessageFailed();
             }
         }else if(strcmp(responseType,TYPE_SEND_MESSAGES)==0){
             sending_messages = false;
             if(strcmp(result,TRUE_CONTENT)==0){
-                //todo register succeed
+                NetworkController::netSendMessageSuccess(buffer);
             }else if(strcmp(result,FALSE_CONTENT)==0){
-
+                NetworkController::netSendMessageFailed();
             }
         }else if(strcmp(responseType,TYPE_RECEIVE_MESSAGES)==0){
             if(strcmp(result,TRUE_CONTENT)==0){
-                //todo register succeed
+                NetworkController::netReceiveMessage(buffer);
             }else if(strcmp(result,FALSE_CONTENT)==0){
 
             }
@@ -139,16 +140,16 @@ void NetworkUtils::start_client(char *ip) {
 }
 
 void NetworkUtils::send_json_to_server(char *s_json) {
-    while(!client_ready||sending_messages);
-
-    sending_messages = true;
-
     std::thread t_sending_json(NetworkUtils::sending_json,s_json);
     t_sending_json.detach();
 
 }
 
 void NetworkUtils::sending_json(char *s_json) {
-    send(master_socket,s_json,strlen(s_json),0);
+    while(!client_ready||sending_messages);
+    sending_messages = true;
+    if (send(master_socket,s_json,strlen(s_json),0) <= 0) {
+        NetworkController::connectFailed();
+    }
 }
 

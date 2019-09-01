@@ -21,8 +21,8 @@ add_executable(client main.cpp View/TestView/TestView.cpp View/TestView/TestView
         ../Constants.h JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp Utils/cJSON.c Utils/cJSON.h
         Beans/Message.cpp Beans/Message.h Beans/User.cpp Beans/User.h View/TipView/TipView.cpp View/TipView/TipView.h View/RegisterView/RegisterView.cpp View/RegisterView/RegisterView.h Controller/ApplicationExitCallback.h
         View/MainView/MainView.cpp View/MainView/MainView.h View/MainView/List/MessageList/MessageList.cpp View/MainView/List/MessageList/MessageList.h View/MainView/List/FriendList/FriendList.cpp View/MainView/List/FriendList/FriendList.h
-        Database/database.cpp Database/database.h Database/sqlite3ext.h Database/sqlite3.h Database/sqlite3.c Beans/Group.cpp Beans/Group.h TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h)
+        Database/database.cpp Database/database.h Database/sqlite3ext.h Database/sqlite3.h Database/sqlite3.c Beans/Group.cpp Beans/Group.h TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h
+        Network/NetworkUtils.cpp Network/NetworkUtils.h Controller/NetworkController/NetworkController.cpp Controller/NetworkController/NetworkController.h)
 
-#add_executable(client_test client.cpp Beans/User.cpp Beans/User.h Beans/Message.h Beans/Message.cpp Beans/Group.h Beans/Group.cpp JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h Utils/cJSON.c Utils/cJSON.h)
 
 target_link_libraries(client ${GTK3_LIBRARIES})

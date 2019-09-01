@@ -9,8 +9,9 @@
 #include "LoginController/LoginController.h"
 #include "ApplicationExitCallback.h"
 #include "../View/MainView/MainView.h"
+#include "NetworkController/NetworkController.h"
 
-class MainController : OnLoginSuccessCallback, ApplicationExitCallback {
+class MainController : OnLoginSuccessCallback, ApplicationExitCallback, NetworkCallback {
 public:
     /**
      * 初始构造函数
@@ -33,6 +34,16 @@ public:
 
     //程序退出回调
     void exitApplication() override;
+
+    //Network Callbacks
+    void netRegisterSuccess(int id) override;
+    void netRegisterFailed() override;
+    void netLoginSuccess(char * username) override;
+    void netLoginFailed() override;
+    void netGetInfoFailed() override;
+    void netGetMessageSuccess(std::vector<Message> messages) override;
+    void netGetMessageFailed() override;
+    void connectFailed() override;
 
 private:
     //Controller
