@@ -245,7 +245,7 @@ char* JsonUtils::make_request_sendMessages_json(int uToId, char *content, int uI
         return NULL;
     }
     cJSON_AddNumberToObject(pSubJson, KEY_UTOID, uToId);
-    cJSON_AddStringToObject(pSubJson, KEY_CONTENT, content);
+    cJSON_AddStringToObject(pSubJson, KEY_MCONTENT, content);
     cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
@@ -347,7 +347,7 @@ bool JsonUtils::parse_response_register_json(char *s_json, int *uId, char *&publ
  * @param s_json
  * @return
  */
-bool JsonUtils::parse_response_login_json(char *s_json, int *uId, char *&publicKey) {
+bool JsonUtils::parse_response_login_json(char *s_json, char *&username, char *&publicKey) {
     cJSON *pJsonRoot = NULL;
     cJSON * pSubJson = NULL;
     if(NULL == s_json){
@@ -360,7 +360,11 @@ bool JsonUtils::parse_response_login_json(char *s_json, int *uId, char *&publicK
     }
 
     pSubJson = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
-    *uId = cJSON_GetObjectItem(pSubJson, KEY_UID)->valueint;
+//    *uId = cJSON_GetObjectItem(pSubJson, KEY_UID)->valueint;
+    char *char_temp = cJSON_GetObjectItem(pSubJson,KEY_USERNAME)->valuestring;
+    username = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
+    strcpy(username,char_temp);
+
     char *temp_publicKey = cJSON_GetObjectItem(pSubJson, KEY_PUBLIC_KEY)->valuestring;
     publicKey = (char *)malloc((strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
