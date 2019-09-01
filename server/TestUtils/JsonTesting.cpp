@@ -95,14 +95,14 @@ void JsonTesting::json_make_response_testing() {
     v_users.emplace_back(User(1, "cyc", "password", 3));
     v_users.emplace_back(User(2, "zhc", "passwordddd", 5));
 
-    std::cout << JsonUtils::make_response_getInfo_json(FALSE_CONTENT, 9, v_users) << std::endl;
+//    std::cout << JsonUtils::make_response_getInfo_json(FALSE_CONTENT, 9, v_users) << std::endl;
+//
+//    std::vector<Message> v_messages;
 
-    std::vector<Message> v_messages;
-
-    v_messages.emplace_back(Message(1,"connnnt",3,"1.22312"));
-    v_messages.emplace_back(Message(2,"connererer",4,"9.092301"));
-
-    std:: cout << JsonUtils::make_response_getMessages_json(FALSE_CONTENT,v_messages) << std::endl;
-
-    std::cout << JsonUtils::make_response_sendMessages_json(FALSE_CONTENT,88) <<std::endl;
+//    v_messages.emplace_back(Message(1,"connnnt",3,"1.22312"));
+//    v_messages.emplace_back(Message(2,"connererer",4,"9.092301"));
+//
+//    std:: cout << JsonUtils::make_response_getMessages_json(FALSE_CONTENT,v_messages) << std::endl;
+//
+//    std::cout << JsonUtils::make_response_sendMessages_json(FALSE_CONTENT,88) <<std::endl;
 }
