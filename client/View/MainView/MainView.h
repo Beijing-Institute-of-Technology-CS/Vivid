@@ -31,6 +31,8 @@ private:
     friend_list  flist;
     static void ChangeToMessage(GtkWidget *widget,  gpointer data);
     static void ChangeToFriend(GtkWidget *widget,  gpointer data);
+    static void tree_selection_message_changed(GtkTreeSelection *selection,  gpointer data);
+    static void tree_selection_friend_changed(GtkTreeSelection *selection,gpointer data);
     static void buttonClickedCallback(GtkWidget * button, gpointer data) {
         printf("Hey!\n");
     }

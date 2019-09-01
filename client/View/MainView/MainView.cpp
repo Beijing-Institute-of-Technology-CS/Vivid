@@ -44,13 +44,17 @@ void MainView::ChangeToFriend(GtkWidget *widget, gpointer data) {
 }
 
 void MainView::create() {
+
     GtkWidget *scolled;
     GtkWidget *info_box;
     GtkWidget *button_box;
+    GtkWidget *list_box;
     GtkWidget *image_avatar;
     GtkWidget *label_name;
     GtkWidget *message_button;
     GtkWidget *friend_button;
+    GtkTreeSelection *message_selection;
+    GtkTreeSelection *friend_selection;
 
     /**
      * 创建构件
@@ -62,10 +66,11 @@ void MainView::create() {
     image_avatar = gtk_image_new_from_file("avatar.png");
     label_name=gtk_label_new("dd");
     button_box = gtk_hbox_new(FALSE,0);
+    list_box = gtk_hbox_new(FALSE,0);
     message_button = gtk_button_new_with_label("message");
     friend_button=gtk_button_new_with_label("friend");
-
-
+    message_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(mlist.getView()));
+    friend_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(flist.getView()));
     /**
      * 信号连接
      */
@@ -75,7 +80,10 @@ void MainView::create() {
                      G_CALLBACK(ChangeToMessage), this);
     g_signal_connect(G_OBJECT(friend_button),"clicked",
                      G_CALLBACK(ChangeToFriend), this);
-
+    g_signal_connect(G_OBJECT(message_selection),"changed",
+                    G_CALLBACK(tree_selection_message_changed),NULL);
+    g_signal_connect(G_OBJECT(friend_selection),"changed",
+                    G_CALLBACK(tree_selection_friend_changed),NULL);
     /**
      * 设定属性
      */
@@ -91,7 +99,7 @@ void MainView::create() {
      * 添加构件
      */
 
-    gtk_container_add(GTK_CONTAINER(main_window),scolled);
+    //gtk_container_add(GTK_CONTAINER(main_window),scolled);
 
     gtk_box_pack_start(GTK_BOX(info_box),image_avatar,FALSE,FALSE,50);
     gtk_box_pack_start(GTK_BOX(info_box),label_name,FALSE,FALSE,5);
@@ -105,17 +113,85 @@ void MainView::create() {
     message_add("大哥","tql");
     message_add("大哥","这个掌是为您鼓的");
     message_add("cyc","nb");
+    message_add("dd","vegetable");
+    message_add("大哥","tql");
+    message_add("大哥","这个掌是为您鼓的");
+    message_add("cyc","nb");
+    message_add("dd","vegetable");
+    message_add("大哥","tql");
+    message_add("大哥","这个掌是为您鼓的");
+    message_add("cyc","nb");
+    message_add("dd","vegetable");
+    message_add("大哥","tql");
+    message_add("大哥","这个掌是为您鼓的");
+    message_add("cyc","nb");
+    message_add("dd","vegetable");
+    message_add("大哥","tql");
+    message_add("大哥","这个掌是为您鼓的");
+    message_add("cyc","nb");
 
     friend_add("1", "大哥");
     friend_add("2", "还是大哥");
+    friend_add("3", "不愧是大哥");
+    friend_add("4", "大哥就是大哥");
+    friend_add("1", "大哥");
+    friend_add("2", "还是大哥");
+    friend_add("3", "不愧是大哥");
+    friend_add("4", "大哥就是大哥");friend_add("1", "大哥");
+    friend_add("2", "还是大哥");
+    friend_add("3", "不愧是大哥");
+    friend_add("4", "大哥就是大哥");friend_add("1", "大哥");
+    friend_add("2", "还是大哥");
+    friend_add("3", "不愧是大哥");
+    friend_add("4", "大哥就是大哥");friend_add("1", "大哥");
+    friend_add("2", "还是大哥");
+    friend_add("3", "不愧是大哥");
+    friend_add("4", "大哥就是大哥");
 
     gtk_box_pack_start(GTK_BOX(button_box),message_button,FALSE,FALSE,50);
     gtk_box_pack_start(GTK_BOX(button_box),friend_button,FALSE,FALSE,5);
 
     gtk_box_pack_start(GTK_BOX(vbox),button_box,FALSE,FALSE,0);
-    gtk_box_pack_start(GTK_BOX(vbox),mlist.getView(),FALSE,FALSE,5);
-    gtk_box_pack_start(GTK_BOX(vbox),flist.getView(),FALSE,FALSE,5);
-    gtk_container_add(GTK_CONTAINER(scolled),vbox);
+    gtk_box_pack_start(GTK_BOX(vbox),scolled,TRUE,TRUE,0);
+    gtk_container_add(GTK_CONTAINER(scolled),list_box);
+    gtk_box_pack_start(GTK_BOX(list_box),mlist.getView(),TRUE,TRUE,5);
+    gtk_box_pack_start(GTK_BOX(list_box),flist.getView(),TRUE,TRUE,5);
+
+    gtk_container_add(GTK_CONTAINER(main_window),vbox);
+}
+
+void MainView::tree_selection_message_changed(GtkTreeSelection *selection, gpointer data) {
+    GtkTreeIter iter;
+    GtkTreeModel *model;
+
+    gchar *name;
+    gchar *message;
+
+    if(gtk_tree_selection_get_selected(selection,&model,&iter))
+    {
+        gtk_tree_model_get(model,&iter,COLUMN_NAME,&name,COLUMN_MESSAGE,&message,-1);
+        g_print("name = %s\n",name);
+        g_print("message = %s\n",message);
+        g_free(name);
+        g_free(message);
+    }
+}
+
+void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpointer data) {
+    GtkTreeIter iter;
+    GtkTreeModel *model;
+
+    gchar *id;
+    gchar *name;
+
+    if(gtk_tree_selection_get_selected(selection,&model,&iter))
+    {
+        gtk_tree_model_get(model,&iter,FRIEND_ID,&id,FRIEND_NAME,&name,-1);
+        g_print("id = %s\n",id);
+        g_print("name = %s\n",name);
+        g_free(name);
+        g_free(id);
+    }
 }
 
 
