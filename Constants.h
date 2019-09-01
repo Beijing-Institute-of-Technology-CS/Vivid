@@ -11,7 +11,11 @@
 #define BUFFER_SIZE 1024
 #define USERS_SIZE 3
 
+
+
 #define LOCALHOST "127.0.0.1"
+#define BITCS "114.55.146.102"
+
 #define MYSQL_USERNAME "root"
 //#define MYSQL_PASSWORD "lp13688421885"
 #define MYSQL_PASSWORD "bluebirds"
