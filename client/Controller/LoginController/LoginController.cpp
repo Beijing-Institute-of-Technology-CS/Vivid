@@ -5,8 +5,7 @@
 #include "LoginController.h"
 #include <string>
 
-LoginController::LoginController() :
-    loginFailedTip("用户名或密码错误") {
+LoginController::LoginController() {
     loginView.setLoginClickedCallback(this);
     loginView.setCloseCallback(this);
     registerView.setSubmitCallback(this);
@@ -44,7 +43,7 @@ void LoginController::onLoginSuccess() {
 void LoginController::onLoginFailed() {
     isLoginSuccess = false;
     printf("Login Failed!\n");
-    loginFailedTip.show();
+    TipView::showSimpleTipView("用户名或密码错误");
 }
 
 void LoginController::onButtonLoginClicked() {

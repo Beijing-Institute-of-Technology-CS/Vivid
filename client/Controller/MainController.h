@@ -8,7 +8,7 @@
 
 #include "LoginController/LoginController.h"
 #include "ApplicationExitCallback.h"
-#include "../View/TestView/TestView.h"
+#include "../View/MainView/MainView.h"
 
 class MainController : OnLoginSuccessCallback, ApplicationExitCallback {
 public:
@@ -39,10 +39,13 @@ private:
     LoginController loginController;
 
     //View
-    TestView testView;
+    MainView mainView;
 
     //退出函数指针
     void (* exit_application)() = nullptr;
+
+    //设置主界面
+    void startMainView();
 };
 
 #endif //CLIENT_MAINCONTROLLER_H
