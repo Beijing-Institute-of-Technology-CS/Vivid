@@ -3,13 +3,12 @@
 #include "sqlite3.h"
 #include <string.h>
 #include "database.h"
-#define SQL_OK 0
 
-sqlite3 *db;
+static sqlite3 *db;
 
 void init_db()
 {
-	int rc=sqlite3_open("data/database.db", &db);
+	int rc=sqlite3_open("database.db", &db);
 	if (rc != SQL_OK)
 	{
 		printf("数据库连接失败，请重试！\n");
@@ -158,7 +157,7 @@ int show_user(int id, char *** resValue, int *nrow, int * ncol)
 	}
 	printf("%d\n",*ncol);
 	printf("%d\n",*nrow);
-	
+
 //	for (int i=4;i<4+(*ncol)*(*nrow);i++)//打印查询结果
 //		puts(resValue[i]);
 	printf("用户查询成功！\n");
@@ -237,29 +236,29 @@ int show_message(int id, char ***resValue, int *nrow, int *ncol)
 }
 
 
-int main ()
-{
-	char ** resValue;
-	int nrow;
-       	int ncol;	
-	init_db();
-	insert_userinfo(2,"123","123",1);
-	insert_friend(1,2,"123",1);
-	delete_friend(1,2);
-	update_user(1,"234","321",1);
-	show_user(2,&resValue,&nrow,&ncol);
-	for (int i=4;i<4+nrow*ncol;i++)
-	{
-		puts(resValue[i]);
-	}
-	show_friend(1,&resValue,&nrow,&ncol);
-	for (int i=4;i<4+nrow*ncol;i++)
-		puts(resValue[i]);
-	insert_message(1,1,2,"12431234","10:00:00");
-	insert_message(2,2,1,"asdfasdf","10:00:01");
-	show_message(1,&resValue,&nrow,&ncol);
-	for (int i=5;i<5+nrow*ncol;i++)
-		puts(resValue[i]);	
-	return 0;
-}
+//int main ()
+//{
+//	char ** resValue;
+//	int nrow;
+//       	int ncol;
+//	init_db();
+//	insert_userinfo(2,"123","123",1);
+//	insert_friend(1,2,"123",1);
+//	delete_friend(1,2);
+//	update_user(1,"234","321",1);
+//	show_user(2,&resValue,&nrow,&ncol);
+//	for (int i=4;i<4+nrow*ncol;i++)
+//	{
+//		puts(resValue[i]);
+//	}
+//	show_friend(1,&resValue,&nrow,&ncol);
+//	for (int i=4;i<4+nrow*ncol;i++)
+//		puts(resValue[i]);
+//	insert_message(1,1,2,"12431234","10:00:00");
+//	insert_message(2,2,1,"asdfasdf","10:00:01");
+//	show_message(1,&resValue,&nrow,&ncol);
+//	for (int i=5;i<5+nrow*ncol;i++)
+//		puts(resValue[i]);
+//	return 0;
+//}
 

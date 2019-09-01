@@ -3,8 +3,6 @@
 #include "sqlite3.h"
 #define SQL_OK 0
 
-static sqlite3 * db;
-
 /*
   所有返回值为int类型的返回值表示操作成功与否，0表示失败，1表示成功
  */
