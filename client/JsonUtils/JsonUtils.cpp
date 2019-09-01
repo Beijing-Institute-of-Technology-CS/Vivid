@@ -2,6 +2,9 @@
 // Created by YichengChen on 8/29/19.
 //
 
+#include <stdio.h>
+#include <cstring>
+#include <cstdlib>
 #include "JsonUtils.h"
 #include "../../Constants.h"
 /**
@@ -279,7 +282,7 @@ bool JsonUtils::parse_response_type_json(char *s_json, char *&responseType) {
     }
 
     char *temp_responseType = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_TYPE)->valuestring;
-    responseType = (char *)malloc((strlen(temp_responseType)+1)*sizeof(char));
+    responseType = (char *)std::malloc((strlen(temp_responseType)+1)*sizeof(char));
     strcpy(responseType, temp_responseType);
     cJSON_Delete(pJsonRoot);
     return true;

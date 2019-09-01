@@ -8,8 +8,8 @@
 
 #include <vector>
 #include "../Utils/cJSON.h"
-#include "../beans/User.h"
-#include "../beans/Message.h"
+#include "../Beans/User.h"
+#include "../Beans/Message.h"
 
 
 
