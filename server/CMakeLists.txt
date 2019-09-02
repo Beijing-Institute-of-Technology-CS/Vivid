@@ -11,8 +11,6 @@ execute_process(COMMAND mysql_config --cflags
 execute_process(COMMAND mysql_config --libs
         OUTPUT_VARIABLE MYSQL_LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-target_compile_options(server PUBLIC ${MYSQL_CFLAGS})
-
 add_executable(server server.cpp Beans/User.cpp Beans/User.h Beans/Message.cpp Beans/Message.h NetworkUtils/NetworkUtils.cpp NetworkUtils/NetworkUtils.h
         JsonUtils/JsonUtils.cpp JsonUtils/JsonUtils.h DatabaseUtils/DatabaseUtils.cpp DatabaseUtils/DatabaseUtils.h
         TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h Utils/cJSON.c Utils/cJSON.h Utils/ThreadPool.h ../Constants.h
@@ -24,4 +22,5 @@ add_executable(server server.cpp Beans/User.cpp Beans/User.h Beans/Message.cpp B
 #link_directories(/usr/local/mysql/lib)
 #target_link_libraries(server /usr/local/mysql/lib)
 
+target_compile_options(server PUBLIC ${MYSQL_CFLAGS})
 target_link_libraries(server ${MYSQL_LIB})
