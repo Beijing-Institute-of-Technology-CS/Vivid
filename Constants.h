@@ -18,7 +18,8 @@
 
 #define MYSQL_USERNAME "root"
 //#define MYSQL_PASSWORD "lp13688421885"
-#define MYSQL_PASSWORD "bluebirds"
+//#define MYSQL_PASSWORD "bluebirds"
+#define MYSQL_PASSWORD "@BITCSpwd123"
 #define MYSQL_DATABASE_NAME "Vivid"
 #define MYSQL_PORT 3306
 
