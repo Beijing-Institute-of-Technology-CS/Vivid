@@ -7,7 +7,7 @@
 
 
 #include <vector>
-//#include <mysql.h>
+#include <mysql.h>
 #include <iostream>
 
 #include "../Beans/Message.h"
