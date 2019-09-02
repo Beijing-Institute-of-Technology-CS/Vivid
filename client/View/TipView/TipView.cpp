@@ -24,7 +24,7 @@ void TipView::show() {
      */
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     g_signal_connect(G_OBJECT(window),"destroy", G_CALLBACK(onNegClickCallback), this);
-    gtk_window_set_title(GTK_WINDOW(window),"Tip");
+    gtk_window_set_title(GTK_WINDOW(window),"Vivid");
     gtk_window_set_position(GTK_WINDOW(window),GTK_WIN_POS_CENTER);
     gtk_container_set_border_width(GTK_CONTAINER(window),10);
 
@@ -97,7 +97,7 @@ void TipView::showSimpleTipView(const char *msg) {
      * 设定window属性
      */
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window),"Tip");
+    gtk_window_set_title(GTK_WINDOW(window),"Vivid");
     gtk_window_set_position(GTK_WINDOW(window),GTK_WIN_POS_CENTER);
     gtk_container_set_border_width(GTK_CONTAINER(window),10);
 

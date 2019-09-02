@@ -5,6 +5,10 @@
 #include "RegisterView.h"
 
 void RegisterView::show() {
+    if (isShow) {
+        return;
+    }
+
     GtkWidget *box;
     GtkWidget *button_box;
     GtkWidget *fixed;
@@ -72,16 +76,21 @@ void RegisterView::show() {
     /*按钮触发*/
     g_signal_connect(G_OBJECT(submit_button),"clicked", G_CALLBACK(onSubmitClickCallback),this);
     g_signal_connect(G_OBJECT(cancel_button),"clicked", G_CALLBACK(onCancelClickCallback),this);
+    g_signal_connect(G_OBJECT(regi_window),"destroy", G_CALLBACK(onDestroy), this);
 
     gtk_widget_show_all(regi_window);
+    isShow = true;
 }
 
-void RegisterView::setSubmitCallback(OnRegisterSubmitClickCallback *submitCallback) {
+void RegisterView::setCallback(RegisterViewCallback *submitCallback) {
     RegisterView::submitCallback = submitCallback;
 }
 
 void RegisterView::destroy() {
-    gtk_widget_destroy(regi_window);
+    if (isShow) {
+        gtk_widget_destroy(regi_window);
+    }
+    isShow = false;
 }
 
 void RegisterView::onSubmitClickCallback(GtkWidget *button, gpointer data) {
@@ -109,5 +118,6 @@ void RegisterView::onCancelClickCallback(GtkWidget *widget, gpointer data) {
     ((RegisterView *)data)->destroy();
 }
 
-RegisterView::RegisterView() {
+void RegisterView::onDestroy(GtkWidget *widget, gpointer data) {
+    ((RegisterView *)data)->isShow = false;
 }

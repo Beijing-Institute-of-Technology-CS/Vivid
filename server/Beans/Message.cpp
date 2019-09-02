@@ -8,6 +8,9 @@
 
 Message::Message() {}
 
+Message::Message(int mId, char *mContent, int uFromId, bool groupMessage, char *mTime) : mId(mId), mContent(mContent),
+                                                        uFromId(uFromId), groupMessage(groupMessage), mTime(mTime) { }
+
 int Message::getMId() const {
     return mId;
 }
@@ -82,4 +85,5 @@ void Message::setUFromUsername(char *uFromUsername) {
 char *Message::getUFromUsername() const {
     return uFromUsername;
 }
+
 
