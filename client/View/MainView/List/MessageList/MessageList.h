@@ -20,7 +20,7 @@ public:
     message_list();
     //void create();
     //void show();
-    void destroy();
+    //void destroy();
     GtkWidget *getView();
     void append(int mId, const gchar *message, const gchar *name);
     void setData(const std::vector<Message>& messages);
