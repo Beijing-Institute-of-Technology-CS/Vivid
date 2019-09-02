@@ -3,6 +3,7 @@ project(server)
 
 set(CMAKE_CXX_STANDARD 14)
 
+include_directories(${MYSQL_INCLUDE_DIR})
 add_executable(server server.cpp Beans/User.cpp Beans/User.h Beans/Message.cpp Beans/Message.h NetworkUtils/NetworkUtils.cpp NetworkUtils/NetworkUtils.h
         JsonUtils/JsonUtils.cpp JsonUtils/JsonUtils.h DatabaseUtils/DatabaseUtils.cpp DatabaseUtils/DatabaseUtils.h
         TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h Utils/cJSON.c Utils/cJSON.h Utils/ThreadPool.h ../Constants.h
@@ -12,3 +13,4 @@ add_executable(server server.cpp Beans/User.cpp Beans/User.h Beans/Message.cpp B
 #include_directories(/usr/local/mysql/include)
 #link_directories(/usr/local/mysql/lib)
 #target_link_libraries(server /usr/local/mysql/lib)
+target_link_libraries(server ${MYSQL_LIB})
