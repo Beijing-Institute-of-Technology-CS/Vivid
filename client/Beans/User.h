@@ -16,9 +16,9 @@ public:
 
     void setUId(int uId);
 
-    char *getUName() const;
+    const char *getUName() const;
 
-    char *getUPassword() const;
+    const char *getUPassword() const;
 
     int getFIconFile() const;
 
@@ -36,11 +36,11 @@ public:
 
     void setUPassword(char *uPassword);
 
+
 private:
     int uId;
 
     int fIconFile;
-
 
     /**
      * for server use only
@@ -53,6 +53,7 @@ private:
 
     char * uName;
     char * uPassword;
+
 };
 
 

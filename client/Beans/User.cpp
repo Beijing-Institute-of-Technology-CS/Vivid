@@ -17,11 +17,11 @@ void User::setUId(int uId) {
     User::uId = uId;
 }
 
-char *User::getUName() const {
+const char *User::getUName() const {
     return uName;
 }
 
-char *User::getUPassword() const {
+const char *User::getUPassword() const {
     return uPassword;
 }
 
@@ -67,4 +67,5 @@ void User::setUPassword(char *uPassword) {
     this->uPassword = (char *)malloc(sizeof(char)*strlen(uPassword)+1);
     strcpy(this->uPassword,uPassword);
 }
+
 

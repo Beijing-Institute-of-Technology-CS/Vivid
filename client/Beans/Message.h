@@ -17,7 +17,7 @@ public:
 
     void setMId(int mId);
 
-    char *getMContent() const;
+    const char *getContent() const;
 
     int getFId() const;
 
@@ -49,6 +49,9 @@ public:
 
     char *getUFromUsername() const;
 
+    void setContent(char *ms);
+
+    const char *setMTime(char *time);
 private:
     int mId;
     int fId;

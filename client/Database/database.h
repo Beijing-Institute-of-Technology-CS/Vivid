@@ -1,12 +1,20 @@
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
-#include "sqlite3.h"
+
+#include "../Beans/User.h"
+#include "../Beans/Message.h"
+#include "../Beans/Group.h"
+#include <vector>
 #define SQL_OK 0
+using namespace std;
 
 
 /*
   所有返回值为int类型的返回值表示操作成功与否，0表示失败，1表示成功
  */
+
+
+
 
 //初始化数据库
 void init_db();
@@ -19,10 +27,10 @@ int insert_userinfo (int userID, char * username, char * password, int image);
 
 //向好友数据表中插入用户信息，参数分别为当前用户ID,他的好友ID,好友用户名
 //和好友头像ID
-int insert_friend(int id, int friend_id, char * friend_name, int image_id);
+int insert_friend(int friend_id, char * friend_name, int image_id);
 
 //删除好友，参数分别为当前用户ID和被删好友ID
-int delete_friend(int id, int friend_id);
+int delete_friend(int friend_id);
 
 //更新用户数据表，参数分别为用户ID，用户名，用户密码和用户头像ID
 int update_user(int id, char * username, char * password, int image_id);
@@ -30,12 +38,12 @@ int update_user(int id, char * username, char * password, int image_id);
 //用户信息展示函数，根据用户ID查找信息
 //resValue为一个指向二维数组的地址，二维数组负责存放数据库放回信息
 //nrow和ncol分别为返回结果的行数和列数
-int show_user(int id, char *** resValue, int * nrow, int * ncol);
+int show_user(int id, vector<User> * us);
 
 //好友显示函数，根据用户ID查找他的所有好友
 //resValue为一个指向二维数组的地址，二维数组负责存放数据库返回信息
 //nrow和ncol分别为返回结果的行数和列数
-int show_friend(int id, char *** resValue, int * nrow, int * ncol);
+int show_friend(int id, vector<User> * frd);
 
 //插入消息记录，参数分别为消息ID，发送方用户ID，接收方用户ID，内容以及时间
 int insert_Usermessage(int message_id, int from_id, int to_id, char * content,
@@ -44,19 +52,19 @@ int insert_Usermessage(int message_id, int from_id, int to_id, char * content,
 //显示聊天记录，可以根据ID查找用户收到和发送的聊天记录，按照消息ID升序排列
 //resValue为一个指向二维数组的地址，二维数组负责存放数据库返回信息
 //nrow和ncol分别为返回结果的行数和列数
-int show_Usermessage(int id, char *** resValue, int * nrow, int *col);
+int show_Usermessage(int id, vector<Message> * ms);
 
 //插入群聊消息
 int insert_Groupmessage(int message_id, int from_id, int to_id, char * content, char * time, int group_id);
 
 //显示群聊消息
-int show_Groupmessage(char *** resValue, int * nrow, int * ncol, int group_id);
+int show_Groupmessage(int group_id, vector<Message> * ms);
 
 //插入群组信息
 int insert_Group(int group_id, int user_id);
 
 //显示群组信息
-int show_Groupinfo(char *** resValue, int * nrow, int * ncol, int user_id);
+int show_Groupinfo(int user_id, vector<Group> * gp);
 
 //判断消息是否是群聊  是返回2，不是返回1，查询错误返回0   参数为消息ID
 int group_or_not(int message_id);

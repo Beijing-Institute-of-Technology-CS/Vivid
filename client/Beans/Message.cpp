@@ -16,9 +16,7 @@ void Message::setMId(int mId) {
     Message::mId = mId;
 }
 
-char *Message::getMContent() const {
-    return mContent;
-}
+
 
 int Message::getFId() const {
     return fId;
@@ -96,5 +94,4 @@ Message::Message(int mId, int fId, int uFromId, int uToId, int gId, bool groupMe
     this->uFromUsername = (char *)malloc(sizeof(char)*(strlen(uFromUsername)+1));
     strcpy(this->uFromUsername,uFromUsername);
 }
-
 
