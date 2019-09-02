@@ -26,5 +26,5 @@ add_executable(server server.cpp Beans/User.cpp Beans/User.h Beans/Message.cpp B
 #target_link_libraries(server ${MYSQL_LIB})
 
 include_directories(/usr/include/mysql)
-#link_directories(/usr/local/mysql/lib)
+link_directories(/usr/lib64/mysql)
 target_link_libraries(server /usr/lib64/mysql mysqlclient pthread m rt dl)
