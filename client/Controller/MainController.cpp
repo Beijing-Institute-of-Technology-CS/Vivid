@@ -45,7 +45,7 @@ void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<G
     }
     //更新数据库groups信息
     for (auto i : groups) {
-        insert_Group(i.getGId(), i.getUId());
+        insert_Group(i.getGId(), LoginController::getInstance().userId);
     }
     //通知刷新联系人界面
     gdk_threads_add_idle(refreshContacts, nullptr);

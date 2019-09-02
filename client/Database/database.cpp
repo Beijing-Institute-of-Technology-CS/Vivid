@@ -35,7 +35,7 @@ void init_db()
 				     "FRIEND_ID   INTEGER  NOT NULL,"\
 				     "FRIEND_NAME TEXT     NOT NULL,"\
 				     "IMAGE       INTEGER  NOT NULL,"\
-				     "PRIMARY KEY FRIEND_ID);";
+				     "PRIMARY KEY (FRIEND_ID));";
 
 		char * sql_message = "CREATE TABLE MESSAGE(" \
 				      "MESSAGEID  INTEGER   PRIMARY KEY    NOT NULL,"\
