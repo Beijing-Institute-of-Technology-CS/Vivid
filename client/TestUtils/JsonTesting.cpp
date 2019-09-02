@@ -60,8 +60,8 @@ void JsonTesting::test_parse_response_json() {
     groupsArray.push_back(Group(2));
     int messagesNumber = 20;
     std::vector<Message> messagesArray;
-    messagesArray.push_back(Message(1, "contentttt", 2, "18:00"));
-    messagesArray.push_back(Message(2, "ttt", 3, "18:15"));
+    messagesArray.push_back(Message(1, "contentttt", 2, TYPE_GROUP_MESSAGE, "18:00"));
+    messagesArray.push_back(Message(2, "ttt", 3, TYPE_USER_MESSAGE, "18:15"));
 
     cJSON *pJsonRoot = cJSON_CreateObject();
     cJSON_AddStringToObject(pJsonRoot, KEY_RESPONSE_TYPE, responseType);
@@ -115,10 +115,11 @@ void JsonTesting::test_parse_response_json() {
         cJSON *json_messagesItem = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_messagesItem, KEY_MID, messagesArray.at(i).getMId());
         cJSON_AddStringToObject(json_messagesItem, KEY_MCONTENT, messagesArray.at(i).getMContent());
-//        cJSON_AddStringToObject(json_messagesItem, KEY_MTYPE, messagesArray.at(i).getMType());
+        cJSON_AddStringToObject(json_messagesItem, KEY_MTYPE, messagesArray.at(i).getMType());
         cJSON_AddNumberToObject(json_messagesItem, KEY_GFROMID, messagesArray.at(i).getGFromId());
         cJSON_AddNumberToObject(json_messagesItem, KEY_UFROMID, messagesArray.at(i).getUFromId());
 //        cJSON_AddStringToObject(json_messagesItem, KEY_UFROMUSERNAME, messagesArray.at(i).getUFromusername());
+//!message.uFromUsername must be initialed before testing! (default: NULL)
         cJSON_AddNumberToObject(json_messagesItem, KEY_FID, messagesArray.at(i).getFId());
         cJSON_AddStringToObject(json_messagesItem, KEY_MTIME, messagesArray.at(i).getMTime());
         cJSON_AddItemToArray(json_messagesArray, json_messagesItem);
@@ -130,7 +131,7 @@ void JsonTesting::test_parse_response_json() {
     cJSON_AddItemToObject(pJsonRoot, KEY_RESPONSE_CONTENT, json_responseContent);
 
     char *s_json = cJSON_Print(pJsonRoot);
-//    std::cout << s_json << std::endl;
+    std::cout << s_json << std::endl;
 
     JsonUtils::parse_response_type_json(s_json, responseType);
     std::cout << responseType << std::endl;
@@ -158,13 +159,13 @@ void JsonTesting::test_parse_response_json() {
 //    JsonUtils::parse_response_getMessages_json(s_json, &messagesNumber, &messagesArray);
 //    std::cout << messagesNumber << " ";
 //    for(auto message: messagesArray){
-//        std::cout << message.getMId() << " " << message.getMTime() << " " << message.getFId()  << " " << message.getUFromId() << " " << message.getGFromId()  << " " << message.getMContent() << " ";
+//        std::cout << message.getMId() << " " << message.getMTime() << " " << message.getMType() << " " << message.getFId()  << " " << message.getUFromId() << " " << message.getGFromId()  << " " << message.getMContent() << " ";
 //    }
 //    std::cout << std::endl;
 
 //    JsonUtils::parse_response_receiveMessages_json(s_json, message);
 //    for(auto message: messagesArray){
-//        std::cout << message.getMId() << " " << message.getMTime() << " " << message.getFId()  << " " << message.getUFromId() << " " << message.getGFromId()  << " " << message.getMContent() << " ";
+//        std::cout << message.getMId() << " " << message.getMTime()  << " " << message.getMType() << " " << message.getFId()  << " " << message.getUFromId() << " " << message.getGFromId()  << " " << message.getMContent() << " ";
 //    }
 //    std::cout << std::endl;
 

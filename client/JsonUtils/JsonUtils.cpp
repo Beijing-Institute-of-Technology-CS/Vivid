@@ -567,8 +567,13 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, Message &message)
 
     message.setUFromId(cJSON_GetObjectItem(pSubJson, KEY_UFROMID)->valueint);
     message.setGFromId(cJSON_GetObjectItem(pSubJson, KEY_GFROMID)->valueint);
+
+    char *temp_uFromUsername = cJSON_GetObjectItem(pSubJson, KEY_UFROMUSERNAME)->valuestring;
+    message.uFromUsername = (char *)std::malloc((std::strlen(temp_uFromUsername)+1)*sizeof(char));
+    strcpy(message.uFromUsername, temp_uFromUsername);
+
     message.setFId(cJSON_GetObjectItem(pSubJson, KEY_FID)->valueint);
-//todo: uFromUsername
+
     char *temp_mTime = cJSON_GetObjectItem(pSubJson, KEY_MTIME)->valuestring;
     message.mTime = (char *)std::malloc((std::strlen(temp_mTime)+1)*sizeof(char));
     strcpy(message.mTime, temp_mTime);
@@ -594,7 +599,17 @@ bool JsonUtils::parse_response_receiveMessages_json(char *s_json, Message &messa
 
     message.setUFromId(cJSON_GetObjectItem(json_responseContent, KEY_UFROMID)->valueint);
     message.setGFromId(cJSON_GetObjectItem(json_responseContent, KEY_GFROMID)->valueint);
-//todo: fId, uFromUsername, mTime
+
+    char *temp_uFromUsername = cJSON_GetObjectItem(json_responseContent, KEY_UFROMUSERNAME)->valuestring;
+    message.uFromUsername = (char *)std::malloc((std::strlen(temp_uFromUsername)+1)*sizeof(char));
+    strcpy(message.uFromUsername, temp_uFromUsername);
+
+    message.setFId(cJSON_GetObjectItem(json_responseContent, KEY_FID)->valueint);
+
+    char *temp_mTime = cJSON_GetObjectItem(json_responseContent, KEY_MTIME)->valuestring;
+    message.mTime = (char *)std::malloc((std::strlen(temp_mTime)+1)*sizeof(char));
+    strcpy(message.mTime, temp_mTime);
+
     cJSON_Delete(json_root);
     return true;
 }
@@ -602,5 +617,4 @@ bool JsonUtils::parse_response_receiveMessages_json(char *s_json, Message &messa
 bool JsonUtils::parse_response_adduIdToGroup(char *s_json) {
     return true;
 }
-
 
