@@ -17,9 +17,7 @@ void Message::setMId(int mId) {
     Message::mId = mId;
 }
 
-char *Message::getMContent() const {
-    return mContent;
-}
+
 
 int Message::getFId() const {
     return fId;
@@ -74,4 +72,18 @@ int Message::getUToId() const {
 
 void Message::setUToId(int uToId) {
     Message::uToId = uToId;
+}
+
+void Message::setContent(char * ms)
+{
+    Message::mContent=ms;
+}
+
+const char * Message::getContent() const{
+    return Message::mContent;
+}
+
+const char * Message::setMTime(char * time)
+{
+    Message::mTime=time;
 }

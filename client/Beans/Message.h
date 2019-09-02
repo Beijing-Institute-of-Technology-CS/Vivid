@@ -27,7 +27,7 @@ public:
 
     void setMId(int mId);
 
-    char *getMContent() const;
+    const char *getContent() const;
 
     char *getMType() const;
 
@@ -53,12 +53,18 @@ public:
 
     char *getMTime() const;
 
+    void setContent(char *ms);
+
+    const char *setMTime(char *time);
 private:
     int mId;
     int gFromId;
     int uFromId;
     int uToId;
     int fId;
+
+
+
 };
 
 

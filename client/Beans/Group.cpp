@@ -15,3 +15,11 @@ int Group::getGId() const{
 void Group::setGId(int gId) {
     Group::gId = gId;
 }
+
+int Group::getUId(){
+    return uId;
+}
+
+void Group::setUId(int uId){
+    Group::uId=uId;
+}
