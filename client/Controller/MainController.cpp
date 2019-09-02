@@ -126,15 +126,22 @@ void MainController::addMsgToDB(Message message) {
 
 gboolean MainController::refreshMessage(gpointer data) {
     //todo:
+    std::vector<Message> groupMsgs;
+    std::vector<Message> userMsgs;
+    show_Usermessage(LoginController::getInstance().userId, &userMsgs);
     return 0;
 }
 
 gboolean MainController::refreshContacts(gpointer data) {
     //todo:
+    std::vector<User> contacts;
+    show_friend(LoginController::getInstance().userId, &contacts);
     return 0;
 }
 
 gboolean MainController::refreshGroups(gpointer data) {
     //todo:
+    std::vector<Group> groups;
+    show_Groupinfo(LoginController::getInstance().userId, &groups);
     return 0;
 }

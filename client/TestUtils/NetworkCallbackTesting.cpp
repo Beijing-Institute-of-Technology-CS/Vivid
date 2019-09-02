@@ -40,6 +40,33 @@ void NetworkCallbackTesting::testThread() {
             case 4:
                 callback->netLoginFailed();
                 break;
+            case 5: {
+                std::vector<User> contacts;
+                std::vector<Group> groups;
+
+                User user1;
+                user1.setUId(1);
+                user1.setUName("U1");
+                user1.setFIconFile(0);
+                contacts.push_back(user1);
+
+                User user2;
+                user2.setUId(2);
+                user2.setUName("U2");
+                user2.setFIconFile(0);
+                contacts.push_back(user2);
+
+                Group group1;
+                group1.setGId(1);
+                groups.push_back(group1);
+
+                Group group2;
+                group2.setGId(2);
+                groups.push_back(group2);
+
+                callback->netGetInfoSuccess(contacts, groups);
+            }
+                break;
             default:
                 break;
         }
