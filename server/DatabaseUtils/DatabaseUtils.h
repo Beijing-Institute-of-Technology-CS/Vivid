@@ -102,7 +102,7 @@ public:
     static void database_start();
 
 private:
-    static void mql_connect(MYSQL &mysql_sock);
+    static void mysql_connect(MYSQL &mysql_sock);
     static MYSQL mysql_sock;
 
 };
