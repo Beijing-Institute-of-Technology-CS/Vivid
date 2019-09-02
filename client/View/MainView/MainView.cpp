@@ -27,7 +27,7 @@ void MainView::message_add(gchar* name,gchar *message) {
 }
 
 void MainView::friend_add(gchar *id, gchar *name) {
-    flist.append(flist.getView(),id,name);
+    flist.append(id,name);
 }
 
 void MainView::ChangeToMessage(GtkWidget *widget, gpointer data) {
