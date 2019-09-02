@@ -104,7 +104,8 @@ void NetworkUtils::init_client(char *ip) {
      */
     if((master_socket=socket(AF_INET, SOCK_STREAM, 0)) < 0){
         perror("client master_socket failed");
-        exit(EXIT_FAILURE);
+//        exit(EXIT_FAILURE);
+        return;
     }
 
     serv_addr.sin_family = AF_INET;
@@ -115,7 +116,8 @@ void NetworkUtils::init_client(char *ip) {
      */
     if(inet_pton(AF_INET,ip,&(serv_addr.sin_addr))<=0){
         perror("Invalid address | address not supported");
-        exit(EXIT_FAILURE);
+//        exit(EXIT_FAILURE);
+        return;
     }
 
     /**
@@ -124,7 +126,8 @@ void NetworkUtils::init_client(char *ip) {
 
     if(connect(master_socket, (sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
         perror("connection failed");
-        exit(EXIT_FAILURE);
+//        exit(EXIT_FAILURE);
+        return;
     }
 
     std::thread t_listen_from_server(NetworkUtils::listen_from_server);

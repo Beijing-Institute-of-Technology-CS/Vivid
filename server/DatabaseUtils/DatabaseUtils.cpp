@@ -70,7 +70,9 @@ void DatabaseUtils::mql_connect(MYSQL &mysql_sock) {
 //    return &mysql;
 }
 
+
 int DatabaseUtils::doRegister(const char *username, const char *password) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    std::cout << mysql_sock << std::endl;
@@ -85,11 +87,13 @@ int DatabaseUtils::doRegister(const char *username, const char *password) {
         uId = mysql_insert_id(&mysql_sock);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
     return uId;
 }
 
+
 bool DatabaseUtils::checkPassword(int uId, const char *password) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -110,11 +114,13 @@ bool DatabaseUtils::checkPassword(int uId, const char *password) {
 
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
     return flag;
 }
 
+
 bool DatabaseUtils::checkId(int uId) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -138,11 +144,13 @@ bool DatabaseUtils::checkId(int uId) {
         mysql_free_result(mysql_results);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
     return flag;
 }
 
+
 int DatabaseUtils::saveMessage(const Message &message) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -158,11 +166,13 @@ int DatabaseUtils::saveMessage(const Message &message) {
         mId = mysql_insert_id(&mysql_sock);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
     return mId;
 }
 
+
 bool DatabaseUtils::getMessage(int mId, Message &message) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -202,11 +212,13 @@ bool DatabaseUtils::getMessage(int mId, Message &message) {
         mysql_free_result(mysql_results);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
     return flag;
 }
 
+
 void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Message> &messages) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -241,11 +253,14 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
         mysql_free_result(mysql_results);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
 }
 
 //todo: error: atoi(NULL)
+
 void DatabaseUtils::getUser(int uId, User &user) {
+
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -267,10 +282,11 @@ void DatabaseUtils::getUser(int uId, User &user) {
 //        user.setFIconFile(atoi(row[3]));
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
 }
 
 void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -301,10 +317,12 @@ void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
         mysql_free_result(mysql_results);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
 }
 
+
 void DatabaseUtils::getGroups(int uId, std::vector<Group> &groups) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -328,10 +346,12 @@ void DatabaseUtils::getGroups(int uId, std::vector<Group> &groups) {
         mysql_free_result(mysql_results);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
 }
 
+
 void DatabaseUtils::addUIdToGroup(int uId, int gId) {
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -343,10 +363,13 @@ void DatabaseUtils::addUIdToGroup(int uId, int gId) {
         ;
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
 }
 
+
 void DatabaseUtils::getGroupContacts(int gId, std::vector<User> &groupContacts) {
+
+
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
     char query_sql[2048];
@@ -378,5 +401,5 @@ void DatabaseUtils::getGroupContacts(int gId, std::vector<User> &groupContacts) 
         mysql_free_result(mysql_results);
     }
 
-    mysql_close(&mysql_sock);
+//    mysql_close(&mysql_sock);
 }

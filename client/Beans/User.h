@@ -36,11 +36,11 @@ public:
 
     void setUPassword(char *uPassword);
 
+
 private:
     int uId;
 
     int fIconFile;
-
 
     /**
      * for server use only
@@ -50,6 +50,7 @@ private:
     /**
      *
      */
+
 
     char * uName;
     char * uPassword;

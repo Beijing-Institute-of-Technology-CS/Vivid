@@ -4,14 +4,9 @@
 
 int main(int argc , char* argv[]) {
     gtk_init(&argc, &argv);
-
-//    MainController mainController = MainController::getInstance();
-//
-//    mainController.start();
-
+    init_db();
     MainController::getInstance().start();
-
     gtk_main();
-
+    close_db();
     return 0;
 }

@@ -6,6 +6,8 @@
 #define CLIENT_FRIENDLIST_H
 
 #include <gtk/gtk.h>
+#include <vector>
+#include "../../../../Beans/User.h"
 
 enum{
     FRIEND_ID,
@@ -18,7 +20,8 @@ class friend_list
 public:
     friend_list();
     GtkWidget *getView();
-    void append(GtkWidget *list, const gchar *name,const gchar *message);
+    void append(const gchar *id,const gchar *name);
+    void setData(const std::vector<User>& contacts);
 private:
     GtkWidget *view= nullptr;
     GtkCellRenderer *renderer= nullptr;

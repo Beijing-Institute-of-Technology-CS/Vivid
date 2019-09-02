@@ -5,8 +5,8 @@
 #ifndef CLIENT_MESSAGELIST_H
 #define CLIENT_MESSAGELIST_H
 #include <gtk/gtk.h>
-
-static int  history_id = 1;
+#include <vector>
+#include "../../../../Beans/Message.h"
 
 enum{
     COLUMN_ID,
@@ -20,9 +20,10 @@ public:
     message_list();
     //void create();
     //void show();
-    void destroy();
+    //void destroy();
     GtkWidget *getView();
-    void append(GtkWidget *list, const gchar *name,const gchar *message);
+    void append(int mId, const gchar *message, const gchar *name);
+    void setData(const std::vector<Message>& messages);
     //void get_input_login_content(const char * & username, const char * & password);
 
 private:

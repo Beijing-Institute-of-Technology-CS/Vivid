@@ -96,6 +96,7 @@ public:
      * @param gId
      * @param groupContacts
      */
+
     static void getGroupContacts(int gId, std::vector<User> &groupContacts);
 
     static void database_start();
@@ -103,6 +104,7 @@ public:
 private:
     static void mql_connect(MYSQL &mysql_sock);
     static MYSQL mysql_sock;
+
 };
 
 
