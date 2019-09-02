@@ -171,15 +171,17 @@ bool DatabaseUtils::getMessage(int mId, Message &message) {
             MYSQL_ROW row;
             if((row = mysql_fetch_row(mysql_results))) {
                 message.setMId(mId);
-                message.mContent = (char *)std::malloc((std::strlen(row[1])+1)*sizeof(char));
-                strcpy(message.mContent, row[1]);
+//                message.mContent = (char *)std::malloc((std::strlen(row[1])+1)*sizeof(char));
+//                strcpy(message.mContent, row[1]);
+                message.setMContent(row[1]);
                 message.setFId(atoi(row[2]));
                 message.setUFromId(atoi(row[3]));
                 message.setUToId(atoi(row[4]));
                 message.setGId(atoi(row[5]));
                 message.setGroupMessage(std::strcmp(row[6], TYPE_GROUP_MESSAGE)?false:true);
-                message.mTime = (char *)std::malloc((std::strlen(row[7])+1)*sizeof(char));
-                strcpy(message.mTime, row[7]);
+//                message.mTime = (char *)std::malloc((std::strlen(row[7])+1)*sizeof(char));
+//                strcpy(message.mTime, row[7]);
+                message.setMTime(row[7]);
                 flag = true;
             }
             else{
@@ -211,15 +213,17 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
             while((row = mysql_fetch_row(mysql_results)) != NULL) {
                 Message temp_message;
                 temp_message.setMId(atoi(row[0]));
-                temp_message.mContent = (char *)std::malloc((std::strlen(row[1])+1)*sizeof(char));
-                strcpy(temp_message.mContent, row[1]);
+//                temp_message.mContent = (char *)std::malloc((std::strlen(row[1])+1)*sizeof(char));
+//                strcpy(temp_message.mContent, row[1]);
+                temp_message.setMContent(row[1]);
                 temp_message.setFId(atoi(row[2]));
                 temp_message.setUFromId(atoi(row[3]));
                 temp_message.setUToId(atoi(row[4]));
                 temp_message.setGId(atoi(row[5]));
                 temp_message.setGroupMessage(std::strcmp(row[6], TYPE_GROUP_MESSAGE)?false:true);
-                temp_message.mTime = (char *)std::malloc((std::strlen(row[7])+1)*sizeof(char));
-                strcpy(temp_message.mTime, row[7]);
+//                temp_message.mTime = (char *)std::malloc((std::strlen(row[7])+1)*sizeof(char));
+//                strcpy(temp_message.mTime, row[7]);
+                temp_message.setMTime(row[7]);
                 messages.push_back(temp_message);
             }
         }
@@ -243,10 +247,12 @@ void DatabaseUtils::getUser(int uId, User &user) {
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         MYSQL_ROW row = mysql_fetch_row(mysql_results);
         user.setUId(atoi(row[0]));
-        user.uName = (char *)std::malloc(std::strlen(row[1]+1)*sizeof(char));
-        strcpy(user.uName, row[1]);
-        user.uPassword = (char *)std::malloc((std::strlen(row[2]+1)*sizeof(char)));
-        strcpy(user.uPassword, row[2]);
+//        user.uName = (char *)std::malloc(std::strlen(row[1]+1)*sizeof(char));
+//        strcpy(user.uName, row[1]);
+        user.setUName(row[1]);
+//        user.uPassword = (char *)std::malloc((std::strlen(row[2]+1)*sizeof(char)));
+//        strcpy(user.uPassword, row[2]);
+        user.setUPassword(row[2]);
 //        user.setFIconFile(atoi(row[3]));
     }
 
@@ -271,10 +277,12 @@ void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
             while((row = mysql_fetch_row(mysql_results)) != NULL) {
                 User temp_user;
                 temp_user.setUId(atoi(row[0]));
-                temp_user.uName = (char *)std::malloc(std::strlen(row[1]+1)*sizeof(char));
-                strcpy(temp_user.uName, row[1]);
-                temp_user.uPassword = (char *)std::malloc((std::strlen(row[2]+1)*sizeof(char)));
-                strcpy(temp_user.uPassword, row[2]);
+//                temp_user.uName = (char *)std::malloc(std::strlen(row[1]+1)*sizeof(char));
+//                strcpy(temp_user.uName, row[1]);
+                temp_user.setUName(row[1]);
+//                temp_user.uPassword = (char *)std::malloc((std::strlen(row[2]+1)*sizeof(char)));
+//                strcpy(temp_user.uPassword, row[2]);
+                temp_user.setUPassword(row[2]);
 //                temp_user.setFIconFile(atoi(row[3]));
                 users.push_back(temp_user);
             }
@@ -301,8 +309,8 @@ void DatabaseUtils::getGroups(int uId, std::vector<Group> &groups) {
         else{
             MYSQL_ROW row;
             while((row = mysql_fetch_row(mysql_results)) != NULL) {
-                Group temp_group;
-                temp_group.setGId(atoi(row[0]));
+                Group temp_group(atoi(row[0]));
+//                temp_group.setGId(atoi(row[0]));
                 groups.push_back(temp_group);
             }
         }
@@ -346,10 +354,12 @@ void DatabaseUtils::getGroupContacts(int gId, std::vector<User> &groupContacts) 
             while((row = mysql_fetch_row(mysql_results)) != NULL) {
                 User temp_user;
                 temp_user.setUId(atoi(row[0]));
-                temp_user.uName = (char *)std::malloc(std::strlen(row[1]+1)*sizeof(char));
-                strcpy(temp_user.uName, row[1]);
-                temp_user.uPassword = (char *)std::malloc((std::strlen(row[2]+1)*sizeof(char)));
-                strcpy(temp_user.uPassword, row[2]);
+//                temp_user.uName = (char *)std::malloc(std::strlen(row[1]+1)*sizeof(char));
+//                strcpy(temp_user.uName, row[1]);
+                temp_user.setUName(row[1]);
+//                temp_user.uPassword = (char *)std::malloc((std::strlen(row[2]+1)*sizeof(char)));
+//                strcpy(temp_user.uPassword, row[2]);
+                temp_user.setUPassword(row[2]);
 //                temp_user.setFIconFile(atoi(row[3]));
                 groupContacts.push_back(temp_user);
             }
