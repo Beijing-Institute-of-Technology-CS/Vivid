@@ -10,7 +10,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-//#include <mysql.h>
+#include <mysql/mysql.h>
 
 #include "../Beans/Message.h"
 #include "../../Constants.h"
