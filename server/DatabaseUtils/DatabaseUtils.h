@@ -27,7 +27,7 @@ public:
      * @param password
      * @return 返回用户uId，为-1表示失败
      */
-    static int doRegister(const char * username, const char * password);
+    static int doRegister(MYSQL &mysql_sock, const char * username, const char * password);
 
     /**
      * 检查密码
@@ -35,21 +35,21 @@ public:
      * @param password
      * @return 密码是否正确
      */
-    static bool checkPassword(int uId, const char * password);
+    static bool checkPassword(MYSQL &mysql_sock, int uId, const char * password);
 
     /**
      * 检查id是否存在
      * @param uId
      * @return 是否存在
      */
-    static bool checkId(int uId);
+    static bool checkId(MYSQL &mysql_sock, int uId);
 
     /**
      * 保存消息
      * @param message 消息无id
      * @return 消息保存后的消息id，-1为失败
      */
-    static int saveMessage(const Message & message);
+    static int saveMessage(MYSQL &mysql_sock, const Message & message);
 
     /**
      * 获取消息
@@ -58,7 +58,7 @@ public:
      * @param message 向该引用对象中插入查询到的消息相关信息
      * @return 是否成功
      */
-    static bool getMessage(int mId, Message & message);
+    static bool getMessage(MYSQL &mysql_sock, int mId, Message & message);
 
     /**
      * 获取消息
@@ -67,21 +67,21 @@ public:
      * @param lastCalledMessage
      * @param messages 返回数据添加至vector中
      */
-    static void getMessages(int uToId, int lastCalledMessage, std::vector<Message> & messages);
+    static void getMessages(MYSQL &mysql_sock, int uToId, int lastCalledMessage, std::vector<Message> & messages);
 
     /**
      *
      * @param uId
      * @param user
      */
-    static void getUser(int uId,User &user);
+    static void getUser(MYSQL &mysql_sock, int uId,User &user);
 
     /**
      *
      * @param uId
      * @param users
      */
-    static void getUsers(int uId,std::vector<User> &users);
+    static void getUsers(MYSQL &mysql_sock, int uId,std::vector<User> &users);
 
     /**
      * 根据uId获取其所在的所有Group
@@ -89,16 +89,16 @@ public:
      * @param uId
      * @param groups
      */
-    static void getGroups(int uId,std::vector<Group>& groups);
+    static void getGroups(MYSQL &mysql_sock, int uId,std::vector<Group>& groups);
 
-    static void addUIdToGroup(int uId,int gId);
+    static void addUIdToGroup(MYSQL &mysql_sock, int uId,int gId);
 
     /**
      * 根据gId获取该群的所有contacts
      * @param gId
      * @param groupContacts
      */
-    static void getGroupContacts(int gId, std::vector<User> &groupContacts);
+    static void getGroupContacts(MYSQL &mysql_sock, int gId, std::vector<User> &groupContacts);
 };
 
 
