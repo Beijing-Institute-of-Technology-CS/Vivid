@@ -117,10 +117,10 @@ void MainController::selectGroup(int gId) {
 }
 
 void MainController::addMsgToDB(Message message) {
-    if (std::strcmp(message.getMType(), TYPE_USER_MESSAGE) == 0) {
+    if (!message.isGroupMessage()) {
         insert_Usermessage(message.getMId(), message.getUFromId(), message.getUToId(), message.getMContent(), message.getMTime());
-    } else if (std::strcmp(message.getMType(), TYPE_GROUP_MESSAGE) == 0) {
-        insert_Groupmessage(message.getMId(), message.getUFromId(), message.getUToId(), message.getMContent(), message.getMTime(), message.getGFromId());
+    } else {
+        insert_Groupmessage(message.getMId(), message.getUFromId(), message.getUToId(), message.getMContent(), message.getMTime(), message.getGId());
     }
 }
 

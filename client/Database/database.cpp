@@ -285,7 +285,7 @@ int show_Usermessage(int id, vector<Message> * ms)
         temp.setUFromId(a);
         sscanf(resValue[i*ncol+2],"%d",&a);
         temp.setUToId(a);
-        temp.setContent(resValue[i*ncol+3]);
+        temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
         ms->push_back(temp);
     }
@@ -343,7 +343,7 @@ int show_Groupmessage(int group_id, vector<Message> * ms)
         temp.setUFromId(a);
         sscanf(resValue[i*ncol+2],"%d",&a);
         temp.setUToId(a);
-        temp.setContent(resValue[i*ncol+3]);
+        temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
         ms->push_back(temp);
     }
