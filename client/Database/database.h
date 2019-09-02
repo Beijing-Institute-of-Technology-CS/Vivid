@@ -27,7 +27,7 @@ int insert_userinfo (int userID, char * username, char * password, int image);
 
 //向好友数据表中插入用户信息，参数分别为当前用户ID,他的好友ID,好友用户名
 //和好友头像ID
-int insert_friend(int friend_id, char * friend_name, int image_id);
+int insert_friend(int friend_id, const char * friend_name, int image_id);
 
 //删除好友，参数分别为当前用户ID和被删好友ID
 int delete_friend(int friend_id);
@@ -46,8 +46,8 @@ int show_user(int id, vector<User> * us);
 int show_friend(int id, vector<User> * frd);
 
 //插入消息记录，参数分别为消息ID，发送方用户ID，接收方用户ID，内容以及时间
-int insert_Usermessage(int message_id, int from_id, int to_id, char * content,
-		char * time);
+int insert_Usermessage(int message_id, int from_id, int to_id, const char * content,
+		const char * time);
 
 //显示聊天记录，可以根据ID查找用户收到和发送的聊天记录，按照消息ID升序排列
 //resValue为一个指向二维数组的地址，二维数组负责存放数据库返回信息
@@ -55,7 +55,7 @@ int insert_Usermessage(int message_id, int from_id, int to_id, char * content,
 int show_Usermessage(int id, vector<Message> * ms);
 
 //插入群聊消息
-int insert_Groupmessage(int message_id, int from_id, int to_id, char * content, char * time, int group_id);
+int insert_Groupmessage(int message_id, int from_id, int to_id, const char * content, const char * time, int group_id);
 
 //显示群聊消息
 int show_Groupmessage(int group_id, vector<Message> * ms);
