@@ -4,13 +4,21 @@
 
 #include "LoginView.h"
 
-void LoginView::create() {
+void LoginView::get_input_login_content(const char *&id, const char *&password) {
+    id = gtk_entry_get_text(GTK_ENTRY(id_entry));
+    password = gtk_entry_get_text(GTK_ENTRY(psw_entry));
+}
+
+void LoginView::show() {
+    if (isShow) {
+        return;
+    }
 
     //构造控件
     GtkWidget *main_box;
     GtkWidget *fixed;
     GtkWidget *button_box;
-    GtkWidget *name_label;
+    GtkWidget *id_label;
     GtkWidget *psw_label;
 
     GtkWidget *login_button;
@@ -24,17 +32,17 @@ void LoginView::create() {
     button_box = gtk_hbox_new(FALSE,15);
     image_logo = gtk_image_new_from_file("logo.png");
     sep = gtk_hseparator_new();
-    name_label = gtk_label_new("          ID：");
-    name_entry = gtk_entry_new();
+    id_label = gtk_label_new("          ID：");
+    id_entry = gtk_entry_new();
     psw_label = gtk_label_new("密码：");
     psw_entry = gtk_entry_new();
     reg_button = gtk_button_new_with_label("register");
     login_button = gtk_button_new_with_label("login");
 
     //连接
-    g_signal_connect(G_OBJECT(login_window),"destroy", G_CALLBACK(onWindowClose), this);
-    g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(onButtonLoginClicked), this);
-    g_signal_connect(G_OBJECT(reg_button), "clicked", G_CALLBACK(onButtonRegisterClicked), this);
+    g_signal_connect(G_OBJECT(login_window),"destroy", G_CALLBACK(on_destroy), this);
+    g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(on_button_login_clicked), this);
+    g_signal_connect(G_OBJECT(reg_button), "clicked", G_CALLBACK(on_button_register_clicked), this);
 
     //设置参数
     gtk_window_set_title(GTK_WINDOW(login_window),"login");
@@ -51,59 +59,54 @@ void LoginView::create() {
 
     gtk_box_pack_start(GTK_BOX(main_box),fixed,FALSE,FALSE,0);
 
-    gtk_fixed_put(GTK_FIXED(fixed),name_label,120,10);
-    gtk_fixed_put(GTK_FIXED(fixed),name_entry,200,10);
+    gtk_fixed_put(GTK_FIXED(fixed),id_label,120,10);
+    gtk_fixed_put(GTK_FIXED(fixed),id_entry,200,10);
     gtk_fixed_put(GTK_FIXED(fixed),psw_label,140,40);
     gtk_fixed_put(GTK_FIXED(fixed),psw_entry,200,40);
 
     gtk_box_pack_start(GTK_BOX(main_box),sep,FALSE,FALSE,5);
 
-    gtk_box_pack_start(GTK_BOX(main_box),button_box,FALSE,FALSE,5);    
+    gtk_box_pack_start(GTK_BOX(main_box),button_box,FALSE,FALSE,5);
     gtk_box_pack_start(GTK_BOX(button_box),reg_button,FALSE,FALSE,5);
-    
+
     gtk_button_set_relief(GTK_BUTTON(reg_button),GTK_RELIEF_NONE);
-
     gtk_box_pack_end(GTK_BOX(button_box),login_button,FALSE,FALSE,5);
-}
 
-void LoginView::get_input_login_content(const char *&username, const char *&password) {
-    username = gtk_entry_get_text(GTK_ENTRY(name_entry));
-    password = gtk_entry_get_text(GTK_ENTRY(psw_entry));
-}
-
-void LoginView::show() {
     gtk_widget_show_all(login_window);
+    isShow = true;
 }
 
 void LoginView::destroy() {
+    if (!isShow) {
+        return;
+    }
+    isShow = false;
     gtk_widget_destroy(login_window);
 }
 
-void LoginView::onButtonLoginClicked(GtkWidget *button, gpointer data) {
-    if (((LoginView *) data)->loginClickedCallback == nullptr) {
+void LoginView::on_button_login_clicked(GtkWidget *button, gpointer data) {
+    if (((LoginView *) data)->callback == nullptr) {
         return;
     }
-    ((LoginView *) data)->loginClickedCallback->onButtonLoginClicked();
+    ((LoginView *) data)->callback->onButtonLoginClicked();
 }
 
-void LoginView::setLoginClickedCallback(OnButtonLoginClickedCallback *loginClickedCallback) {
-    LoginView::loginClickedCallback = loginClickedCallback;
+void LoginView::setCallback(LoginViewCallback *loginCallback) {
+    LoginView::callback = loginCallback;
 }
 
-void LoginView::onWindowClose(GtkWidget *widget, gpointer data) {
-    if (((LoginView *)data)->closeCallback == nullptr) {
+
+void LoginView::on_button_register_clicked(GtkWidget *button, gpointer data) {
+    if (((LoginView *) data)->callback == nullptr) {
         return;
     }
-    ((LoginView *) data)->closeCallback->onLoginWindowClose();
+    ((LoginView *) data)->callback->onButtonRegisterClicked();
 }
 
-void LoginView::setCloseCallback(OnLoginWindowCloseCallback *closeCallback) {
-    LoginView::closeCallback = closeCallback;
-}
-
-void LoginView::onButtonRegisterClicked(GtkWidget *button, gpointer data) {
-    if (((LoginView *) data)->loginClickedCallback == nullptr) {
+void LoginView::on_destroy(GtkWidget *widget, gpointer data) {
+    ((LoginView *) data)->isShow = false;
+    if (((LoginView *) data)->callback == nullptr) {
         return;
     }
-    ((LoginView *) data)->loginClickedCallback->onButtonRegisterClicked();
+    ((LoginView *) data)->callback->onLoginViewDestroy();
 }

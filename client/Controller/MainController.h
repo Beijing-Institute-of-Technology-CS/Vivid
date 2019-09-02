@@ -7,35 +7,25 @@
 
 
 #include "LoginController/LoginController.h"
-#include "ApplicationExitCallback.h"
 #include "../View/MainView/MainView.h"
 #include "NetworkController/NetworkController.h"
 
-class MainController : OnLoginSuccessCallback, ApplicationExitCallback, NetworkCallback {
+class MainController : public NetworkCallback {
 public:
-    /**
-     * 初始构造函数
-     */
     MainController();
 
     /**
-     * 程序开始
+     * MainController 单例
+     * @return
      */
+    static MainController & getInstance() {
+        static MainController mainController;
+        return mainController;
+    }
+
     void start();
 
-    /**
-     * 设置程序退出方法
-     * @param exitApplication
-     */
-    void setExitApplicationFunc(void (*exitApplication)());
-
-    //登录成功回调
-    void onLoginSuccessCallback(int id, char * password) override;
-
-    //程序退出回调
-    void exitApplication() override;
-
-    //Network Callbacks
+    /*=========================callback===========================*/
     void netRegisterSuccess(int id) override;
     void netRegisterFailed() override;
     void netLoginSuccess(char * username) override;
@@ -50,22 +40,13 @@ public:
     void connectFailed() override;
 
 private:
-    //Controller
-    LoginController loginController;
-
-    //View
+    //view
     MainView mainView;
 
-    //userInfo
-    int userId;
-    char * username;
-    char * userPwd;
-
-    //退出函数指针
-    void (* exit_application)() = nullptr;
-
-    //设置主界面
     void startMainView();
+
+    //friends
+    friend class LoginController;
 };
 
 #endif //CLIENT_MAINCONTROLLER_H

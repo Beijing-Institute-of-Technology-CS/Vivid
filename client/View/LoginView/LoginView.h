@@ -7,15 +7,13 @@
 
 #include <gtk/gtk.h>
 
-class OnButtonLoginClickedCallback;
-class OnLoginWindowCloseCallback;
+class LoginViewCallback;
 
 class LoginView {
 public:
     /**
-     * 构造、展示、销毁
+     * 展示、销毁
      */
-    void create();
     void show();
     void destroy();
 
@@ -23,48 +21,39 @@ public:
      * 设置登录点击回调
      * @param loginClickedCallback
      */
-    void setLoginClickedCallback(OnButtonLoginClickedCallback *loginClickedCallback);
-    /**
-     * 设置窗口关闭回调
-     * @param closeCallback
-     */
-    void setCloseCallback(OnLoginWindowCloseCallback *closeCallback);
+    void setCallback(LoginViewCallback *loginCallback);
 
     /**
      * 获取输入的用户名、密码
-     * @param username
+     * @param id
      * @param password
      */
-    void get_input_login_content(const char * & username, const char * & password);
+    void get_input_login_content(const char * & id, const char * & password);
 
 private:
+    //isShow
+    bool isShow = false;
+
     //GTK控件
     GtkWidget *login_window = nullptr;
-    GtkWidget *name_entry = nullptr;
+    GtkWidget *id_entry = nullptr;
     GtkWidget *psw_entry = nullptr;
 
     //登录点击回调
-    OnButtonLoginClickedCallback * loginClickedCallback = nullptr;
-    //关闭窗口回调
-    OnLoginWindowCloseCallback * closeCallback = nullptr;
+    LoginViewCallback * callback = nullptr;
 
     //GTK回调
-    static void onButtonLoginClicked(GtkWidget* button, gpointer data);
-    static void onButtonRegisterClicked(GtkWidget* button, gpointer data);
-    static void onWindowClose(GtkWidget * widget, gpointer data);
+    static void on_button_login_clicked(GtkWidget *button, gpointer data);
+    static void on_button_register_clicked(GtkWidget *button, gpointer data);
+    static void on_destroy(GtkWidget *widget, gpointer data);
 };
 
 //登录点击回调
-class OnButtonLoginClickedCallback {
+class LoginViewCallback {
 public:
     virtual void onButtonLoginClicked() = 0;
     virtual void onButtonRegisterClicked() = 0;
-};
-
-//窗口关闭回调
-class OnLoginWindowCloseCallback {
-public:
-    virtual void onLoginWindowClose() = 0;
+    virtual void onLoginViewDestroy() = 0;
 };
 
 
