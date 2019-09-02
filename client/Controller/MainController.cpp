@@ -2,13 +2,16 @@
 // Created by William Zhang on 2019-08-30.
 //
 
+#include <thread>
 #include "MainController.h"
 #include "../TestUtils/NetworkCallbackTesting.h"
+#include "../Network/NetworkUtils.h"
 
 MainController::MainController() {
     NetworkController::setCallback(this);
     NetworkCallbackTesting::setCallback(this);
     NetworkCallbackTesting::startTestingThread();
+    mainView.setCallback(this);
 }
 
 void MainController::startMainView() {
@@ -36,38 +39,63 @@ void MainController::netLoginFailed() {
 }
 
 void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) {
-
+    //todo: 更新数据库contacts信息
+    //todo: 更新数据库groups信息
+    //todo: 通知刷新联系人界面
+    //todo: 通知刷新群聊界面
 }
 
 void MainController::netGetInfoFailed() {
-
+    //todo: tip
 }
 
 void MainController::netGetMessageSuccess(std::vector<Message> messages) {
-
+    //todo: 更新数据库messages信息
+    //todo: 通知刷新消息界面
 }
 
 void MainController::netGetMessageFailed() {
-
+    //todo: tip
 }
 
 void MainController::netSendMessageSuccess(Message message) {
-
+    //todo: 将信息插入数据库
+    //todo: 通知刷新消息界面
 }
 
 void MainController::netSendMessageFailed() {
-
+    //todo: tip
 }
 
 void MainController::netReceiveMessage(Message message) {
-
+    //todo: 将消息插入数据库
+    //todo: 通知刷新消息界面
 }
 
 void MainController::connectFailed() {
-
+    //todo: tip
 }
 /*====================End===NetworkCallback========================*/
 
 void MainController::start() {
     LoginController::getInstance().startLoginView();
+    std::thread thread(startNetworkConnect);
+    thread.detach();
+}
+
+void MainController::startNetworkConnect() {
+    NetworkUtils::start_client(BITCS);
+}
+
+void MainController::selectUser(int uId, std::string uName) {
+    chatView.show(uName.c_str());
+    chatView.currentId = uId;
+    chatView.isGroup = false;
+}
+
+void MainController::selectGroup(int gId) {
+    std::string title = "Group: " + std::to_string(gId);
+    chatView.show(title.c_str());
+    chatView.currentId = gId;
+    chatView.isGroup = true;
 }

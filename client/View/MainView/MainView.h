@@ -7,8 +7,16 @@
 
 
 #include <gtk/gtk.h>
+#include <string>
 #include "List/MessageList/MessageList.h"
 #include "List/FriendList/FriendList.h"
+#include "List/GroupList/GroupList.h"
+
+class MainViewCallback;
+
+enum MainViewShowMode {
+    MSG, CONTACTS, GROUP
+};
 
 class MainView {
 public:
@@ -19,23 +27,37 @@ public:
     void create();
     void show();
     void destroy();
-    //给历史消息列表加入一行新消息，消息id号，姓名，最后一条消息
-    void message_add(gchar*,gchar*);
-    //给好友列表中添加一个新好友，id，姓名
-    void friend_add(gchar*,gchar*);
 
-private:
-    GtkWidget *main_window = nullptr;
-    GtkWidget *vbox;
+    void setCallback(MainViewCallback *callback);
+
     message_list mlist;
     friend_list  flist;
+    GroupList gList;
+
+private:
+    MainViewShowMode mode = MSG;
+
+    GtkWidget *main_window = nullptr;
+    GtkWidget * inputEntry;
+    GtkWidget * inputHBox;
+
+    MainViewCallback * callback;
+
+    std::string getInput();
+
     static void ChangeToMessage(GtkWidget *widget,  gpointer data);
     static void ChangeToFriend(GtkWidget *widget,  gpointer data);
+    static void ChangeToGroup(GtkWidget *widget, gpointer data);
     static void tree_selection_message_changed(GtkTreeSelection *selection,  gpointer data);
     static void tree_selection_friend_changed(GtkTreeSelection *selection,gpointer data);
-    static void buttonClickedCallback(GtkWidget * button, gpointer data) {
-        printf("Hey!\n");
-    }
+    static void tree_selection_group_changed(GtkTreeSelection *selection,gpointer data);
+    static void goButtonClickedCallback(GtkWidget * button, gpointer data);
+};
+
+class MainViewCallback {
+public:
+    virtual void selectUser(int uId, std::string uName) = 0;
+    virtual void selectGroup(int gId) = 0;
 };
 
 
