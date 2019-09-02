@@ -452,8 +452,7 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
         User user;
         user.setUId(cJSON_GetObjectItem(json_contactsArray, KEY_UID)->valueint);
         char *temp_uName = cJSON_GetObjectItem(json_contactsArray, KEY_UNAME)->valuestring;
-        user.uName = (char *)std::malloc((std::strlen(temp_uName)+1)*sizeof(char));
-        strcpy(user.uName, temp_uName);
+        user.setUName(temp_uName);
         user.setFIconFile(cJSON_GetObjectItem(json_contactsArray,KEY_FICON)->valueint);
         contactsArray->push_back(user);
         json_contactsArray = json_contactsArray->next;

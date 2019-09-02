@@ -184,7 +184,7 @@ int show_user(int id, vector<User> * us)
         User u;
         u.setUId(a);
         u.setUName(resValue[i*ncol+1]);
-        u.setUPWD(resValue[i*ncol+2]);
+        u.setUPassword(resValue[i*ncol+2]);
         sscanf(resValue[i*ncol+3],"%d",&a);
         u.setFIconFile(a);
         us->push_back(u);
