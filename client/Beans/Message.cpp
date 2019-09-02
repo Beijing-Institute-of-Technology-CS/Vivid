@@ -2,11 +2,12 @@
 // Created by YichengChen on 8/29/19.
 //
 
-#include <cstdlib>
-#include <cstring>
 #include "Message.h"
 
 Message::Message() {}
+
+Message::Message(int mId, char *mContent, int uFromId, char *mType, char *mTime) : mId(mId), mContent(mContent),
+                                                                uFromId(uFromId), mType(mType), mTime(mTime) {this->uFromUsername = NULL;}
 
 int Message::getMId() const {
     return mId;
@@ -30,20 +31,20 @@ char *Message::getMTime() const {
     return mTime;
 }
 
-bool Message::isGroupMessage() const {
-    return groupMessage;
+char *Message::getMType() const {
+    return mType;
 }
 
-void Message::setGroupMessage(bool groupMessage) {
-    Message::groupMessage = groupMessage;
+int Message::getGFromId() const {
+    return gFromId;
 }
 
-int Message::getGId() const {
-    return gId;
+void Message::setGFromId(int gId) {
+    Message::gFromId = gId;
 }
 
-void Message::setGId(int gId) {
-    Message::gId = gId;
+char *Message::getUFromusername() const {
+    return uFromUsername;
 }
 
 int Message::getUFromId() const {
@@ -54,44 +55,35 @@ void Message::setUFromId(int uFromId) {
     Message::uFromId = uFromId;
 }
 
+bool Message::isGroup() const {
+    if(Message::mType != NULL){
+        if (std::strcmp(Message::mType, TYPE_GROUP_MESSAGE) == 0)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
 int Message::getUToId() const {
-    return uToId;
+    return Message::uToId;
 }
 
 void Message::setUToId(int uToId) {
     Message::uToId = uToId;
 }
 
-void Message::setMContent(char *mContent) {
-    this->mContent = (char *)malloc(sizeof(char)*(strlen(mContent)+1));
-    strcpy(this->mContent,mContent);
+void Message::setContent(char * ms)
+{
+    Message::mContent=ms;
 }
 
-void Message::setMTime(char *mTime) {
-    this->mTime = (char *)malloc(sizeof(char)*(strlen(mTime)+1));
-    strcpy(this->mTime,mTime);
+const char * Message::getMContent() const{
+    return Message::mContent;
 }
 
-void Message::setUFromUsername(char *uFromUsername) {
-    this->uFromUsername = (char *)malloc(sizeof(char)*(strlen(uFromUsername)+1));
-    strcpy(this->uFromUsername,uFromUsername);
+const char * Message::setMTime(char * time)
+{
+    Message::mTime=time;
 }
-
-char *Message::getUFromUsername() const {
-    return uFromUsername;
-}
-
-Message::Message(int mId, int fId, int uFromId, int uToId, int gId, bool groupMessage, char *mContent, char *mTime,
-                 char *uFromUsername) : mId(mId), fId(fId), uFromId(uFromId), uToId(uToId), gId(gId),
-                                        groupMessage(groupMessage), mContent(mContent), mTime(mTime),
-                                        uFromUsername(uFromUsername) {
-    this->mContent = (char *)malloc(sizeof(char)*(strlen(mContent)+1));
-    strcpy(this->mContent,mContent);
-
-    this->mTime = (char *)malloc(sizeof(char)*(strlen(mTime)+1));
-    strcpy(this->mTime,mTime);
-
-    this->uFromUsername = (char *)malloc(sizeof(char)*(strlen(uFromUsername)+1));
-    strcpy(this->uFromUsername,uFromUsername);
-}
-
