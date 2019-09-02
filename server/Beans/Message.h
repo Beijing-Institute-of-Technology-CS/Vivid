@@ -10,8 +10,6 @@ class Message {
 public:
     Message();
 
-    Message(int mId, char *mContent, int fId, char *mTime);
-
     int getMId() const;
 
     void setMId(int mId);
@@ -24,24 +22,42 @@ public:
 
     char *getMTime() const;
 
-    int getFromId() const;
+    int getUFromId() const;
 
-    void setFromId(int fromId);
+    void setUFromId(int uFromId);
 
-    int getToId() const;
+    int getUToId() const;
 
-    void setToId(int toId);
+    void setUToId(int uToId);
+
+    bool isGroupMessage() const;
+
+    void setGroupMessage(bool groupMessage);
+
+    int getGId() const;
+
+    void setGId(int gId);
 
     char * mContent;
+
     char * mTime;
 
+    char *uFromUsername;
 
 private:
     int mId;
     int fId;
 
-    int fromId;
-    int toId;
+    int uFromId;
+    int uToId;
+
+    /**
+     * should be the same
+     */
+    int gId;
+
+    bool groupMessage;
+
 };
 
 

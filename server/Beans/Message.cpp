@@ -30,21 +30,35 @@ char *Message::getMTime() const {
     return mTime;
 }
 
-int Message::getFromId() const {
-    return fromId;
+bool Message::isGroupMessage() const {
+    return groupMessage;
 }
 
-void Message::setFromId(int fromId) {
-    Message::fromId = fromId;
+void Message::setGroupMessage(bool groupMessage) {
+    Message::groupMessage = groupMessage;
 }
 
-int Message::getToId() const {
-    return toId;
+int Message::getGId() const {
+    return gId;
 }
 
-void Message::setToId(int toId) {
-    Message::toId = toId;
+void Message::setGId(int gId) {
+    Message::gId = gId;
 }
 
-Message::Message(int mId, char *mContent, int fId, char *mTime) : mId(mId), mContent(mContent), fId(fId),
-                                                                  mTime(mTime) {}
+int Message::getUFromId() const {
+    return uFromId;
+}
+
+void Message::setUFromId(int uFromId) {
+    Message::uFromId = uFromId;
+}
+
+int Message::getUToId() const {
+    return uToId;
+}
+
+void Message::setUToId(int uToId) {
+    Message::uToId = uToId;
+}
+

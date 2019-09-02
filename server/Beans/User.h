@@ -24,10 +24,6 @@ public:
 
     void setFIconFile(int fIconFile);
 
-    int getFd() const;
-
-    void setFd(int fd);
-
     bool isInUse() const;
 
     void setInUse(bool inUse);
@@ -43,7 +39,6 @@ private:
     int uId;
 
     int fIconFile;
-    int fd;
 
     int client_index;
     bool inUse;

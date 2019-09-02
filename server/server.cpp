@@ -14,39 +14,38 @@
 #include <iostream>
 #include <vector>
 
-
-#include "Database/Database.h"
 #include "NetworkUtils/NetworkUtils.h"
+#include "TestUtils/JsonTesting.h"
 
 int main() {
-//    Database::mql_connect();
-//    int id = Database::doRegister("hello", "psd");
+//    DatabaseUtils::mql_connect();
+//    int id = DatabaseUtils::doRegister("hello", "psd");
 //    std::cout << id << std::endl;
-//    std::cout << Database::checkId(1) << std::endl;
-//    std::cout << Database::checkPassword(1, "psd") << std::endl;
+//    std::cout << DatabaseUtils::checkId(1) << std::endl;
+//    std::cout << DatabaseUtils::checkPassword(1, "psd") << std::endl;
 //    Message message(NULL, "another content", NULL, "18:15");
-//    std::cout << Database::saveMessage(message) << std::endl;
+//    std::cout << DatabaseUtils::saveMessage(message) << std::endl;
 //    Message message;
-//    std::cout << Database::getMessages(1, message) << std::endl;
+//    std::cout << DatabaseUtils::getMessages(1, message) << std::endl;
 //    std::cout << message.getMId() << " " << message.getMContent() << " " << message.getFId() << " " << message.getFromId() << " " << message.getToId() << " " << message.getMTime() << std::endl;
 //    std::vector<Message> messages;
-//    Database::getMessages(1, 1, messages);
+//    DatabaseUtils::getMessages(1, 1, messages);
 //    for(auto message :messages){
 //        std::cout << message.getMId() << " " << message.getMContent() << " " << message.getFId() << " " << message.getFromId() << " " << message.getToId() << " " << message.getMTime() << std::endl;
 //    }
 //    User user;
-//    Database::getUser(3, user);
+//    DatabaseUtils::getUser(3, user);
 //    std::cout << user.getUId() << " " << user.getUName() << " " << user.getUPassword() << " " << user.getFIconFile() << std::endl;
 //    std::vector<User> users;
-//    Database::getUsers(3, users);
+//    DatabaseUtils::getUsers(3, users);
 //    for(auto user: users){
 //        std::cout << user.getUId() << " " << user.getUName() << " " << user.getUPassword() << " " << user.getFIconFile() << std::endl;
 //    }
 
-//    JsonTesting::json_parse_request_testing();
-//    JsonTesting::json_make_response_testing();
+    JsonTesting::json_parse_request_testing();
+    JsonTesting::json_make_response_testing();
 
-    NetworkUtils::start_server();
+//    NetworkUtils::start_server();
 
     return 0;
 }

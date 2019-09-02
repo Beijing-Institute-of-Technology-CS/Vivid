@@ -2,7 +2,7 @@
 //// Created by YichengChen on 8/29/19.
 ////
 //
-//#include "Database.h"
+//#include "DatabaseUtils.h"
 //
 ////void Database::mql_connect() {
 ////    /**
@@ -45,7 +45,7 @@
 ////    mysql_close(mysql_sock);
 ////}
 ////
-//void Database::mql_connect(MYSQL &mysql_sock) {
+//void DatabaseUtils::mql_connect(MYSQL &mysql_sock) {
 ////    MYSQL mysql, *mysql_sock;
 ////    mysql_init(&mysql);
 //    mysql_init(&mysql_sock);
@@ -59,7 +59,7 @@
 ////    return &mysql;
 //}
 //
-//int Database::doRegister(const char *username, const char *password) {
+//int DatabaseUtils::doRegister(const char *username, const char *password) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 ////    std::cout << mysql_sock << std::endl;
@@ -78,7 +78,7 @@
 //    return uId;
 //}
 //
-//bool Database::checkPassword(int uId, const char *password) {
+//bool DatabaseUtils::checkPassword(int uId, const char *password) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
@@ -103,7 +103,7 @@
 //    return flag;
 //}
 //
-//bool Database::checkId(int uId) {
+//bool DatabaseUtils::checkId(int uId) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
@@ -131,13 +131,13 @@
 //    return flag;
 //}
 //
-//int Database::saveMessage(const Message &message) {
+//int DatabaseUtils::saveMessage(const Message &message) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
 //    int mId = -1;
 //
-//    sprintf(query_sql, "INSERT INTO Message(%s, %s, %s, %s, %s) VALUES(\'%s\', %d, %d, %d, \'%s\')", KEY_MCONTENT, KEY_FFILE, KEY_UFROMID, KEY_UTOID, KEY_MTIME, message.getMContent(), message.getFId(), message.getFromId(), message.getToId(), message.getMTime());
+//    sprintf(query_sql, "INSERT INTO Message(%s, %s, %s, %s, %s) VALUES(\'%s\', %d, %d, %d, \'%s\')", KEY_MCONTENT, KEY_FFILE, KEY_UFROMID, KEY_UTOID, KEY_MTIME, message.getMContent(), message.getFId(), message.getUFromId(), message.getUToId(), message.getMTime());
 //    if(mysql_query(&mysql_sock, query_sql)!=0){
 //        perror("query failed");
 //    }else{
@@ -148,7 +148,7 @@
 //    return mId;
 //}
 //
-//bool Database::getMessage(int mId, Message &message) {
+//bool DatabaseUtils::getMessage(int mId, Message &message) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
@@ -188,7 +188,7 @@
 //    return flag;
 //}
 //
-//void Database::getMessages(int uToId, int lastCalledMessage, std::vector<Message> &messages) {
+//void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Message> &messages) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
@@ -223,7 +223,7 @@
 //}
 //
 ////todo: error: atoi(NULL)
-//void Database::getUser(int uId, User &user) {
+//void DatabaseUtils::getUser(int uId, User &user) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
@@ -246,7 +246,7 @@
 //    mysql_close(&mysql_sock);
 //}
 //
-//void Database::getUsers(int uId, std::vector<User> &users) {
+//void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
 //    MYSQL mysql_sock ;
 //    mql_connect(mysql_sock);
 //    char query_sql[2048];
@@ -277,3 +277,5 @@
 //
 //    mysql_close(&mysql_sock);
 //}
+//
+//

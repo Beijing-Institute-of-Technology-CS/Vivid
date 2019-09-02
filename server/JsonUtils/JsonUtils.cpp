@@ -105,7 +105,7 @@ bool JsonUtils::parse_request_getMessages_json(char *s_json, int *lastCalledMess
 
 //checked
 //checked
-bool JsonUtils::parse_request_sendMessages_json(char *s_json, int *uToId, char *&content) {
+bool JsonUtils::parse_request_sendMessages_json(char *s_json, int *uToId, int *gToId, char *& mType, char *&mContent) {
     cJSON *json_root;
     cJSON *json_requestContent;
 
@@ -114,9 +114,29 @@ bool JsonUtils::parse_request_sendMessages_json(char *s_json, int *uToId, char *
 
     (*uToId) = cJSON_GetObjectItem(json_requestContent, KEY_UTOID)->valueint;
 
+    (*gToId) = cJSON_GetObjectItem(json_requestContent, KEY_GTOID)->valueint;
+
     char * char_temp = cJSON_GetObjectItem(json_requestContent, KEY_MCONTENT)->valuestring;
-    content = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
-    strcpy(content,char_temp);
+    mContent = (char *)malloc((strlen(char_temp) + 1) * sizeof(char));
+    strcpy(mContent, char_temp);
+
+    char_temp = cJSON_GetObjectItem(json_requestContent,KEY_MTYPE)->valuestring;
+    mType = (char *)malloc((strlen(char_temp) + 1) * sizeof(char));
+    strcpy(mType, char_temp);
+
+    cJSON_Delete(json_root);
+    return true;
+}
+
+bool JsonUtils::parse_request_adduIdToGroup_json(char *s_json, int *uId, int *gId) {
+    cJSON *json_root;
+    cJSON *json_requestContent;
+
+    json_root = cJSON_Parse(s_json);
+    json_requestContent = cJSON_GetObjectItem(json_root, KEY_REQUEST_CONTENT);
+
+    *uId = cJSON_GetObjectItem(json_requestContent,KEY_UID)->valueint;
+    *gId = cJSON_GetObjectItem(json_requestContent,KEY_GID)->valueint;
 
     cJSON_Delete(json_root);
     return true;
@@ -172,7 +192,7 @@ char *JsonUtils::make_response_login_json(char *result, char *username) {
 }
 
 char *
-JsonUtils::make_response_getInfo_json(char *result, int fIcon, std::vector<User> & contactsArray) {
+JsonUtils::make_response_getInfo_json(char *result, int fIcon, std::vector<User> & contactsArray, std::vector<Group> &groupsArray) {
     char *s_json;
 
     cJSON *json_root = cJSON_CreateObject();
@@ -181,6 +201,10 @@ JsonUtils::make_response_getInfo_json(char *result, int fIcon, std::vector<User>
     cJSON *json_responseContent = cJSON_CreateObject();
 
     cJSON_AddNumberToObject(json_responseContent,KEY_FICON,fIcon);
+
+    /**
+     *
+     */
 
     cJSON *json_contacts = cJSON_CreateObject();
 
@@ -198,11 +222,35 @@ JsonUtils::make_response_getInfo_json(char *result, int fIcon, std::vector<User>
     }
 
     cJSON_AddItemToObject(json_contacts,KEY_CONTACTS_ARRAY,json_contactsArray);
-
     cJSON_AddItemToObject(json_responseContent,KEY_CONTACTS,json_contacts);
+
+    /**
+     *
+     */
+
+    cJSON * json_groups = cJSON_CreateObject();
+
+    cJSON_AddNumberToObject(json_groups, KEY_GROUPS_NUMBER, groupsArray.size());
+
+    cJSON * json_groupsArray = cJSON_CreateArray();
+
+    for(int i=0;i<groupsArray.size();i++){
+        cJSON *json_groupsItem = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_groupsItem,KEY_GID,groupsArray.at(i).getGId());
+
+        cJSON_AddItemToArray(json_groupsArray,json_groupsItem);
+    }
+
+    cJSON_AddItemToObject(json_groups,KEY_GROUPS_ARRAY,json_groupsArray);
+    cJSON_AddItemToObject(json_responseContent,KEY_GROUPS,json_groups);
+
+    /**
+     *
+     */
 
     cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
     cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
+
     cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
 
     s_json = cJSON_Print(json_root);
@@ -230,6 +278,16 @@ char *JsonUtils::make_response_getMessages_json(char *result, std::vector<Messag
         cJSON *json_messagesItem = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_messagesItem,KEY_MID,messagesArray.at(i).getMId());
         cJSON_AddStringToObject(json_messagesItem,KEY_MCONTENT,messagesArray.at(i).getMContent());
+
+        if(messagesArray.at(i).isGroupMessage()){
+            cJSON_AddStringToObject(json_messagesItem,KEY_MTYPE,TYPE_GROUP_MESSAGE);
+        }else{
+            cJSON_AddStringToObject(json_messagesItem,KEY_MTYPE,TYPE_USER_MESSAGE);
+        }
+
+        cJSON_AddNumberToObject(json_messagesItem,KEY_GFROMID,messagesArray.at(i).getGId());
+        cJSON_AddNumberToObject(json_messagesItem,KEY_UFROMID,messagesArray.at(i).getUFromId());
+        cJSON_AddStringToObject(json_messagesItem,KEY_UFROMUSERNAME,messagesArray.at(i).uFromUsername);
         cJSON_AddNumberToObject(json_messagesItem,KEY_FID,messagesArray.at(i).getFId());
         cJSON_AddStringToObject(json_messagesItem,KEY_MTIME,messagesArray.at(i).getMTime());
 
@@ -251,7 +309,7 @@ char *JsonUtils::make_response_getMessages_json(char *result, std::vector<Messag
     return s_json;
 }
 
-char *JsonUtils::make_response_sendMessages_json(char *result, int mId) {
+char *JsonUtils::make_response_sendMessages_json(char *result, Message & message) {
     char * s_json;
 
     cJSON * json_root = cJSON_CreateObject();
@@ -259,7 +317,15 @@ char *JsonUtils::make_response_sendMessages_json(char *result, int mId) {
     char * json_result = result;
     cJSON * json_responseContent = cJSON_CreateObject();
 
-    cJSON_AddNumberToObject(json_responseContent,KEY_MID,mId);
+    cJSON_AddNumberToObject(json_responseContent,KEY_MID,message.getMId());
+    cJSON_AddStringToObject(json_responseContent,KEY_MCONTENT,message.getMContent());
+    if(message.isGroupMessage()){
+        cJSON_AddStringToObject(json_responseContent,KEY_MTYPE,TYPE_GROUP_MESSAGE);
+    }else{
+        cJSON_AddStringToObject(json_responseContent,KEY_MTYPE,TYPE_USER_MESSAGE);
+    }
+    cJSON_AddNumberToObject(json_responseContent,KEY_GFROMID,message.getGId());
+    cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,message.getUFromId());
 
     cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
     cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
@@ -272,7 +338,7 @@ char *JsonUtils::make_response_sendMessages_json(char *result, int mId) {
     return s_json;
 }
 
-char *JsonUtils::make_response_receiveMessages_json(char *result, int mId, char *mContent, int uFromId) {
+char *JsonUtils::make_response_receiveMessages_json(char *result, Message & message) {
     char *s_json;
 
     cJSON * json_root = cJSON_CreateObject();
@@ -283,13 +349,42 @@ char *JsonUtils::make_response_receiveMessages_json(char *result, int mId, char 
     cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
     cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
 
-    cJSON_AddNumberToObject(json_responseContent,KEY_MID,mId);
-    cJSON_AddStringToObject(json_responseContent,KEY_MCONTENT,mContent);
-    cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,uFromId);
+    cJSON_AddNumberToObject(json_responseContent,KEY_MID,message.getMId());
+    cJSON_AddStringToObject(json_responseContent,KEY_MCONTENT,message.getMContent());
+    if(message.isGroupMessage()){
+        cJSON_AddStringToObject(json_responseContent,KEY_MTYPE,TYPE_GROUP_MESSAGE);
+    }else{
+        cJSON_AddStringToObject(json_responseContent,KEY_MTYPE,TYPE_USER_MESSAGE);
+    }
+    cJSON_AddNumberToObject(json_responseContent,KEY_GFROMID,message.getGId());
+    cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,message.getUFromId());
+
+    cJSON_AddNumberToObject(json_responseContent,KEY_FID,message.getFId());
+    cJSON_AddStringToObject(json_responseContent,KEY_MTIME,message.getMTime());
 
     cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
 
     s_json = cJSON_Print(json_root);
+
+    cJSON_Delete(json_root);
+
+    return s_json;
+}
+
+char *JsonUtils::make_response_adduIdToGroup_json(char *result) {
+    char *s_json;
+
+    cJSON *json_root = cJSON_CreateObject();
+    char * json_responseType = TYPE_ADD_TO_GROUP;
+    char * json_result = result;
+    cJSON *json_responseContent = cJSON_CreateObject();
+
+    cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,TYPE_ADD_TO_GROUP);
+    cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
+    cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
+
+    s_json = cJSON_Print(json_root);
+
 
     cJSON_Delete(json_root);
 
