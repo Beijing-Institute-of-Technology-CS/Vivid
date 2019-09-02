@@ -18,17 +18,24 @@ public:
 
     void setUId(int uId);
 
-    char *getUName() const;
+    const char *getUName() const;
 
-    char *getUPassword() const;
+    const char *getUPassword() const;
 
     int getFIconFile() const;
 
     void setFIconFile(int fIconFile);
 
+    void setUName(char *a);
+
+    void setUPWD(char *a);
+
 private:
     int uId;
     int fIconFile;
+
+
+
 };
 
 

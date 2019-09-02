@@ -310,12 +310,15 @@ char *JsonUtils::make_response_getMessages_json(char *result, std::vector<Messag
 }
 
 char *JsonUtils::make_response_sendMessages_json(char *result, Message & message) {
-    char * s_json;
+    char *s_json;
 
     cJSON * json_root = cJSON_CreateObject();
-    char * json_responseType =TYPE_SEND_MESSAGES;
+    char * json_responseType = TYPE_SEND_MESSAGES;
     char * json_result = result;
     cJSON * json_responseContent = cJSON_CreateObject();
+
+    cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
+    cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
 
     cJSON_AddNumberToObject(json_responseContent,KEY_MID,message.getMId());
     cJSON_AddStringToObject(json_responseContent,KEY_MCONTENT,message.getMContent());
@@ -327,8 +330,11 @@ char *JsonUtils::make_response_sendMessages_json(char *result, Message & message
     cJSON_AddNumberToObject(json_responseContent,KEY_GFROMID,message.getGId());
     cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,message.getUFromId());
 
-    cJSON_AddStringToObject(json_root,KEY_RESPONSE_TYPE,json_responseType);
-    cJSON_AddStringToObject(json_root,KEY_RESULT,json_result);
+    cJSON_AddStringToObject(json_responseContent,KEY_UFROMUSERNAME, message.getUFromUsername());
+
+    cJSON_AddNumberToObject(json_responseContent,KEY_FID,message.getFId());
+    cJSON_AddStringToObject(json_responseContent,KEY_MTIME,message.getMTime());
+
     cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
 
     s_json = cJSON_Print(json_root);
@@ -359,6 +365,8 @@ char *JsonUtils::make_response_receiveMessages_json(char *result, Message & mess
     cJSON_AddNumberToObject(json_responseContent,KEY_GFROMID,message.getGId());
     cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,message.getUFromId());
 
+    cJSON_AddStringToObject(json_responseContent,KEY_UFROMUSERNAME, message.getUFromUsername());
+
     cJSON_AddNumberToObject(json_responseContent,KEY_FID,message.getFId());
     cJSON_AddStringToObject(json_responseContent,KEY_MTIME,message.getMTime());
 
@@ -384,7 +392,6 @@ char *JsonUtils::make_response_adduIdToGroup_json(char *result) {
     cJSON_AddItemToObject(json_root,KEY_RESPONSE_CONTENT,json_responseContent);
 
     s_json = cJSON_Print(json_root);
-
 
     cJSON_Delete(json_root);
 

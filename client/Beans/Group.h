@@ -8,6 +8,7 @@
 class Group{
 private:
     int gId;
+    int uId;
 public:
     Group();
 
@@ -16,6 +17,10 @@ public:
     int getGId() const;
 
     void setGId(int gId);
+
+    int getUId();
+
+    void setUId(int uId);
 };
 
 #endif //CLIENT_GROUP_H

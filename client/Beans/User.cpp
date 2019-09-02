@@ -17,11 +17,11 @@ void User::setUId(int uId) {
     User::uId = uId;
 }
 
-char *User::getUName() const {
+const char *User::getUName() const {
     return uName;
 }
 
-char *User::getUPassword() const {
+const char *User::getUPassword() const {
     return uPassword;
 }
 
@@ -31,4 +31,12 @@ int User::getFIconFile() const {
 
 void User::setFIconFile(int fIconFile) {
     User::fIconFile = fIconFile;
+}
+
+void User::setUName (char * a){
+    User::uName=a;
+}
+
+void User::setUPWD(char * a){
+    User::uPassword=a;
 }
