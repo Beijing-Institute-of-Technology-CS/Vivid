@@ -113,10 +113,8 @@ void NetworkUtils::start_server() {
          * adding client_socket
          */
 
-        int fd;
-
         for(int i=0;i<USERS_SIZE;i++) {
-            fd = clients[i].getFd();
+            int fd = clients[i].getFd();
 
             if (fd > 0) {
                 FD_SET(fd, &read_fds);
@@ -126,7 +124,6 @@ void NetworkUtils::start_server() {
                 max_fd = fd;
             }
         }
-
 
         activity = select(max_fd+1,&read_fds,NULL,NULL,NULL);
 
@@ -170,7 +167,7 @@ void NetworkUtils::start_server() {
          * else handling some IO operation on other socket
          */
         for(int i=0;i<USERS_SIZE;i++){
-            fd = clients[i].getFd();
+            int fd = clients[i].getFd();
 
             if(FD_ISSET(fd,&read_fds)){
 
@@ -244,9 +241,9 @@ void NetworkUtils::start_server() {
                              * users
                              */
                             users[uId].setInUse(true);
+                            users[uId].setUId(uId);
 
-                            users[uId].uPassword = (char *)malloc((strlen(password)+1)*sizeof(char));
-                            strcpy(users[uId].uPassword,password);
+                            users[uId].setUPassword(password);
 
                             users[uId].setClientIndex(i);
 
@@ -258,6 +255,8 @@ void NetworkUtils::start_server() {
                             User user_for_username;
                             DatabaseUtils::getUser(uId, user_for_username);
                             char *username = user_for_username.getUName();
+
+                            users[uId].setUName(username);
 
                             char *s_json = JsonUtils::make_response_login_json(TRUE_CONTENT,username);
                             send(fd,s_json,strlen(s_json),0);
@@ -271,20 +270,24 @@ void NetworkUtils::start_server() {
                      * verifying token
                      */
                      else{
-                        int uId;
-                        char * uPwd;
-                        JsonUtils::parse_request_token(buffer,&uId,uPwd);
+                        int uId_from_token;
+                        char * uPwd_from_token;
 
-                        if(DatabaseUtils::checkPassword(uId,uPwd)){
+
+
+
+                        JsonUtils::parse_request_token(buffer, &uId_from_token, uPwd_from_token);
+
+                        if(DatabaseUtils::checkPassword(uId_from_token, uPwd_from_token)){
                             if(strcmp(requestType,TYPE_GET_INFO)==0){
 
                                 int fIcon = 0;
 
                                 std::vector<User> contacts;
-                                DatabaseUtils::getUsers(uId,contacts);
+                                DatabaseUtils::getUsers(uId_from_token, contacts);
 
                                 std::vector<Group> groups;
-                                DatabaseUtils::getGroups(uId,groups);
+                                DatabaseUtils::getGroups(uId_from_token, groups);
 
                                 char * s_json = JsonUtils::make_response_getInfo_json(TRUE_CONTENT, fIcon, contacts,groups);
 
@@ -296,7 +299,7 @@ void NetworkUtils::start_server() {
                                 JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
 
                                 std::vector<Message> messages;
-                                DatabaseUtils::getMessages(uId,lastCalledMessage,messages);
+                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
 
                                 char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
 
@@ -322,14 +325,18 @@ void NetworkUtils::start_server() {
                                 message.setUToId(uToId);
                                 message.setGId(gToId);
 
-                                message.mContent = (char *)malloc(sizeof(char)*(strlen(mContent)+1));
-                                strcpy(message.mContent,mContent);
+                                message.setMContent(mContent);
 
                                 if(strcmp(mType,TYPE_GROUP_MESSAGE)==0){
                                     message.setGroupMessage(true);
                                 }else{
                                     message.setGroupMessage(false);
                                 }
+
+                                User user_for_username;
+                                DatabaseUtils::getUser(uId_from_token, user_for_username);
+                                char *username = user_for_username.getUName();
+                                message.setUFromUsername(username);
 
                                 /**
                                  * generate time
@@ -343,8 +350,12 @@ void NetworkUtils::start_server() {
                                 time_s += " ";
                                 time_s += std::to_string(ltm->tm_sec);
 
-                                message.mTime = (char *)malloc(sizeof(char)* (time_s.length()+1));
-                                strcpy(message.mTime,time_s.c_str());
+                                char * time_c = (char *)malloc(sizeof(char)*(strlen(time_s.c_str())+1));
+                                strcpy(time_c,time_s.c_str());
+                                message.setMTime(time_c);
+
+                                int mId = DatabaseUtils::saveMessage(message);
+                                message.setMId(mId);
 
                                 /**
                                  * to sender
@@ -359,15 +370,20 @@ void NetworkUtils::start_server() {
                                  */
                                 if(message.isGroupMessage()){
                                     std::vector<User> groupContacts;
-                                    for(int j=0;j<groupContacts.size();j++){
-                                        int uToId_groupMessage = groupContacts.at(j).getUId();
+
+                                    DatabaseUtils::getGroupContacts(gToId,groupContacts);
+
+                                    for(int k=0;k<groupContacts.size();k++){
+                                        int uToId_groupMessage = groupContacts.at(k).getUId();
+                                        if(uFromId==uToId_groupMessage){
+                                            continue;
+                                        }
                                         if(users[uToId_groupMessage].isInUse()){
 
                                             int clientIndex = users[uToId_groupMessage].getClientIndex();
-                                            int fd = clients[clientIndex].getFd();
 
                                             char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,message);
-                                            send(fd,s_json,strlen(s_json),0);
+                                            send(clients[clientIndex].getFd(),s_json,strlen(s_json),0);
 
                                         }else{
                                             //todo do nothing
@@ -393,14 +409,16 @@ void NetworkUtils::start_server() {
                                     }
                                 }
                             }else if(strcmp(requestType,TYPE_ADD_TO_GROUP)==0){
-                                    int uId;
-                                    int gId;
+                                    int uId_AddToGroup;
+                                    int gId_AddToGroup;
 
-                                    JsonUtils::parse_request_adduIdToGroup_json(buffer,&uId,&gId);
+                                    JsonUtils::parse_request_adduIdToGroup_json(buffer, &uId_AddToGroup, &gId_AddToGroup);
 
-                                    DatabaseUtils::addUIdToGroup(uId,gId);
+                                    DatabaseUtils::addUIdToGroup(uId_AddToGroup, gId_AddToGroup);
 
                                     char *s_json = JsonUtils::make_response_adduIdToGroup_json(TRUE_CONTENT);
+                                    send(clients[fd].getFd(),s_json,strlen(s_json),0);
+
                             }
                         }else{
                             perror("wrong token!");

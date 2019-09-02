@@ -38,11 +38,13 @@ public:
 
     void setGId(int gId);
 
-    char * mContent;
+    void setMContent(char *mContent);
 
-    char * mTime;
+    void setMTime(char *mTime);
 
-    char *uFromUsername;
+    void setUFromUsername(char *uFromUsername);
+
+    char *getUFromUsername() const;
 
 private:
     int mId;
@@ -51,12 +53,15 @@ private:
     int uFromId;
     int uToId;
 
-    /**
-     * should be the same
-     */
     int gId;
 
     bool groupMessage;
+
+    char * mContent;
+
+    char * mTime;
+
+    char * uFromUsername;
 
 };
 

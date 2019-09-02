@@ -42,10 +42,10 @@ int main() {
 //        std::cout << user.getUId() << " " << user.getUName() << " " << user.getUPassword() << " " << user.getFIconFile() << std::endl;
 //    }
 
-    JsonTesting::json_parse_request_testing();
-    JsonTesting::json_make_response_testing();
+//    JsonTesting::json_parse_request_testing();
+//    JsonTesting::json_make_response_testing();
 
-//    NetworkUtils::start_server();
+    NetworkUtils::start_server();
 
     return 0;
 }

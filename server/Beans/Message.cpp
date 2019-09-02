@@ -2,6 +2,8 @@
 // Created by YichengChen on 8/29/19.
 //
 
+#include <cstdlib>
+#include <cstring>
 #include "Message.h"
 
 Message::Message() {}
@@ -60,5 +62,24 @@ int Message::getUToId() const {
 
 void Message::setUToId(int uToId) {
     Message::uToId = uToId;
+}
+
+void Message::setMContent(char *mContent) {
+    this->mContent = (char *)malloc(sizeof(char)*(strlen(mContent)+1));
+    strcpy(this->mContent,mContent);
+}
+
+void Message::setMTime(char *mTime) {
+    this->mTime = (char *)malloc(sizeof(char)*(strlen(mTime)+1));
+    strcpy(this->mTime,mTime);
+}
+
+void Message::setUFromUsername(char *uFromUsername) {
+    this->uFromUsername = (char *)malloc(sizeof(char)*(strlen(uFromUsername)+1));
+    strcpy(this->uFromUsername,uFromUsername);
+}
+
+char *Message::getUFromUsername() const {
+    return uFromUsername;
 }
 
