@@ -19,8 +19,6 @@
 
 class DatabaseUtils {
 public:
-    static void mql_connect(MYSQL &mysql_sock);
-
     /**
      * 注册用户
      * @param username
@@ -99,6 +97,12 @@ public:
      * @param groupContacts
      */
     static void getGroupContacts(int gId, std::vector<User> &groupContacts);
+
+    static void database_start();
+
+private:
+    static void mql_connect(MYSQL &mysql_sock);
+    static MYSQL mysql_sock;
 };
 
 

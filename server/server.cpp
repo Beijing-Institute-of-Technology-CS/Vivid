@@ -33,6 +33,7 @@
 
 int main() {
 
+    DatabaseUtils::database_start();
     NetworkUtils::start_server();
 
     return 0;

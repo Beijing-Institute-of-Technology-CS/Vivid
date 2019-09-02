@@ -45,6 +45,17 @@
 //    mysql_close(mysql_sock);
 //}
 //
+
+MYSQL DatabaseUtils::mysql_sock;
+
+
+void DatabaseUtils::database_start() {
+    std::cout << "database starting" << std::endl;
+    mysql_connect(mysql_sock);
+    std::cout << "database started" << std::endl;
+}
+
+
 void DatabaseUtils::mql_connect(MYSQL &mysql_sock) {
 //    MYSQL mysql, *mysql_sock;
 //    mysql_init(&mysql);
@@ -60,8 +71,8 @@ void DatabaseUtils::mql_connect(MYSQL &mysql_sock) {
 }
 
 int DatabaseUtils::doRegister(const char *username, const char *password) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
 //    std::cout << mysql_sock << std::endl;
     char query_sql[2048];
     int uId = -1;
@@ -79,8 +90,8 @@ int DatabaseUtils::doRegister(const char *username, const char *password) {
 }
 
 bool DatabaseUtils::checkPassword(int uId, const char *password) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
     bool flag = false;
 
@@ -104,8 +115,8 @@ bool DatabaseUtils::checkPassword(int uId, const char *password) {
 }
 
 bool DatabaseUtils::checkId(int uId) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
     bool flag = false;
 
@@ -132,8 +143,8 @@ bool DatabaseUtils::checkId(int uId) {
 }
 
 int DatabaseUtils::saveMessage(const Message &message) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
     int mId = -1;
 
@@ -152,8 +163,8 @@ int DatabaseUtils::saveMessage(const Message &message) {
 }
 
 bool DatabaseUtils::getMessage(int mId, Message &message) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
     bool flag = false;
 
@@ -196,8 +207,8 @@ bool DatabaseUtils::getMessage(int mId, Message &message) {
 }
 
 void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Message> &messages) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
 
     sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d AND %s > %d", KEY_UTOID, uToId, KEY_MID, lastCalledMessage);
@@ -235,8 +246,8 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
 
 //todo: error: atoi(NULL)
 void DatabaseUtils::getUser(int uId, User &user) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
 
     sprintf(query_sql, "SELECT * FROM User WHERE %s = %d", KEY_UID, uId);
@@ -260,8 +271,8 @@ void DatabaseUtils::getUser(int uId, User &user) {
 }
 
 void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
 
     sprintf(query_sql, "SELECT * FROM User WHERE %s IN (SELECT %s FROM Befriend WHERE %s = %d)", KEY_UID, KEY_UID2, KEY_UID1, uId);
@@ -294,8 +305,8 @@ void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
 }
 
 void DatabaseUtils::getGroups(int uId, std::vector<Group> &groups) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
 
     sprintf(query_sql, "SELECT %s FROM GroupVivid WHERE %s = %d", KEY_GID, KEY_UID, uId);
@@ -321,8 +332,8 @@ void DatabaseUtils::getGroups(int uId, std::vector<Group> &groups) {
 }
 
 void DatabaseUtils::addUIdToGroup(int uId, int gId) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
 
     sprintf(query_sql, "INSERT INTO GroupVivid VALUES(%d, %d)", gId, uId);
@@ -336,8 +347,8 @@ void DatabaseUtils::addUIdToGroup(int uId, int gId) {
 }
 
 void DatabaseUtils::getGroupContacts(int gId, std::vector<User> &groupContacts) {
-    MYSQL mysql_sock ;
-    mql_connect(mysql_sock);
+//    MYSQL mysql_sock ;
+//    mql_connect(mysql_sock);
     char query_sql[2048];
 
     sprintf(query_sql, "SELECT * FROM User WHERE %s IN (SELECT %s FROM GroupVivid WHERE %s = %d)", KEY_UID, KEY_UID, KEY_GID, gId);
@@ -369,4 +380,3 @@ void DatabaseUtils::getGroupContacts(int gId, std::vector<User> &groupContacts) 
 
     mysql_close(&mysql_sock);
 }
-
