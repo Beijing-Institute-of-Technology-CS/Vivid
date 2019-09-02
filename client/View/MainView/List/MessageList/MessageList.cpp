@@ -33,11 +33,11 @@ GtkTreeModel *message_list::list_model_create() {
     return GTK_TREE_MODEL(store);
 }
 
-void message_list::append(GtkWidget *list, const gchar *name, const gchar *message) {
+void message_list::append(const gchar *name, const gchar *message) {
     GtkListStore *store;
     GtkTreeIter iter;
 
-    store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(list)));
+    store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
     gtk_list_store_append(store, &iter);
     gtk_list_store_set(store, &iter,COLUMN_ID,history_id++,COLUMN_NAME,name,COLUMN_MESSAGE, message, -1);
 }

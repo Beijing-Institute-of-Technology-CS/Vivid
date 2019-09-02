@@ -41,7 +41,7 @@ void friend_list::append(const gchar *id, const gchar *name) {
     gtk_list_store_set(store, &iter,FRIEND_ID,id,FRIEND_NAME,name, -1);
 }
 
-void friend_list::setData(std::vector<User> contacts) {
+void friend_list::setData(const std::vector<User>& contacts) {
     GtkListStore *store;
     store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
     gtk_list_store_clear(store);

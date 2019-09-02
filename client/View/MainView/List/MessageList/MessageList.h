@@ -22,7 +22,7 @@ public:
     //void show();
     void destroy();
     GtkWidget *getView();
-    void append(GtkWidget *list, const gchar *name,const gchar *message);
+    void append(const gchar *name, const gchar *message);
     //void get_input_login_content(const char * & username, const char * & password);
 
 private:

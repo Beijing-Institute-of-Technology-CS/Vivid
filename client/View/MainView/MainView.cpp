@@ -7,14 +7,14 @@
 #include <string>
 
 
-MainView::MainView():mlist(),flist() {
+MainView::MainView():mlist(),flist(), gList() {
 }
 
 
 void MainView::show()
 {
     gtk_widget_show_all(main_window);
-    gtk_widget_hide(flist.getView());
+    ChangeToMessage(nullptr, this);
 }
 
 void MainView::destroy() {
@@ -22,18 +22,12 @@ void MainView::destroy() {
 
 }
 
-void MainView::message_add(gchar* name,gchar *message) {
-    mlist.append(mlist.getView(),name,message);
-}
-
-void MainView::friend_add(gchar *id, gchar *name) {
-    flist.append(id,name);
-}
-
 void MainView::ChangeToMessage(GtkWidget *widget, gpointer data) {
     MainView * mainView = (MainView *) data;
     gtk_widget_show(mainView->mlist.getView());
     gtk_widget_hide(mainView->flist.getView());
+    gtk_widget_hide(mainView->gList.getView());
+    mainView->mode = MSG;
 }
 
 
@@ -41,7 +35,18 @@ void MainView::ChangeToFriend(GtkWidget *widget, gpointer data) {
     MainView * mainView = (MainView *) data;
     gtk_widget_show(mainView->flist.getView());
     gtk_widget_hide(mainView->mlist.getView());
+    gtk_widget_hide(mainView->gList.getView());
+    mainView->mode = CONTACTS;
 }
+
+void MainView::ChangeToGroup(GtkWidget *widget, gpointer data) {
+    MainView * mainView = (MainView *) data;
+    gtk_widget_hide(mainView->flist.getView());
+    gtk_widget_hide(mainView->mlist.getView());
+    gtk_widget_show(mainView->gList.getView());
+    mainView->mode = GROUP;
+}
+
 
 void MainView::create() {
 
@@ -54,6 +59,7 @@ void MainView::create() {
     GtkWidget *label_name;
     GtkWidget *message_button;
     GtkWidget *friend_button;
+    GtkWidget * group_button;
     GtkWidget * inputHBox;
     GtkWidget * inputEntry;
     GtkWidget * inputConfirmButton;
@@ -71,8 +77,9 @@ void MainView::create() {
     label_name=gtk_label_new("dd");
     button_box = gtk_hbox_new(FALSE,0);
     list_box = gtk_vbox_new(FALSE,0);
-    message_button = gtk_button_new_with_label("message");
-    friend_button=gtk_button_new_with_label("friend");
+    message_button = gtk_button_new_with_label("Messages");
+    friend_button=gtk_button_new_with_label("Contacts");
+    group_button = gtk_button_new_with_label("Groups");
     message_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(mlist.getView()));
     friend_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(flist.getView()));
 
@@ -88,10 +95,13 @@ void MainView::create() {
                      G_CALLBACK(ChangeToMessage), this);
     g_signal_connect(G_OBJECT(friend_button),"clicked",
                      G_CALLBACK(ChangeToFriend), this);
+    g_signal_connect(G_OBJECT(group_button),"clicked",
+                     G_CALLBACK(ChangeToGroup), this);
     g_signal_connect(G_OBJECT(message_selection),"changed",
                     G_CALLBACK(tree_selection_message_changed),this);
     g_signal_connect(G_OBJECT(friend_selection),"changed",
                     G_CALLBACK(tree_selection_friend_changed),this);
+
     /**
      * 设定属性
      */
@@ -102,6 +112,7 @@ void MainView::create() {
     gtk_widget_set_size_request(mlist.getView(),300,500);
     gtk_button_set_relief(GTK_BUTTON(message_button),GTK_RELIEF_NONE);
     gtk_button_set_relief(GTK_BUTTON(friend_button),GTK_RELIEF_NONE);
+    gtk_button_set_relief(GTK_BUTTON(group_button),GTK_RELIEF_NONE);
 
     /**
      * 添加构件
@@ -116,60 +127,65 @@ void MainView::create() {
     gtk_box_pack_start(GTK_BOX(inputHBox), inputEntry, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(inputHBox), inputConfirmButton, FALSE, FALSE, 0);
 
-    message_add("dd","vegetable");
-    message_add("大哥","tql");
-    message_add("大哥","这个掌是为您鼓的");
-    message_add("cyc","nb");
-    message_add("dd","vegetable");
-    message_add("大哥","tql");
-    message_add("大哥","这个掌是为您鼓的");
-    message_add("cyc","nb");
-    message_add("dd","vegetable");
-    message_add("大哥","tql");
-    message_add("大哥","这个掌是为您鼓的");
-    message_add("cyc","nb");
-    message_add("dd","vegetable");
-    message_add("大哥","tql");
-    message_add("大哥","这个掌是为您鼓的");
-    message_add("cyc","nb");
-    message_add("dd","vegetable");
-    message_add("大哥","tql");
-    message_add("大哥","这个掌是为您鼓的");
-    message_add("cyc","nb");
-    message_add("dd","vegetable");
-    message_add("大哥","tql");
-    message_add("大哥","这个掌是为您鼓的");
-    message_add("cyc","nb");
+    mlist.append("dd","vegetable");
+    mlist.append("大哥","tql");
+    mlist.append("大哥","这个掌是为您鼓的");
+    mlist.append("cyc","nb");
+    mlist.append("dd","vegetable");
+    mlist.append("大哥","tql");
+    mlist.append("大哥","这个掌是为您鼓的");
+    mlist.append("cyc","nb");
+    mlist.append("dd","vegetable");
+    mlist.append("大哥","tql");
+    mlist.append("大哥","这个掌是为您鼓的");
+    mlist.append("cyc","nb");
+    mlist.append("dd","vegetable");
+    mlist.append("大哥","tql");
+    mlist.append("大哥","这个掌是为您鼓的");
+    mlist.append("cyc","nb");
+    mlist.append("dd","vegetable");
+    mlist.append("大哥","tql");
+    mlist.append("大哥","这个掌是为您鼓的");
+    mlist.append("cyc","nb");
+    mlist.append("dd","vegetable");
+    mlist.append("大哥","tql");
+    mlist.append("大哥","这个掌是为您鼓的");
+    mlist.append("cyc","nb");
 
-    friend_add("1", "大哥");
-    friend_add("2", "还是大哥");
-    friend_add("3", "不愧是大哥");
-    friend_add("4", "大哥就是大哥");
-    friend_add("1", "大哥");
-    friend_add("2", "还是大哥");
-    friend_add("3", "不愧是大哥");
-    friend_add("4", "大哥就是大哥");friend_add("1", "大哥");
-    friend_add("2", "还是大哥");
-    friend_add("3", "不愧是大哥");
-    friend_add("4", "大哥就是大哥");friend_add("1", "大哥");
-    friend_add("2", "还是大哥");
-    friend_add("3", "不愧是大哥");
-    friend_add("4", "大哥就是大哥");friend_add("1", "大哥");
-    friend_add("2", "还是大哥");
-    friend_add("3", "不愧是大哥");
-    friend_add("4", "大哥就是大哥");
+    flist.append("1", "大哥");
+    flist.append("2", "还是大哥");
+    flist.append("3", "不愧是大哥");
+    flist.append("4", "大哥就是大哥");
+    flist.append("1", "大哥");
+    flist.append("2", "还是大哥");
+    flist.append("3", "不愧是大哥");
+    flist.append("4", "大哥就是大哥");
+    flist.append("1", "大哥");
+    flist.append("2", "还是大哥");
+    flist.append("3", "不愧是大哥");
+    flist.append("4", "大哥就是大哥");
+    flist.append("1", "大哥");
+    flist.append("2", "还是大哥");
+    flist.append("3", "不愧是大哥");
+    flist.append("4", "大哥就是大哥");
+    flist.append("1", "大哥");
+    flist.append("2", "还是大哥");
+    flist.append("3", "不愧是大哥");
+    flist.append("4", "大哥就是大哥");
 
     gtk_box_pack_start(GTK_BOX(button_box),message_button,FALSE,FALSE,50);
     gtk_box_pack_start(GTK_BOX(button_box),friend_button,FALSE,FALSE,5);
+    gtk_box_pack_start(GTK_BOX(button_box), group_button, FALSE, FALSE, 5);
 
     gtk_box_pack_start(GTK_BOX(vbox),button_box,FALSE,FALSE,0);
     gtk_box_pack_start(GTK_BOX(vbox),scolled,TRUE,TRUE,0);
     gtk_container_add(GTK_CONTAINER(scolled),list_box);
 
 
-    gtk_box_pack_start(GTK_BOX(list_box), inputHBox, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(list_box), inputHBox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(list_box),mlist.getView(),TRUE,TRUE,5);
     gtk_box_pack_start(GTK_BOX(list_box),flist.getView(),TRUE,TRUE,5);
+    gtk_box_pack_start(GTK_BOX(list_box),gList.getView(),TRUE,TRUE,5);
 
     gtk_container_add(GTK_CONTAINER(main_window),vbox);
 }

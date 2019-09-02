@@ -21,7 +21,7 @@ public:
     friend_list();
     GtkWidget *getView();
     void append(const gchar *id,const gchar *name);
-    void setData(std::vector<User> contacts);
+    void setData(const std::vector<User>& contacts);
 private:
     GtkWidget *view= nullptr;
     GtkCellRenderer *renderer= nullptr;
