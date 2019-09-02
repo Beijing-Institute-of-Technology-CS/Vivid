@@ -27,12 +27,15 @@ void MainView::ChangeToMessage(GtkWidget *widget, gpointer data) {
     gtk_widget_show(mainView->mlist.getView());
     gtk_widget_hide(mainView->flist.getView());
     gtk_widget_hide(mainView->gList.getView());
+    gtk_widget_hide(mainView->inputHBox);
     mainView->mode = MSG;
 }
 
 
 void MainView::ChangeToFriend(GtkWidget *widget, gpointer data) {
     MainView * mainView = (MainView *) data;
+    gtk_widget_show(mainView->inputHBox);
+    gtk_entry_set_text(GTK_ENTRY(mainView->inputEntry), "");
     gtk_widget_show(mainView->flist.getView());
     gtk_widget_hide(mainView->mlist.getView());
     gtk_widget_hide(mainView->gList.getView());
@@ -41,6 +44,8 @@ void MainView::ChangeToFriend(GtkWidget *widget, gpointer data) {
 
 void MainView::ChangeToGroup(GtkWidget *widget, gpointer data) {
     MainView * mainView = (MainView *) data;
+    gtk_widget_show(mainView->inputHBox);
+    gtk_entry_set_text(GTK_ENTRY(mainView->inputEntry), "");
     gtk_widget_hide(mainView->flist.getView());
     gtk_widget_hide(mainView->mlist.getView());
     gtk_widget_show(mainView->gList.getView());
@@ -60,8 +65,6 @@ void MainView::create() {
     GtkWidget *message_button;
     GtkWidget *friend_button;
     GtkWidget * group_button;
-    GtkWidget * inputHBox;
-    GtkWidget * inputEntry;
     GtkWidget * inputConfirmButton;
     GtkTreeSelection *message_selection;
     GtkTreeSelection *friend_selection;
@@ -101,6 +104,8 @@ void MainView::create() {
                     G_CALLBACK(tree_selection_message_changed),this);
     g_signal_connect(G_OBJECT(friend_selection),"changed",
                     G_CALLBACK(tree_selection_friend_changed),this);
+    g_signal_connect(G_OBJECT(inputConfirmButton),"changed",
+                     G_CALLBACK(goButtonClickedCallback),this);
 
     /**
      * 设定属性
@@ -126,52 +131,6 @@ void MainView::create() {
 
     gtk_box_pack_start(GTK_BOX(inputHBox), inputEntry, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(inputHBox), inputConfirmButton, FALSE, FALSE, 0);
-
-    mlist.append(0, "vegetable", "dd");
-    mlist.append(0, "tql", "大哥");
-    mlist.append(0, "这个掌是为您鼓的", "大哥");
-    mlist.append(0, "nb", "cyc");
-    mlist.append(0, "vegetable", "dd");
-    mlist.append(0, "tql", "大哥");
-    mlist.append(0, "这个掌是为您鼓的", "大哥");
-    mlist.append(0, "nb", "cyc");
-    mlist.append(0, "vegetable", "dd");
-    mlist.append(0, "tql", "大哥");
-    mlist.append(0, "这个掌是为您鼓的", "大哥");
-    mlist.append(0, "nb", "cyc");
-    mlist.append(0, "vegetable", "dd");
-    mlist.append(0, "tql", "大哥");
-    mlist.append(0, "这个掌是为您鼓的", "大哥");
-    mlist.append(0, "nb", "cyc");
-    mlist.append(0, "vegetable", "dd");
-    mlist.append(0, "tql", "大哥");
-    mlist.append(0, "这个掌是为您鼓的", "大哥");
-    mlist.append(0, "nb", "cyc");
-    mlist.append(0, "vegetable", "dd");
-    mlist.append(0, "tql", "大哥");
-    mlist.append(0, "这个掌是为您鼓的", "大哥");
-    mlist.append(0, "nb", "cyc");
-
-    flist.append("1", "大哥");
-    flist.append("2", "还是大哥");
-    flist.append("3", "不愧是大哥");
-    flist.append("4", "大哥就是大哥");
-    flist.append("1", "大哥");
-    flist.append("2", "还是大哥");
-    flist.append("3", "不愧是大哥");
-    flist.append("4", "大哥就是大哥");
-    flist.append("1", "大哥");
-    flist.append("2", "还是大哥");
-    flist.append("3", "不愧是大哥");
-    flist.append("4", "大哥就是大哥");
-    flist.append("1", "大哥");
-    flist.append("2", "还是大哥");
-    flist.append("3", "不愧是大哥");
-    flist.append("4", "大哥就是大哥");
-    flist.append("1", "大哥");
-    flist.append("2", "还是大哥");
-    flist.append("3", "不愧是大哥");
-    flist.append("4", "大哥就是大哥");
 
     gtk_box_pack_start(GTK_BOX(button_box),message_button,FALSE,FALSE,50);
     gtk_box_pack_start(GTK_BOX(button_box),friend_button,FALSE,FALSE,5);
@@ -228,6 +187,11 @@ void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpoint
 
 void MainView::setCallback(MainViewCallback *callback) {
     MainView::callback = callback;
+}
+
+void MainView::goButtonClickedCallback(GtkWidget *button, gpointer data) {
+    //todo:
+    auto * mainView = (MainView *)data;
 }
 
 

@@ -38,6 +38,8 @@ private:
     MainViewShowMode mode = MSG;
 
     GtkWidget *main_window = nullptr;
+    GtkWidget * inputEntry;
+    GtkWidget * inputHBox;
 
     MainViewCallback * callback;
 
@@ -46,9 +48,7 @@ private:
     static void ChangeToGroup(GtkWidget *widget, gpointer data);
     static void tree_selection_message_changed(GtkTreeSelection *selection,  gpointer data);
     static void tree_selection_friend_changed(GtkTreeSelection *selection,gpointer data);
-    static void buttonClickedCallback(GtkWidget * button, gpointer data) {
-        printf("Hey!\n");
-    }
+    static void goButtonClickedCallback(GtkWidget * button, gpointer data);
 };
 
 class MainViewCallback {
