@@ -5,37 +5,25 @@
 #ifndef SERVER_MESSAGE_H
 #define SERVER_MESSAGE_H
 
-#include <cstring>
-#include "../../Constants.h"
 
 class Message {
 public:
-    char *uFromUsername;
-
-    char *mContent;
-
-    char *mType;
-
-    char *mTime;
-
     Message();
 
-    //mType must be initialed
-    Message(int mId, char *mContent, int uFromId, char *mType, char *mTime);
+    Message(int mId, int fId, int uFromId, int uToId, int gId, bool groupMessage, char *mContent, char *mTime,
+            char *uFromUsername);
 
     int getMId() const;
 
     void setMId(int mId);
 
-    const char *getMContent() const;
+    char *getMContent() const;
 
-    char *getMType() const;
+    int getFId() const;
 
-    bool isGroup() const;
+    void setFId(int fId);
 
-    int getGFromId() const;
-
-    void setGFromId(int gFromId);
+    char *getMTime() const;
 
     int getUFromId() const;
 
@@ -45,25 +33,38 @@ public:
 
     void setUToId(int uToId);
 
-    char *getUFromusername() const;
+    bool isGroupMessage() const;
 
-    int getFId() const;
+    void setGroupMessage(bool groupMessage);
 
-    void setFId(int fId);
+    int getGId() const;
 
-    char *getMTime() const;
+    void setGId(int gId);
 
-    void setContent(char *ms);
+    void setMContent(char *mContent);
 
-    const char *setMTime(char *time);
+    void setMTime(char *mTime);
+
+    void setUFromUsername(char *uFromUsername);
+
+    char *getUFromUsername() const;
+
 private:
     int mId;
-    int gFromId;
-    int uFromId;
-    int uToId;
     int fId;
 
+    int uFromId;
+    int uToId;
 
+    int gId;
+
+    bool groupMessage;
+
+    char * mContent;
+
+    char * mTime;
+
+    char * uFromUsername;
 
 };
 
