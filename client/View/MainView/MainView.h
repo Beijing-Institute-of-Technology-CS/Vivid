@@ -7,6 +7,7 @@
 
 
 #include <gtk/gtk.h>
+#include <string>
 #include "List/MessageList/MessageList.h"
 #include "List/FriendList/FriendList.h"
 
@@ -30,7 +31,6 @@ public:
 
 private:
     GtkWidget *main_window = nullptr;
-    GtkWidget *vbox;
     message_list mlist;
     friend_list  flist;
 
@@ -47,7 +47,7 @@ private:
 
 class MainViewCallback {
 public:
-    virtual void selectUser(int uId) = 0;
+    virtual void selectUser(int uId, std::string uName) = 0;
     virtual void selectGroup(int gId) = 0;
 };
 

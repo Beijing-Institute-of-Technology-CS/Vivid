@@ -41,7 +41,7 @@ public:
     void netReceiveMessage(Message message) override;
     void connectFailed() override;
 
-    void selectUser(int uId) override;
+    void selectUser(int uId, std::string uName) override;
     void selectGroup(int gId) override;
 
 private:

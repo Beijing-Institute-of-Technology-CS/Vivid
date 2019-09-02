@@ -87,9 +87,9 @@ void MainController::startNetworkConnect() {
     NetworkUtils::start_client(BITCS);
 }
 
-void MainController::selectUser(int uId) {
-    //todo
-    chatView.show("hhhhh");
+void MainController::selectUser(int uId, std::string uName) {
+    chatView.show(uName.c_str());
+    chatView.currentId = uId;
 }
 
 void MainController::selectGroup(int gId) {

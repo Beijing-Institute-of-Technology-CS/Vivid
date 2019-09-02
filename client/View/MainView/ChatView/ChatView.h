@@ -10,9 +10,9 @@
 class ChatView
 {
 public:
-    void show(char *name);
+    void show(const char *name);
     void destroy();
-
+    int currentId;
 private:
     bool isShow = false;
 

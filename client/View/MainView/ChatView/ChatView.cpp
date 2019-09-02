@@ -53,7 +53,7 @@ void ChatView::clear_input_area(GtkWidget *textView) {
     gtk_text_buffer_delete(buffer,&start,&end);
 }
 
-void ChatView::show(char *name) {
+void ChatView::show(const char *name) {
 
     if (isShow) {
         destroy();

@@ -4,7 +4,7 @@
 
 #include "MainView.h"
 #include <gtk/gtk.h>
-
+#include <string>
 
 
 MainView::MainView():mlist(),flist() {
@@ -46,6 +46,7 @@ void MainView::ChangeToFriend(GtkWidget *widget, gpointer data) {
 void MainView::create() {
 
     GtkWidget *scolled;
+    GtkWidget *vbox;
     GtkWidget *info_box;
     GtkWidget *button_box;
     GtkWidget *list_box;
@@ -53,6 +54,9 @@ void MainView::create() {
     GtkWidget *label_name;
     GtkWidget *message_button;
     GtkWidget *friend_button;
+    GtkWidget * inputHBox;
+    GtkWidget * inputEntry;
+    GtkWidget * inputConfirmButton;
     GtkTreeSelection *message_selection;
     GtkTreeSelection *friend_selection;
 
@@ -66,11 +70,15 @@ void MainView::create() {
     image_avatar = gtk_image_new_from_file("avatar.png");
     label_name=gtk_label_new("dd");
     button_box = gtk_hbox_new(FALSE,0);
-    list_box = gtk_hbox_new(FALSE,0);
+    list_box = gtk_vbox_new(FALSE,0);
     message_button = gtk_button_new_with_label("message");
     friend_button=gtk_button_new_with_label("friend");
     message_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(mlist.getView()));
     friend_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(flist.getView()));
+
+    inputHBox = gtk_hbox_new(FALSE, 0);
+    inputEntry = gtk_entry_new();
+    inputConfirmButton = gtk_button_new_with_label("GO");
     /**
      * 信号连接
      */
@@ -104,6 +112,9 @@ void MainView::create() {
     gtk_box_pack_start(GTK_BOX(info_box),image_avatar,FALSE,FALSE,50);
     gtk_box_pack_start(GTK_BOX(info_box),label_name,FALSE,FALSE,5);
     gtk_box_pack_start(GTK_BOX(vbox),info_box,FALSE,FALSE,0);
+
+    gtk_box_pack_start(GTK_BOX(inputHBox), inputEntry, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(inputHBox), inputConfirmButton, FALSE, FALSE, 0);
 
     message_add("dd","vegetable");
     message_add("大哥","tql");
@@ -154,6 +165,9 @@ void MainView::create() {
     gtk_box_pack_start(GTK_BOX(vbox),button_box,FALSE,FALSE,0);
     gtk_box_pack_start(GTK_BOX(vbox),scolled,TRUE,TRUE,0);
     gtk_container_add(GTK_CONTAINER(scolled),list_box);
+
+
+    gtk_box_pack_start(GTK_BOX(list_box), inputHBox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(list_box),mlist.getView(),TRUE,TRUE,5);
     gtk_box_pack_start(GTK_BOX(list_box),flist.getView(),TRUE,TRUE,5);
 
@@ -172,10 +186,6 @@ void MainView::tree_selection_message_changed(GtkTreeSelection *selection, gpoin
         gtk_tree_model_get(model,&iter,COLUMN_NAME,&name,COLUMN_MESSAGE,&message,-1);
         g_print("name = %s\n",name);
         g_print("message = %s\n",message);
-
-        //todo:
-        ((MainView *)data)->callback->selectUser(0);
-
         g_free(name);
         g_free(message);
     }
@@ -193,6 +203,8 @@ void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpoint
         gtk_tree_model_get(model,&iter,FRIEND_ID,&id,FRIEND_NAME,&name,-1);
         g_print("id = %s\n",id);
         g_print("name = %s\n",name);
+        int selectedId = std::stoi(id);
+        ((MainView *)data)->callback->selectUser(selectedId, name);
         g_free(name);
         g_free(id);
     }
