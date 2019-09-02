@@ -9,6 +9,7 @@
 #include "LoginController/LoginController.h"
 #include "../View/MainView/MainView.h"
 #include "NetworkController/NetworkController.h"
+#include "../Database/database.h"
 
 class MainController : public NetworkCallback {
 public:
