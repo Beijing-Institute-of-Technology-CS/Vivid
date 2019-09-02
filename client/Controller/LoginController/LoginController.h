@@ -5,90 +5,69 @@
 #ifndef CLIENT_LOGINCONTROLLER_H
 #define CLIENT_LOGINCONTROLLER_H
 
-
+#include <string>
 #include "../../View/LoginView/LoginView.h"
-#include "../../View/TipView/TipView.h"
-#include "../ApplicationExitCallback.h"
 #include "../../View/RegisterView/RegisterView.h"
 
-class OnLoginSuccessCallback;
-
-class LoginController : OnButtonLoginClickedCallback, OnLoginWindowCloseCallback, OnRegisterSubmitClickCallback {
+class LoginController : public LoginViewCallback, RegisterViewCallback {
 public:
-    /**
-     * 初始构造函数
-     */
     LoginController();
 
-    /**
-     * 展示与销毁
-     */
-    void showLoginView();
-    void dismissLoginView();
+    static LoginController & getInstance () {
+        static LoginController instance;
+        return instance;
+    }
+
+    //userInfo
+    int userId = -1;
+    std::string username;
+    std::string userPassword;
 
     /**
-     * 设置登录成功回调
-     * @param loginSuccessCallback
+     * 创建并启动LoginView
      */
-    void setLoginSuccessCallback(OnLoginSuccessCallback *loginSuccessCallback);
+    void startLoginView();
 
     /**
-     * 设置程序退出回调
-     * @param applicationExitCallback
+     * 登录相关
      */
-    void setApplicationExitCallback(ApplicationExitCallback *applicationExitCallback);
+     void loginSuccess(std::string username);
+     void loginFailed();
 
-    //登录相关回调
+     /**
+      * 注册相关
+      */
+     void registerSuccess(int id);
+     void registerFailed();
+
+    /*=======================callback========================*/
+
+    /**
+     * login view callback
+     */
     void onButtonLoginClicked() override;
     void onButtonRegisterClicked() override;
-    void onLoginWindowClose() override;
+    void onLoginViewDestroy() override;
+
+    /**
+     * register view callback
+     */
     void onRegisterSubmit(const char * username, const char * password) override;
 
 private:
-    //是否登录成功
-    bool isLoginSuccess = false;
+    //status
+    bool isLoggedIn = false;
 
     //View
     LoginView loginView;
     RegisterView registerView;
 
-    /**
-     * 检查登录信息
-     * @param username
-     * @param password
-     * @return 是否成功
-     */
-    bool checkLogin(const char * username, const char * password);
+    /*=======================StaticThreadFunc========================*/
 
-    /**
-     * 登录成功、失败操作
-     */
-    void onLoginSuccess();
-    void onLoginFailed();
-
-    /**
-     * 注册
-     * @param username
-     * @param password
-     * @return 是否成功
-     */
-    bool doRegister(const char * username, const char * password);
-
-    /**
-     * 登录成功、失败操作
-     */
-    void onRegisterSuccess(int id);
-    void onRegisterFailed();
-
-    //回调
-    OnLoginSuccessCallback * loginSuccessCallback = nullptr;
-    ApplicationExitCallback * applicationExitCallback = nullptr;
-};
-
-//登录成功回调
-class OnLoginSuccessCallback {
-public:
-    virtual void onLoginSuccessCallback() = 0;
+    static gboolean login_success(gpointer username);
+    static gboolean login_failed(gpointer data);
+    static gboolean register_success(gpointer id);
+    static gboolean register_failed(gpointer data);
 };
 
 #endif //CLIENT_LOGINCONTROLLER_H

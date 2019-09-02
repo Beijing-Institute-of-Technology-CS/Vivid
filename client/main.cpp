@@ -2,18 +2,14 @@
 #include <gtk/gtk.h>
 #include "Controller/MainController.h"
 
-void exit_application() {
-    gtk_main_quit();
-}
-
 int main(int argc , char* argv[]) {
     gtk_init(&argc, &argv);
 
-    MainController mainController;
+//    MainController mainController = MainController::getInstance();
+//
+//    mainController.start();
 
-    mainController.setExitApplicationFunc(exit_application);
-
-    mainController.start();
+    MainController::getInstance().start();
 
     gtk_main();
 

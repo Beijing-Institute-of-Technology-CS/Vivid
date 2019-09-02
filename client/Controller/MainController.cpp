@@ -3,34 +3,71 @@
 //
 
 #include "MainController.h"
-#include "../View/MainView/MainView.h"
+#include "../TestUtils/NetworkCallbackTesting.h"
 
 MainController::MainController() {
-    //设置回调
-    loginController.setLoginSuccessCallback(this);
-    loginController.setApplicationExitCallback(this);
-}
-
-void MainController::onLoginSuccessCallback() {
-    loginController.dismissLoginView();
-    startMainView();
-}
-
-void MainController::start() {
-    loginController.showLoginView();
-}
-
-void MainController::setExitApplicationFunc(void (*exitApplication)()) {
-    exit_application = exitApplication;
-}
-
-void MainController::exitApplication() {
-    if (exit_application != nullptr) {
-        exit_application();
-    }
+    NetworkController::setCallback(this);
+    NetworkCallbackTesting::setCallback(this);
+    NetworkCallbackTesting::startTestingThread();
 }
 
 void MainController::startMainView() {
     mainView.create();
     mainView.show();
+}
+
+
+/*====================NetworkCallback========================*/
+
+void MainController::netRegisterSuccess(int id) {
+    LoginController::getInstance().registerSuccess(id);
+}
+
+void MainController::netRegisterFailed() {
+    LoginController::getInstance().registerFailed();
+}
+
+void MainController::netLoginSuccess(char *username) {
+    LoginController::getInstance().loginSuccess(username);
+}
+
+void MainController::netLoginFailed() {
+    LoginController::getInstance().loginFailed();
+}
+
+void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) {
+
+}
+
+void MainController::netGetInfoFailed() {
+
+}
+
+void MainController::netGetMessageSuccess(std::vector<Message> messages) {
+
+}
+
+void MainController::netGetMessageFailed() {
+
+}
+
+void MainController::netSendMessageSuccess(Message message) {
+
+}
+
+void MainController::netSendMessageFailed() {
+
+}
+
+void MainController::netReceiveMessage(Message message) {
+
+}
+
+void MainController::connectFailed() {
+
+}
+/*====================End===NetworkCallback========================*/
+
+void MainController::start() {
+    LoginController::getInstance().startLoginView();
 }

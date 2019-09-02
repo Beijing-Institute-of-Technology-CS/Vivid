@@ -8,15 +8,10 @@
 #include <gtk/gtk.h>
 #include "../TipView/TipView.h"
 
-class OnRegisterSubmitClickCallback;
+class RegisterViewCallback;
 
 class RegisterView {
 public:
-
-    /**
-     * 初始构造函数
-     */
-    RegisterView();
 
     /**
      * 展示与销毁
@@ -24,9 +19,12 @@ public:
     void show();
     void destroy();
 
-    void setSubmitCallback(OnRegisterSubmitClickCallback *submitCallback);
+    void setCallback(RegisterViewCallback *submitCallback);
 
 private:
+    //is show
+    bool isShow = false;
+
     //GTK Widget
     GtkWidget* regi_window;
     GtkWidget* entry_name;
@@ -34,16 +32,17 @@ private:
     GtkWidget* entry_check;
 
     //submit callback
-    OnRegisterSubmitClickCallback * submitCallback = nullptr;
+    RegisterViewCallback * submitCallback = nullptr;
 
     //GTK callback
     static void onSubmitClickCallback(GtkWidget * button, gpointer data);
     static void onCancelClickCallback(GtkWidget * widget, gpointer data);
+    static void onDestroy(GtkWidget * widget, gpointer data);
 
 };
 
 //注册点击回调
-class OnRegisterSubmitClickCallback {
+class RegisterViewCallback {
 public:
     virtual void onRegisterSubmit(const char * username, const char * password) = 0;
 };
