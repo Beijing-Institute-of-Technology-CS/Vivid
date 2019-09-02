@@ -87,17 +87,7 @@ void LoginController::onButtonRegisterClicked() {
 }
 
 void LoginController::onRegisterSubmit(const char *username, const char *password) {
-    doRegister(username, password);
-}
-
-bool LoginController::doRegister(const char *username, const char *password) {
-    //todo: 注册
-    if (strlen(username) < 5) {
-        onRegisterSuccess(strlen(username));
-        return true;
-    }
-    onRegisterFailed();
-    return false;
+    NetworkController::netRegister(username, password);
 }
 
 void LoginController::onRegisterSuccess(int id) {

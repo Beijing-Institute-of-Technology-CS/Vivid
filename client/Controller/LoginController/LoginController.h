@@ -50,6 +50,12 @@ public:
     void onLoginSuccess();
     void onLoginFailed();
 
+    /**
+     * 注册成功、失败操作
+     */
+    void onRegisterSuccess(int id);
+    void onRegisterFailed();
+
 private:
     //是否登录成功
     bool isLoginSuccess = false;
@@ -61,20 +67,6 @@ private:
     //user info
     int userId;
     char * userPwd;
-
-    /**
-     * 注册
-     * @param username
-     * @param password
-     * @return 是否成功
-     */
-    bool doRegister(const char * username, const char * password);
-
-    /**
-     * 登录成功、失败操作
-     */
-    void onRegisterSuccess(int id);
-    void onRegisterFailed();
 
     //回调
     OnLoginSuccessCallback * loginSuccessCallback = nullptr;

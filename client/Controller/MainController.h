@@ -58,6 +58,7 @@ private:
 
     //userInfo
     int userId;
+    char * username;
     char * userPwd;
 
     //退出函数指针

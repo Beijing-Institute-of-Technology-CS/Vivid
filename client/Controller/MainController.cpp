@@ -46,19 +46,20 @@ void MainController::startMainView() {
 }
 
 void MainController::netRegisterSuccess(int id) {
-
+    loginController.onRegisterSuccess(id);
 }
 
 void MainController::netRegisterFailed() {
-
+    loginController.onRegisterFailed();
 }
 
 void MainController::netLoginSuccess(char *username) {
-
+    username = username;
+    loginController.onLoginSuccess();
 }
 
 void MainController::netLoginFailed() {
-
+    loginController.onLoginFailed();
 }
 
 void MainController::netGetInfoFailed() {
