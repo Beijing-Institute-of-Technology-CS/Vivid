@@ -12,6 +12,7 @@ class ChatView
 public:
     void show(const char *name);
     void destroy();
+    bool isGroup;
     int currentId;
 private:
     bool isShow = false;

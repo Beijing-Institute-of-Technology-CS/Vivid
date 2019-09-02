@@ -43,6 +43,8 @@ private:
 
     MainViewCallback * callback;
 
+    std::string getInput();
+
     static void ChangeToMessage(GtkWidget *widget,  gpointer data);
     static void ChangeToFriend(GtkWidget *widget,  gpointer data);
     static void ChangeToGroup(GtkWidget *widget, gpointer data);

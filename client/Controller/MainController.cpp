@@ -90,8 +90,12 @@ void MainController::startNetworkConnect() {
 void MainController::selectUser(int uId, std::string uName) {
     chatView.show(uName.c_str());
     chatView.currentId = uId;
+    chatView.isGroup = false;
 }
 
 void MainController::selectGroup(int gId) {
-
+    std::string title = "Group: " + std::to_string(gId);
+    chatView.show(title.c_str());
+    chatView.currentId = gId;
+    chatView.isGroup = true;
 }

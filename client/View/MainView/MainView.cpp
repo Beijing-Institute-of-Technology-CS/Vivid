@@ -210,8 +210,28 @@ void MainView::setCallback(MainViewCallback *callback) {
 }
 
 void MainView::goButtonClickedCallback(GtkWidget *button, gpointer data) {
-    //todo:
     auto * mainView = (MainView *)data;
+    std::string idString = mainView->getInput();
+    if (idString.empty()) {
+        return;
+    }
+    const char * tmp = idString.c_str();
+    for (int i = 0; i < std::strlen(tmp); ++i) {
+        if (tmp[i] < '0' || tmp[i] > '9') {
+            return;
+        }
+    }
+    int idInt = std::stoi(idString);
+    if (mainView->mode == GROUP) {
+        mainView->callback->selectGroup(idInt);
+    } else if (mainView->mode == CONTACTS) {
+        mainView->callback->selectUser(idInt, "User: " + idString);
+    }
+}
+
+std::string MainView::getInput() {
+    std::string content = gtk_entry_get_text(GTK_ENTRY(inputEntry));
+    return content;
 }
 
 
