@@ -8,9 +8,6 @@
 
 Message::Message() {}
 
-Message::Message(int mId, char *mContent, int uFromId, bool groupMessage, char *mTime) : mId(mId), mContent(mContent),
-                                                        uFromId(uFromId), groupMessage(groupMessage), mTime(mTime) { }
-
 int Message::getMId() const {
     return mId;
 }
@@ -84,6 +81,20 @@ void Message::setUFromUsername(char *uFromUsername) {
 
 char *Message::getUFromUsername() const {
     return uFromUsername;
+}
+
+Message::Message(int mId, int fId, int uFromId, int uToId, int gId, bool groupMessage, char *mContent, char *mTime,
+                 char *uFromUsername) : mId(mId), fId(fId), uFromId(uFromId), uToId(uToId), gId(gId),
+                                        groupMessage(groupMessage), mContent(mContent), mTime(mTime),
+                                        uFromUsername(uFromUsername) {
+    this->mContent = (char *)malloc(sizeof(char)*(strlen(mContent)+1));
+    strcpy(this->mContent,mContent);
+
+    this->mTime = (char *)malloc(sizeof(char)*(strlen(mTime)+1));
+    strcpy(this->mTime,mTime);
+
+    this->uFromUsername = (char *)malloc(sizeof(char)*(strlen(uFromUsername)+1));
+    strcpy(this->uFromUsername,uFromUsername);
 }
 
 
