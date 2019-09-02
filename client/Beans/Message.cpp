@@ -5,9 +5,9 @@
 #include "Message.h"
 
 Message::Message() {}
-//todo: initialize mType uFromUsername?
-Message::Message(int mId, char *mContent, int fId, char *mTime) : mId(mId), mContent(mContent), fId(fId),
-                                                                  mTime(mTime) {}
+
+Message::Message(int mId, char *mContent, int uFromId, char *mType, char *mTime) : mId(mId), mContent(mContent),
+                                                                uFromId(uFromId), mType(mType), mTime(mTime) {this->uFromUsername = NULL;}
 
 int Message::getMId() const {
     return mId;
@@ -55,4 +55,23 @@ int Message::getUFromId() const {
 
 void Message::setUFromId(int uFromId) {
     Message::uFromId = uFromId;
+}
+
+bool Message::isGroup() const {
+    if(Message::mType != NULL){
+        if (std::strcmp(Message::mType, TYPE_GROUP_MESSAGE) == 0)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+int Message::getUToId() const {
+    return Message::uToId;
+}
+
+void Message::setUToId(int uToId) {
+    Message::uToId = uToId;
 }

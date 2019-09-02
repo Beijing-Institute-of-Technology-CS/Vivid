@@ -323,7 +323,7 @@ bool JsonUtils::parse_response_type_json(char *s_json, char *&responseType) {
     }
 
     char *temp_responseType = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_TYPE)->valuestring;
-    responseType = (char *)std::malloc((strlen(temp_responseType)+1)*sizeof(char));
+    responseType = (char *)std::malloc((std::strlen(temp_responseType)+1)*sizeof(char));
     strcpy(responseType, temp_responseType);
     cJSON_Delete(pJsonRoot);
     return true;
@@ -347,7 +347,7 @@ bool JsonUtils::parse_response_result_json(char *s_json, char *&result) {
     }
 
     char *temp_result = cJSON_GetObjectItem(pJsonRoot,KEY_RESULT)->valuestring;
-    result = (char *)std::malloc((strlen(temp_result)+1)*sizeof(char));
+    result = (char *)std::malloc((std::strlen(temp_result)+1)*sizeof(char));
     strcpy(result, temp_result);
     cJSON_Delete(pJsonRoot);
     return true;
@@ -375,7 +375,7 @@ bool JsonUtils::parse_response_register_json(char *s_json, int *uId, char *&publ
     pSubJson = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
     *uId = cJSON_GetObjectItem(pSubJson, KEY_UID)->valueint;
     char *temp_publicKey = cJSON_GetObjectItem(pSubJson, KEY_PUBLIC_KEY)->valuestring;
-    publicKey = (char *)std::malloc((strlen(temp_publicKey)+1)*sizeof(char));
+    publicKey = (char *)std::malloc((std::strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
 
     cJSON_Delete(pJsonRoot);
@@ -403,11 +403,11 @@ bool JsonUtils::parse_response_login_json(char *s_json, char *&username, char *&
     pSubJson = cJSON_GetObjectItem(pJsonRoot, KEY_RESPONSE_CONTENT);
 //    *uId = cJSON_GetObjectItem(pSubJson, KEY_UID)->valueint;
     char *char_temp = cJSON_GetObjectItem(pSubJson,KEY_USERNAME)->valuestring;
-    username = (char *)malloc((strlen(char_temp)+1)*sizeof(char));
+    username = (char *)malloc((std::strlen(char_temp)+1)*sizeof(char));
     strcpy(username,char_temp);
 
     char *temp_publicKey = cJSON_GetObjectItem(pSubJson, KEY_PUBLIC_KEY)->valuestring;
-    publicKey = (char *)std::malloc((strlen(temp_publicKey)+1)*sizeof(char));
+    publicKey = (char *)std::malloc((std::strlen(temp_publicKey)+1)*sizeof(char));
     strcpy(publicKey, temp_publicKey);
 
     cJSON_Delete(pJsonRoot);
@@ -452,7 +452,7 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
         User user;
         user.setUId(cJSON_GetObjectItem(json_contactsArray, KEY_UID)->valueint);
         char *temp_uName = cJSON_GetObjectItem(json_contactsArray, KEY_UNAME)->valuestring;
-        user.uName = (char *)std::malloc((strlen(temp_uName)+1)*sizeof(char));
+        user.uName = (char *)std::malloc((std::strlen(temp_uName)+1)*sizeof(char));
         strcpy(user.uName, temp_uName);
         user.setFIconFile(cJSON_GetObjectItem(json_contactsArray,KEY_FICON)->valueint);
         contactsArray->push_back(user);
@@ -508,24 +508,24 @@ bool JsonUtils::parse_response_getMessages_json(char *s_json, int *messagesNumbe
         message.setMId(cJSON_GetObjectItem(json_messagesArray, KEY_MID)->valueint);
 
         char *temp_mContent = cJSON_GetObjectItem(json_messagesArray, KEY_MCONTENT)->valuestring;
-        message.mContent = (char *)std::malloc((strlen(temp_mContent)+1)*sizeof(char));
+        message.mContent = (char *)std::malloc((std::strlen(temp_mContent)+1)*sizeof(char));
         strcpy(message.mContent, temp_mContent);
 
         char *temp_mType = cJSON_GetObjectItem(json_messagesArray, KEY_MTYPE)->valuestring;
-        message.mType = (char *)std::malloc((strlen(temp_mType)+1)* sizeof(char));
+        message.mType = (char *)std::malloc((std::strlen(temp_mType)+1)* sizeof(char));
         strcpy(message.mType, temp_mType);
 
         message.setGFromId(cJSON_GetObjectItem(json_messagesArray, KEY_GFROMID)->valueint);
         message.setUFromId(cJSON_GetObjectItem(json_messagesArray, KEY_UFROMID)->valueint);
 
         char *temp_uFromUsername = cJSON_GetObjectItem(json_messagesArray, KEY_UFROMUSERNAME)->valuestring;
-        message.uFromUsername = (char *)std::malloc((strlen(temp_uFromUsername)+1)*sizeof(char));
+        message.uFromUsername = (char *)std::malloc((std::strlen(temp_uFromUsername)+1)*sizeof(char));
         strcpy(message.uFromUsername, temp_uFromUsername);
 
         message.setFId(cJSON_GetObjectItem(json_messagesArray, KEY_FID)->valueint);
 
         char *temp_mTime = cJSON_GetObjectItem(json_messagesArray, KEY_MTIME)->valuestring;
-        message.mTime = (char *)std::malloc((strlen(temp_mTime)+1)*sizeof(char));
+        message.mTime = (char *)std::malloc((std::strlen(temp_mTime)+1)*sizeof(char));
         strcpy(message.mTime, temp_mTime);
 
         messagesArray->push_back(message);
@@ -558,11 +558,11 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, Message &message)
     message.setMId(cJSON_GetObjectItem(pSubJson, KEY_MID)->valueint);
 
     char * char_temp = cJSON_GetObjectItem(pSubJson,KEY_MCONTENT)->valuestring;
-    message.mContent = (char *)std::malloc((strlen(char_temp)+1)*sizeof(char));
+    message.mContent = (char *)std::malloc((std::strlen(char_temp)+1)*sizeof(char));
     strcpy(message.mContent,char_temp);
 
     char *temp_mType = cJSON_GetObjectItem(pSubJson, KEY_MTYPE)->valuestring;
-    message.mType = (char *)std::malloc((strlen(temp_mType)+1)*sizeof(char));
+    message.mType = (char *)std::malloc((std::strlen(temp_mType)+1)*sizeof(char));
     strcpy(message.mType, temp_mType);
 
     message.setUFromId(cJSON_GetObjectItem(pSubJson, KEY_UFROMID)->valueint);
@@ -570,7 +570,7 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, Message &message)
     message.setFId(cJSON_GetObjectItem(pSubJson, KEY_FID)->valueint);
 //todo: uFromUsername
     char *temp_mTime = cJSON_GetObjectItem(pSubJson, KEY_MTIME)->valuestring;
-    message.mTime = (char *)std::malloc((strlen(temp_mTime)+1)*sizeof(char));
+    message.mTime = (char *)std::malloc((std::strlen(temp_mTime)+1)*sizeof(char));
     strcpy(message.mTime, temp_mTime);
 
     cJSON_Delete(pJsonRoot);
@@ -585,11 +585,11 @@ bool JsonUtils::parse_response_receiveMessages_json(char *s_json, Message &messa
     message.setMId(cJSON_GetObjectItem(json_responseContent,KEY_MID)->valueint);
 
     char * char_temp = cJSON_GetObjectItem(json_responseContent,KEY_MCONTENT)->valuestring;
-    message.mContent = (char *)std::malloc((strlen(char_temp)+1)*sizeof(char));
+    message.mContent = (char *)std::malloc((std::strlen(char_temp)+1)*sizeof(char));
     strcpy(message.mContent,char_temp);
 
     char *temp_mType = cJSON_GetObjectItem(json_responseContent, KEY_MTYPE)->valuestring;
-    message.mType = (char *)std::malloc((strlen(temp_mType)+1)*sizeof(char));
+    message.mType = (char *)std::malloc((std::strlen(temp_mType)+1)*sizeof(char));
     strcpy(message.mType, temp_mType);
 
     message.setUFromId(cJSON_GetObjectItem(json_responseContent, KEY_UFROMID)->valueint);

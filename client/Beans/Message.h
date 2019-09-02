@@ -5,6 +5,8 @@
 #ifndef SERVER_MESSAGE_H
 #define SERVER_MESSAGE_H
 
+#include <cstring>
+#include "../../Constants.h"
 
 class Message {
 public:
@@ -12,7 +14,6 @@ public:
 
     char *mContent;
 
-    //todo: bool getMType()   (strcmp)
     char *mType;
 
     char *mTime;
@@ -20,7 +21,7 @@ public:
     Message();
 
     //mType must be initialed
-    Message(int mId, char *mContent, int fId, char *mTime);
+    Message(int mId, char *mContent, int uFromId, char *mType, char *mTime);
 
     int getMId() const;
 
@@ -30,6 +31,8 @@ public:
 
     char *getMType() const;
 
+    bool isGroup() const;
+
     int getGFromId() const;
 
     void setGFromId(int gFromId);
@@ -37,6 +40,10 @@ public:
     int getUFromId() const;
 
     void setUFromId(int uFromId);
+
+    int getUToId() const;
+
+    void setUToId(int uToId);
 
     char *getUFromusername() const;
 
@@ -50,8 +57,9 @@ private:
     int mId;
     int gFromId;
     int uFromId;
+    int uToId;
     int fId;
-};//todo: toId...
+};
 
 
 #endif //SERVER_MESSAGE_H
