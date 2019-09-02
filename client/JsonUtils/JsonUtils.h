@@ -25,9 +25,9 @@ class JsonUtils {
 public:
 //    static char * make_request_token_json(int uId, char *uPwd);
 
-    static char * make_request_reqister_json(char * username, char *password);
+    static char * make_request_reqister_json(const char * username,const char *password);
 
-    static char * make_request_login_json(int uId, char *password);
+    static char * make_request_login_json(int uId, const char *password);
 
     static char * make_request_getInfo_json(int uId, char *uPwd);
 

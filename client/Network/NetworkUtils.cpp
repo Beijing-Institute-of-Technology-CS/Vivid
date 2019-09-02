@@ -146,10 +146,17 @@ void NetworkUtils::send_json_to_server(char *s_json) {
 }
 
 void NetworkUtils::sending_json(char *s_json) {
+    //todo: debug only
+    std::cout<<std::endl<<std::endl<<"====================================="<<std::endl;
+    std::cout<<"sending_json:"<<std::endl;
+    std::cout<<s_json<<std::endl;
+    std::cout<<"====================================="<<std::endl;
     while(!client_ready||sending_messages);
     sending_messages = true;
     if (send(master_socket,s_json,strlen(s_json),0) <= 0) {
         NetworkController::connectFailed();
+    } else {
+        std::cout<<"Send Success"<<std::endl;
     }
 }
 

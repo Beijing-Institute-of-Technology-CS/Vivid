@@ -3,6 +3,7 @@
 //
 
 #include "LoginController.h"
+#include "../NetworkController/NetworkController.h"
 #include <string>
 
 LoginController::LoginController() {
@@ -20,24 +21,13 @@ void LoginController::dismissLoginView() {
     loginView.destroy();
 }
 
-bool LoginController::checkLogin(const char *username, const char *password) {
-    //todo: check login
-    printf("Username: %s\n", username);
-    printf("Password: %s\n", password);
-    if (strcmp(password, "123") == 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 void LoginController::onLoginSuccess() {
     isLoginSuccess = true;
     printf("Login Success!\n");
     if (loginSuccessCallback == nullptr) {
         return;
     }
-    loginSuccessCallback->onLoginSuccessCallback();
+    loginSuccessCallback->onLoginSuccessCallback(userId, userPwd);
 }
 
 void LoginController::onLoginFailed() {
@@ -50,11 +40,28 @@ void LoginController::onButtonLoginClicked() {
     const char *username;
     const char *password;
     loginView.get_input_login_content(username, password);
-    if (checkLogin(username, password)) {
+    if (strlen(username) <= 0) {
+        onLoginFailed();
+        return;
+    }
+    for (int i = 0; i < strlen(username); ++i) {
+        if (username[i] < '0' || username[i] > '9') {
+            onLoginFailed();
+            return;
+        }
+    }
+    userId = std::stoi(username);
+    userPwd = (char *)malloc((strlen(password)+1) * sizeof(password));
+    strcpy(userPwd, password);
+    //todo: debug only
+    printf("id: %s\n", username);
+    printf("Password: %s\n", password);
+    if (strcmp(password, "123") == 0) {
         onLoginSuccess();
     } else {
         onLoginFailed();
     }
+//    NetworkController::netLogin(userId, password);
 }
 
 void LoginController::setLoginSuccessCallback(OnLoginSuccessCallback *loginSuccessCallback) {

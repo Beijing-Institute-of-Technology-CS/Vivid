@@ -83,13 +83,13 @@ void NetworkController::netReceiveMessage(char *json) {
     callback->netReceiveMessage(message);
 }
 
-void NetworkController::netRegister(char *username, char *password) {
+void NetworkController::netRegister(const char *username, const char *password) {
     char * json;
     json = JsonUtils::make_request_reqister_json(username, password);
     NetworkUtils::send_json_to_server(json);
 }
 
-void NetworkController::netLogin(int uId, char *password) {
+void NetworkController::netLogin(int uId, const char *password) {
     char * json;
     json = JsonUtils::make_request_login_json(uId, password);
     NetworkUtils::send_json_to_server(json);

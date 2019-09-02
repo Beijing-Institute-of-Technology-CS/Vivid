@@ -2,6 +2,7 @@
 // Created by William Zhang on 2019-08-30.
 //
 
+#include <iostream>
 #include <thread>
 #include <vector>
 #include "MainController.h"
@@ -15,7 +16,9 @@ MainController::MainController() {
     loginController.setApplicationExitCallback(this);
 }
 
-void MainController::onLoginSuccessCallback() {
+void MainController::onLoginSuccessCallback(int id, char * password) {
+    userId = id;
+    userPwd = password;
     loginController.dismissLoginView();
     startMainView();
 }
@@ -25,8 +28,6 @@ void MainController::start() {
     NetworkController::setCallback(this);
     std::thread thread(NetworkController::startServer);
     thread.detach();
-    NetworkUtils::client_ready = true;
-    NetworkController::netLogin(233, "pwd");
 }
 
 void MainController::setExitApplicationFunc(void (*exitApplication)()) {
@@ -73,7 +74,7 @@ void MainController::netGetMessageFailed() {
 }
 
 void MainController::connectFailed() {
-
+    std::cout<<"CONNECT_FAILED"<<std::endl;
 }
 
 void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) {

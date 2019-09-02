@@ -44,7 +44,7 @@
  * @param password
  * @return
  */
-char* JsonUtils::make_request_reqister_json(char *username, char *password) {
+char* JsonUtils::make_request_reqister_json(const char *username, const char *password) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;
@@ -91,7 +91,7 @@ char* JsonUtils::make_request_reqister_json(char *username, char *password) {
  * @param password
  * @return
  */
-char* JsonUtils::make_request_login_json(int uId, char *password) {
+char* JsonUtils::make_request_login_json(int uId, const char *password) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;

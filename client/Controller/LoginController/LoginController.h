@@ -44,6 +44,12 @@ public:
     void onLoginWindowClose() override;
     void onRegisterSubmit(const char * username, const char * password) override;
 
+    /**
+     * 登录成功、失败操作
+     */
+    void onLoginSuccess();
+    void onLoginFailed();
+
 private:
     //是否登录成功
     bool isLoginSuccess = false;
@@ -52,19 +58,9 @@ private:
     LoginView loginView;
     RegisterView registerView;
 
-    /**
-     * 检查登录信息
-     * @param username
-     * @param password
-     * @return 是否成功
-     */
-    bool checkLogin(const char * username, const char * password);
-
-    /**
-     * 登录成功、失败操作
-     */
-    void onLoginSuccess();
-    void onLoginFailed();
+    //user info
+    int userId;
+    char * userPwd;
 
     /**
      * 注册
@@ -88,7 +84,7 @@ private:
 //登录成功回调
 class OnLoginSuccessCallback {
 public:
-    virtual void onLoginSuccessCallback() = 0;
+    virtual void onLoginSuccessCallback(int id, char * password) = 0;
 };
 
 #endif //CLIENT_LOGINCONTROLLER_H

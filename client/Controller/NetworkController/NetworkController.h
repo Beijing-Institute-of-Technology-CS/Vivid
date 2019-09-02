@@ -5,6 +5,8 @@
 #ifndef CLIENT_NETWORKCONTROLLER_H
 #define CLIENT_NETWORKCONTROLLER_H
 
+#include <vector>
+
 #include "../../Beans/User.h"
 #include "../../Beans/Message.h"
 #include "../../Beans/Group.h"
@@ -16,8 +18,8 @@ public:
     static void setCallback(NetworkCallback *callback);
     static void startServer();
 
-    static void netRegister(char * username, char * password);
-    static void netLogin(int uId, char * password);
+    static void netRegister(const char * username, const char * password);
+    static void netLogin(int uId, const char * password);
     static void netGetInfo(int uId, char * password);
     static void netGetMessages(int uId, char * password, int lastCalledMsg);
     static void netSendMessage(int uId, char * password, bool isGroup, int uToId, int gToId, char * content);

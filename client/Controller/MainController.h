@@ -30,7 +30,7 @@ public:
     void setExitApplicationFunc(void (*exitApplication)());
 
     //登录成功回调
-    void onLoginSuccessCallback() override;
+    void onLoginSuccessCallback(int id, char * password) override;
 
     //程序退出回调
     void exitApplication() override;
@@ -55,6 +55,10 @@ private:
 
     //View
     MainView mainView;
+
+    //userInfo
+    int userId;
+    char * userPwd;
 
     //退出函数指针
     void (* exit_application)() = nullptr;

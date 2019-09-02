@@ -24,7 +24,7 @@ void LoginView::create() {
     button_box = gtk_hbox_new(FALSE,15);
     image_logo = gtk_image_new_from_file("logo.png");
     sep = gtk_hseparator_new();
-    name_label = gtk_label_new("用户名：");
+    name_label = gtk_label_new("          ID：");
     name_entry = gtk_entry_new();
     psw_label = gtk_label_new("密码：");
     psw_entry = gtk_entry_new();
