@@ -75,3 +75,19 @@ void MainController::netGetMessageFailed() {
 void MainController::connectFailed() {
 
 }
+
+void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) {
+
+}
+
+void MainController::netSendMessageSuccess(Message message) {
+
+}
+
+void MainController::netSendMessageFailed() {
+
+}
+
+void MainController::netReceiveMessage(Message message) {
+
+}

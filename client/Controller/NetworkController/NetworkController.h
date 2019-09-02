@@ -7,6 +7,7 @@
 
 #include "../../Beans/User.h"
 #include "../../Beans/Message.h"
+#include "../../Beans/Group.h"
 
 class NetworkCallback;
 
@@ -20,6 +21,7 @@ public:
     static void netGetInfo(int uId, char * password);
     static void netGetMessages(int uId, char * password, int lastCalledMsg);
     static void netSendMessage(int uId, char * password, bool isGroup, int uToId, int gToId, char * content);
+    static void netAddUIdToGroup(int uId, char * password, int gId);
 
     /**
      * Network Callbacks
@@ -50,13 +52,13 @@ public:
     virtual void netRegisterFailed() = 0;
     virtual void netLoginSuccess(char * username) = 0;
     virtual void netLoginFailed() = 0;
-//    virtual void netGetInfoSuccess(std::vector<User> contacts) = 0;
+    virtual void netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) = 0;
     virtual void netGetInfoFailed() = 0;
     virtual void netGetMessageSuccess(std::vector<Message> messages) = 0;
     virtual void netGetMessageFailed() = 0;
-//    virtual void netSendMessageSuccess(int mId) = 0;
-//    virtual void netSendMessageFailed() = 0;
-//    virtual void netReceiveMessage(Message message) = 0;
+    virtual void netSendMessageSuccess(Message message) = 0;
+    virtual void netSendMessageFailed() = 0;
+    virtual void netReceiveMessage(Message message) = 0;
 
     virtual void connectFailed() = 0;
 };

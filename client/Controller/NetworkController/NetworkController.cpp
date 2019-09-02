@@ -44,9 +44,12 @@ void NetworkController::netLoginFailed() {
 
 void NetworkController::netGetInfoSuccess(char *json) {
     std::vector<User> contacts;
+    std::vector<Group> groups;
     int fileIcon;
     int contactsNum;
-    //todo: get info
+    int groupNum;
+    JsonUtils::parse_response_getInfo_json(json, &fileIcon,&contactsNum, &contacts, &groupNum, &groups);
+    callback->netGetInfoSuccess(contacts, groups);
 }
 
 void NetworkController::netGetInfoFailed() {
@@ -65,15 +68,19 @@ void NetworkController::netGetMessageFailed() {
 }
 
 void NetworkController::netSendMessageSuccess(char *json) {
-    //todo: send msg successful
+    Message message;
+    JsonUtils::parse_response_sendMessages_json(json, message);
+    callback->netSendMessageSuccess(message);
 }
 
 void NetworkController::netSendMessageFailed() {
-    //todo: send msg failed
+    callback->netSendMessageFailed();
 }
 
 void NetworkController::netReceiveMessage(char *json) {
-    //todo: receive msg
+    Message message;
+    JsonUtils::parse_response_receiveMessages_json(json, message);
+    callback->netReceiveMessage(message);
 }
 
 void NetworkController::netRegister(char *username, char *password) {
@@ -102,11 +109,21 @@ void NetworkController::netGetMessages(int uId, char *password, int lastCalledMs
 
 void NetworkController::netSendMessage(int uId, char * password, bool isGroup, int uToId, int gToId, char * content) {
     char * json;
-    //todo: generate send msg json
+    if (isGroup) {
+        JsonUtils::make_request_sendMessages_json(0, gToId, TYPE_GROUP_MESSAGE, content, uId, password);
+    } else {
+        JsonUtils::make_request_sendMessages_json(uToId, 0, TYPE_USER_MESSAGE, content, uId, password);
+    }
     NetworkUtils::send_json_to_server(json);
 }
 
 void NetworkController::connectFailed() {
     callback->connectFailed();
+}
+
+void NetworkController::netAddUIdToGroup(int uId, char *password, int gId) {
+    char * json;
+    JsonUtils::make_request_adduIdToGroup_json(uId, gId, password);
+    NetworkUtils::send_json_to_server(json);
 }
 

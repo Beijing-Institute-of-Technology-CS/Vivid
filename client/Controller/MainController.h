@@ -40,9 +40,13 @@ public:
     void netRegisterFailed() override;
     void netLoginSuccess(char * username) override;
     void netLoginFailed() override;
+    void netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) override;
     void netGetInfoFailed() override;
     void netGetMessageSuccess(std::vector<Message> messages) override;
     void netGetMessageFailed() override;
+    void netSendMessageSuccess(Message message) override;
+    void netSendMessageFailed() override;
+    void netReceiveMessage(Message message) override;
     void connectFailed() override;
 
 private:
