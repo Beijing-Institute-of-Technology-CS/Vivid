@@ -2,8 +2,10 @@
 // Created by William Zhang on 2019-08-30.
 //
 
+#include <thread>
 #include "MainController.h"
 #include "../TestUtils/NetworkCallbackTesting.h"
+#include "../Network/NetworkUtils.h"
 
 MainController::MainController() {
     NetworkController::setCallback(this);
@@ -70,4 +72,10 @@ void MainController::connectFailed() {
 
 void MainController::start() {
     LoginController::getInstance().startLoginView();
+    std::thread thread(startNetworkConnect);
+    thread.detach();
+}
+
+void MainController::startNetworkConnect() {
+    NetworkUtils::start_client(BITCS);
 }

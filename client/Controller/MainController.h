@@ -43,6 +43,7 @@ private:
     //view
     MainView mainView;
 
+    static void startNetworkConnect();
     void startMainView();
 
     //friends

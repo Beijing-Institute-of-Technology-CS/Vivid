@@ -60,12 +60,6 @@ gboolean LoginController::login_success(gpointer username) {
     LoginController::getInstance().username = *(std::string *)username;
     LoginController::getInstance().isLoggedIn = true;
     LoginController::getInstance().loginView.destroy();
-
-    //todo: debug only
-    std::cout<<LoginController::getInstance().username<<std::endl
-        <<LoginController::getInstance().userId<<std::endl
-        <<LoginController::getInstance().userPassword<<std::endl;
-
     MainController::getInstance().startMainView();
     return FALSE;
 }
