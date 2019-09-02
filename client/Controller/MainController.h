@@ -10,8 +10,9 @@
 #include "../View/MainView/MainView.h"
 #include "NetworkController/NetworkController.h"
 #include "../Database/database.h"
+#include "../View/MainView/ChatView/ChatView.h"
 
-class MainController : public NetworkCallback {
+class MainController : public NetworkCallback, MainViewCallback {
 public:
     MainController();
 
@@ -40,9 +41,13 @@ public:
     void netReceiveMessage(Message message) override;
     void connectFailed() override;
 
+    void selectUser(int uId) override;
+    void selectGroup(int gId) override;
+
 private:
     //view
     MainView mainView;
+    ChatView chatView;
 
     static void startNetworkConnect();
     void startMainView();

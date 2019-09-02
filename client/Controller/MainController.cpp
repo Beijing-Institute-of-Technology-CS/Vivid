@@ -11,6 +11,7 @@ MainController::MainController() {
     NetworkController::setCallback(this);
     NetworkCallbackTesting::setCallback(this);
     NetworkCallbackTesting::startTestingThread();
+    mainView.setCallback(this);
 }
 
 void MainController::startMainView() {
@@ -84,4 +85,13 @@ void MainController::start() {
 
 void MainController::startNetworkConnect() {
     NetworkUtils::start_client(BITCS);
+}
+
+void MainController::selectUser(int uId) {
+    //todo
+    chatView.show("hhhhh");
+}
+
+void MainController::selectGroup(int gId) {
+
 }

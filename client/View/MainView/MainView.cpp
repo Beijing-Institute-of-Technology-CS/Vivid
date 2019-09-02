@@ -81,9 +81,9 @@ void MainView::create() {
     g_signal_connect(G_OBJECT(friend_button),"clicked",
                      G_CALLBACK(ChangeToFriend), this);
     g_signal_connect(G_OBJECT(message_selection),"changed",
-                    G_CALLBACK(tree_selection_message_changed),NULL);
+                    G_CALLBACK(tree_selection_message_changed),this);
     g_signal_connect(G_OBJECT(friend_selection),"changed",
-                    G_CALLBACK(tree_selection_friend_changed),NULL);
+                    G_CALLBACK(tree_selection_friend_changed),this);
     /**
      * 设定属性
      */
@@ -172,6 +172,10 @@ void MainView::tree_selection_message_changed(GtkTreeSelection *selection, gpoin
         gtk_tree_model_get(model,&iter,COLUMN_NAME,&name,COLUMN_MESSAGE,&message,-1);
         g_print("name = %s\n",name);
         g_print("message = %s\n",message);
+
+        //todo:
+        ((MainView *)data)->callback->selectUser(0);
+
         g_free(name);
         g_free(message);
     }
@@ -192,6 +196,10 @@ void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpoint
         g_free(name);
         g_free(id);
     }
+}
+
+void MainView::setCallback(MainViewCallback *callback) {
+    MainView::callback = callback;
 }
 
 
