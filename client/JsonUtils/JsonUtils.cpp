@@ -271,7 +271,7 @@ char* JsonUtils::make_request_adduIdToGroup_json(int uId, int gId, char *uPwd) {
         return NULL;
     }
 
-    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_ADDTOGROUP);
+    cJSON_AddStringToObject(pJsonRoot, KEY_REQUEST_TYPE, TYPE_ADD_TO_GROUP);
 
     pSubJson = cJSON_CreateObject();
     cJSON_AddNumberToObject(pSubJson, KEY_UID, uId);
@@ -460,8 +460,8 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
     }
 
     cJSON *json_groups = cJSON_GetObjectItem(json_responseContent, KEY_GROUPS);
-    *groupsNumber = cJSON_GetObjectItem(json_groups, KEY_GROUPSNUMBER)->valueint;
-    cJSON *json_groupsArray = cJSON_GetObjectItem(json_groups, KEY_GROUPSARRAY)->child;
+    *groupsNumber = cJSON_GetObjectItem(json_groups, KEY_GROUPS_NUMBER)->valueint;
+    cJSON *json_groupsArray = cJSON_GetObjectItem(json_groups, KEY_GROUPS_ARRAY)->child;
     while(json_groupsArray != NULL){
         Group group;
         group.setGId(cJSON_GetObjectItem(json_groupsArray, KEY_GID)->valueint);

@@ -97,14 +97,14 @@ void JsonTesting::test_parse_response_json() {
 
 
     pSubJson = cJSON_CreateObject();
-    cJSON_AddNumberToObject(pSubJson, KEY_GROUPSNUMBER, groupsNumber);
+    cJSON_AddNumberToObject(pSubJson, KEY_GROUPS_NUMBER, groupsNumber);
     cJSON *json_groupsArray = cJSON_CreateArray();
     for(int i=0;i<groupsArray.size();i++){
         cJSON *json_groupsItem = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_groupsItem, KEY_GID, groupsArray.at(i).getGId());
         cJSON_AddItemToArray(json_groupsArray, json_groupsItem);
     }
-    cJSON_AddItemToObject(pSubJson,KEY_GROUPSARRAY,json_groupsArray);
+    cJSON_AddItemToObject(pSubJson,KEY_GROUPS_ARRAY,json_groupsArray);
     cJSON_AddItemToObject(json_responseContent, KEY_GROUPS, pSubJson);
 
 
