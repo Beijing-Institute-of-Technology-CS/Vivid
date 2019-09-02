@@ -19,21 +19,21 @@
 #include "TestUtils/DatabaseTesting.h"
 #include "DatabaseUtils/DatabaseUtils.h"
 
-//#include "Beans/Message.h"
-//#include "Beans/User.h"
-//#include "Beans/Group.h"
+#include "Beans/Message.h"
+#include "Beans/User.h"
+#include "Beans/Group.h"
 ////include .cpp to use g++
 ////!never uncomment .cpp when cmaking the project!
-//#include "TestUtils/DatabaseTesting.cpp"
-//#include "DatabaseUtils/DatabaseUtils.cpp"
-//#include "Beans/Message.cpp"
-//#include "Beans/User.cpp"
-//#include "Beans/Group.cpp"
+#include "TestUtils/DatabaseTesting.cpp"
+#include "DatabaseUtils/DatabaseUtils.cpp"
+#include "Beans/Message.cpp"
+#include "Beans/User.cpp"
+#include "Beans/Group.cpp"
 
 
 int main() {
 
-//    DatabaseTesting::testDatabase();
+    DatabaseTesting::testDatabase();
 
 //    JsonTesting::json_parse_request_testing();
 //    JsonTesting::json_make_response_testing();

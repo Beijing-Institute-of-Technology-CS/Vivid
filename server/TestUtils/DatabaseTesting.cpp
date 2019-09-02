@@ -9,8 +9,8 @@
 void DatabaseTesting::testDatabase() {
 ////    DatabaseUtils::mql_connect();
 
-//    int id = DatabaseUtils::doRegister("hello", "psd");
-//    std::cout << id << std::endl;
+    int id = DatabaseUtils::doRegister("hello", "psd");
+    std::cout << id << std::endl;
 
 //    std::cout << DatabaseUtils::checkId(1) << std::endl;
 //
