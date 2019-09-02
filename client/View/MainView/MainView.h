@@ -48,6 +48,7 @@ private:
     static void ChangeToGroup(GtkWidget *widget, gpointer data);
     static void tree_selection_message_changed(GtkTreeSelection *selection,  gpointer data);
     static void tree_selection_friend_changed(GtkTreeSelection *selection,gpointer data);
+    static void tree_selection_group_changed(GtkTreeSelection *selection,gpointer data);
     static void goButtonClickedCallback(GtkWidget * button, gpointer data);
 };
 

@@ -68,6 +68,7 @@ void MainView::create() {
     GtkWidget * inputConfirmButton;
     GtkTreeSelection *message_selection;
     GtkTreeSelection *friend_selection;
+    GtkTreeSelection *group_selection;
 
     /**
      * 创建构件
@@ -85,6 +86,7 @@ void MainView::create() {
     group_button = gtk_button_new_with_label("Groups");
     message_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(mlist.getView()));
     friend_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(flist.getView()));
+    group_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(gList.getView()));
 
     inputHBox = gtk_hbox_new(FALSE, 0);
     inputEntry = gtk_entry_new();
@@ -100,12 +102,14 @@ void MainView::create() {
                      G_CALLBACK(ChangeToFriend), this);
     g_signal_connect(G_OBJECT(group_button),"clicked",
                      G_CALLBACK(ChangeToGroup), this);
+    g_signal_connect(G_OBJECT(inputConfirmButton),"clicked",
+                     G_CALLBACK(goButtonClickedCallback),this);
     g_signal_connect(G_OBJECT(message_selection),"changed",
                     G_CALLBACK(tree_selection_message_changed),this);
     g_signal_connect(G_OBJECT(friend_selection),"changed",
                     G_CALLBACK(tree_selection_friend_changed),this);
-    g_signal_connect(G_OBJECT(inputConfirmButton),"changed",
-                     G_CALLBACK(goButtonClickedCallback),this);
+    g_signal_connect(G_OBJECT(group_selection),"changed",
+                     G_CALLBACK(tree_selection_group_changed),this);
 
     /**
      * 设定属性
@@ -181,6 +185,22 @@ void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpoint
         int selectedId = std::stoi(id);
         ((MainView *)data)->callback->selectUser(selectedId, name);
         g_free(name);
+        g_free(id);
+    }
+}
+
+void MainView::tree_selection_group_changed(GtkTreeSelection *selection, gpointer data) {
+    GtkTreeIter iter;
+    GtkTreeModel *model;
+
+    gchar *id;
+
+    if(gtk_tree_selection_get_selected(selection,&model,&iter))
+    {
+        gtk_tree_model_get(model,&iter,GROUP_ID,&id,-1);
+        g_print("id = %s\n",id);
+        int selectedId = std::stoi(id);
+        ((MainView *)data)->callback->selectGroup(selectedId);
         g_free(id);
     }
 }
