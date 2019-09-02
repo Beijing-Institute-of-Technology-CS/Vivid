@@ -17,11 +17,11 @@ void User::setUId(int uId) {
     User::uId = uId;
 }
 
-const char *User::getUName() const {
+char *User::getUName() const {
     return uName;
 }
 
-const char *User::getUPassword() const {
+char *User::getUPassword() const {
     return uPassword;
 }
 

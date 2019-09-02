@@ -16,9 +16,9 @@ public:
 
     void setUId(int uId);
 
-    const char *getUName() const;
+    char *getUName() const;
 
-    const char *getUPassword() const;
+    char *getUPassword() const;
 
     int getFIconFile() const;
 
@@ -51,9 +51,9 @@ private:
      *
      */
 
+
     char * uName;
     char * uPassword;
-
 };
 
 
