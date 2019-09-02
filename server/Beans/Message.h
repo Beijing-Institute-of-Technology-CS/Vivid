@@ -10,6 +10,8 @@ class Message {
 public:
     Message();
 
+    Message(int mId, char *mContent, int uFromId, bool groupMessage, char *mTime);
+
     int getMId() const;
 
     void setMId(int mId);

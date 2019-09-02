@@ -6,6 +6,9 @@
 
 Message::Message() {}
 
+Message::Message(int mId, char *mContent, int uFromId, bool groupMessage, char *mTime) : mId(mId), mContent(mContent),
+                                                        uFromId(uFromId), groupMessage(groupMessage), mTime(mTime) { }
+
 int Message::getMId() const {
     return mId;
 }
@@ -61,4 +64,3 @@ int Message::getUToId() const {
 void Message::setUToId(int uToId) {
     Message::uToId = uToId;
 }
-

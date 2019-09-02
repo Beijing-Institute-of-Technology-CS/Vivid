@@ -7,8 +7,10 @@
 
 
 #include <vector>
-//#include <mysql.h>
 #include <iostream>
+#include <cstdlib>
+#include <cstring>
+//#include <mysql.h>
 
 #include "../Beans/Message.h"
 #include "../../Constants.h"
