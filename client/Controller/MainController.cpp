@@ -38,35 +38,41 @@ void MainController::netLoginFailed() {
 }
 
 void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<Group> groups) {
-
+    //todo: 更新数据库contacts信息
+    //todo: 更新数据库groups信息
+    //todo: 通知刷新联系人界面
+    //todo: 通知刷新群聊界面
 }
 
 void MainController::netGetInfoFailed() {
-
+    //todo: tip
 }
 
 void MainController::netGetMessageSuccess(std::vector<Message> messages) {
-
+    //todo: 更新数据库messages信息
+    //todo: 通知刷新消息界面
 }
 
 void MainController::netGetMessageFailed() {
-
+    //todo: tip
 }
 
 void MainController::netSendMessageSuccess(Message message) {
-
+    //todo: 将信息插入数据库
+    //todo: 通知刷新消息界面
 }
 
 void MainController::netSendMessageFailed() {
-
+    //todo: tip
 }
 
 void MainController::netReceiveMessage(Message message) {
-
+    //todo: 将消息插入数据库
+    //todo: 通知刷新消息界面
 }
 
 void MainController::connectFailed() {
-
+    //todo: tip
 }
 /*====================End===NetworkCallback========================*/
 
