@@ -19,7 +19,7 @@
 
 class DatabaseUtils {
 public:
-//    static void mql_connect(MYSQL &mysql_sock);
+    static void mql_connect(MYSQL &mysql_sock);
 
     /**
      * 注册用户
