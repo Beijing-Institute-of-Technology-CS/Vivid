@@ -75,3 +75,27 @@ gboolean LoginController::login_failed(gpointer data) {
     return FALSE;
 }
 
+void LoginController::registerSuccess(int id) {
+    int * data = (int *)malloc(sizeof(int));
+    *data = id;
+    gdk_threads_add_idle(register_success, data);
+}
+
+void LoginController::registerFailed() {
+    gdk_threads_add_idle(register_failed, nullptr);
+}
+
+gboolean LoginController::register_success(gpointer data) {
+    int * id = (int *)data;
+    std::string idString = "您的id是: " + std::to_string(*id);
+    free(id);
+    TipView::showSimpleTipView(idString.c_str());
+    LoginController::getInstance().registerView.destroy();
+    return FALSE;
+}
+
+gboolean LoginController::register_failed(gpointer data) {
+    TipView::showSimpleTipView("注册失败，请重试");
+    return FALSE;
+}
+

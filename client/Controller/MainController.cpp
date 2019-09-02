@@ -20,11 +20,11 @@ void MainController::startMainView() {
 /*====================NetworkCallback========================*/
 
 void MainController::netRegisterSuccess(int id) {
-
+    LoginController::getInstance().registerSuccess(id);
 }
 
 void MainController::netRegisterFailed() {
-
+    LoginController::getInstance().registerFailed();
 }
 
 void MainController::netLoginSuccess(char *username) {

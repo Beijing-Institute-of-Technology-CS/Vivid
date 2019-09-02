@@ -34,6 +34,12 @@ public:
      void loginSuccess(std::string username);
      void loginFailed();
 
+     /**
+      * 注册相关
+      */
+     void registerSuccess(int id);
+     void registerFailed();
+
     /*=======================callback========================*/
 
     /**
@@ -58,9 +64,10 @@ private:
 
     /*=======================StaticThreadFunc========================*/
 
-    static gboolean login_success(gpointer id);
+    static gboolean login_success(gpointer username);
     static gboolean login_failed(gpointer data);
     static gboolean register_success(gpointer id);
+    static gboolean register_failed(gpointer data);
 };
 
 #endif //CLIENT_LOGINCONTROLLER_H
