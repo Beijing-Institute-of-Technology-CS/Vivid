@@ -287,7 +287,7 @@ char *JsonUtils::make_response_getMessages_json(char *result, std::vector<Messag
 
         cJSON_AddNumberToObject(json_messagesItem,KEY_GFROMID,messagesArray.at(i).getGId());
         cJSON_AddNumberToObject(json_messagesItem,KEY_UFROMID,messagesArray.at(i).getUFromId());
-        cJSON_AddStringToObject(json_messagesItem,KEY_UFROMUSERNAME,messagesArray.at(i).uFromUsername);
+        cJSON_AddStringToObject(json_messagesItem,KEY_UFROMUSERNAME,messagesArray.at(i).getUFromUsername());
         cJSON_AddNumberToObject(json_messagesItem,KEY_FID,messagesArray.at(i).getFId());
         cJSON_AddStringToObject(json_messagesItem,KEY_MTIME,messagesArray.at(i).getMTime());
 

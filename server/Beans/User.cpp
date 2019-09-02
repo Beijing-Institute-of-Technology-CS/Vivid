@@ -2,6 +2,8 @@
 // Created by YichengChen on 8/29/19.
 //
 
+#include <cstring>
+#include <cstdlib>
 #include "User.h"
 
 User::User() {inUse = false;}
@@ -39,8 +41,14 @@ void User::setInUse(bool inUse) {
     User::inUse = inUse;
 }
 
-User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
-                                                                   fIconFile(fIconFile) {}
+User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId),
+                                                                   fIconFile(fIconFile) {
+    this->uName = (char *)malloc(sizeof(char)*(strlen(uName)+1));
+    strcpy(this->uName,uName);
+
+    this->uPassword = (char *)malloc(sizeof(char)*strlen(uPassword)+1);
+    strcpy(this->uPassword,uPassword);
+}
 
 int User::getClientIndex() const {
     return client_index;
@@ -48,5 +56,15 @@ int User::getClientIndex() const {
 
 void User::setClientIndex(int clientIndex) {
     client_index = clientIndex;
+}
+
+void User::setUName(char *uName) {
+    this->uName = (char *)malloc(sizeof(char)*(strlen(uName)+1));
+    strcpy(this->uName,uName);
+}
+
+void User::setUPassword(char *uPassword) {
+    this->uPassword = (char *)malloc(sizeof(char)*strlen(uPassword)+1);
+    strcpy(this->uPassword,uPassword);
 }
 

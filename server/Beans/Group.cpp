@@ -19,3 +19,5 @@ const std::vector<User> &Group::getUsers() const {
 void Group::setUsers(const std::vector<User> users) {
     Group::users = users;
 }
+
+Group::Group(int gId) : gId(gId) {}

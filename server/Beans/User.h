@@ -32,16 +32,27 @@ public:
 
     void setClientIndex(int clientIndex);
 
-    char * uName;
-    char * uPassword;
+    void setUName(char *uName);
+
+    void setUPassword(char *uPassword);
 
 private:
     int uId;
 
     int fIconFile;
 
+
+    /**
+     * for server use only
+     */
     int client_index;
     bool inUse;
+    /**
+     *
+     */
+
+    char * uName;
+    char * uPassword;
 };
 
 

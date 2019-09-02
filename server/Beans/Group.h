@@ -18,6 +18,8 @@ public:
 
     void setUsers(const std::vector<User> users);
 
+    Group(int gId);
+
 private:
     int gId;
 
