@@ -2,12 +2,12 @@
 // Created by YichengChen on 8/29/19.
 //
 
+#include <cstring>
+#include <cstdlib>
 #include "User.h"
 
-User::User() {}
+User::User() {inUse = false;}
 
-User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId), uName(uName), uPassword(uPassword),
-                                                                     fIconFile(fIconFile) {}
 
 int User::getUId() const {
     return uId;
@@ -17,11 +17,11 @@ void User::setUId(int uId) {
     User::uId = uId;
 }
 
-const char *User::getUName() const {
+char *User::getUName() const {
     return uName;
 }
 
-const char *User::getUPassword() const {
+char *User::getUPassword() const {
     return uPassword;
 }
 
@@ -33,10 +33,38 @@ void User::setFIconFile(int fIconFile) {
     User::fIconFile = fIconFile;
 }
 
-void User::setUName (char * a){
-    User::uName=a;
+bool User::isInUse() const {
+    return inUse;
 }
 
-void User::setUPWD(char * a){
-    User::uPassword=a;
+void User::setInUse(bool inUse) {
+    User::inUse = inUse;
 }
+
+User::User(int uId, char *uName, char *uPassword, int fIconFile) : uId(uId),
+                                                                   fIconFile(fIconFile) {
+    this->uName = (char *)malloc(sizeof(char)*(strlen(uName)+1));
+    strcpy(this->uName,uName);
+
+    this->uPassword = (char *)malloc(sizeof(char)*strlen(uPassword)+1);
+    strcpy(this->uPassword,uPassword);
+}
+
+int User::getClientIndex() const {
+    return client_index;
+}
+
+void User::setClientIndex(int clientIndex) {
+    client_index = clientIndex;
+}
+
+void User::setUName(char *uName) {
+    this->uName = (char *)malloc(sizeof(char)*(strlen(uName)+1));
+    strcpy(this->uName,uName);
+}
+
+void User::setUPassword(char *uPassword) {
+    this->uPassword = (char *)malloc(sizeof(char)*strlen(uPassword)+1);
+    strcpy(this->uPassword,uPassword);
+}
+

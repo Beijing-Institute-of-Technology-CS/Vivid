@@ -8,34 +8,51 @@
 
 class User {
 public:
-    char *uName;
-    char *uPassword;
-
     User();
+
     User(int uId, char *uName, char *uPassword, int fIconFile);
 
     int getUId() const;
 
     void setUId(int uId);
 
-    const char *getUName() const;
+    char *getUName() const;
 
-    const char *getUPassword() const;
+    char *getUPassword() const;
 
     int getFIconFile() const;
 
     void setFIconFile(int fIconFile);
 
-    void setUName(char *a);
+    bool isInUse() const;
 
-    void setUPWD(char *a);
+    void setInUse(bool inUse);
+
+    int getClientIndex() const;
+
+    void setClientIndex(int clientIndex);
+
+    void setUName(char *uName);
+
+    void setUPassword(char *uPassword);
 
 private:
     int uId;
+
     int fIconFile;
 
 
+    /**
+     * for server use only
+     */
+    int client_index;
+    bool inUse;
+    /**
+     *
+     */
 
+    char * uName;
+    char * uPassword;
 };
 
 
