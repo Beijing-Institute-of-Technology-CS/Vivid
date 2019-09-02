@@ -33,16 +33,25 @@ GtkTreeModel *message_list::list_model_create() {
     return GTK_TREE_MODEL(store);
 }
 
-void message_list::append(const gchar *name, const gchar *message) {
+void message_list::append(int mId, const gchar *message, const gchar *name) {
     GtkListStore *store;
     GtkTreeIter iter;
 
     store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
     gtk_list_store_append(store, &iter);
-    gtk_list_store_set(store, &iter,COLUMN_ID,history_id++,COLUMN_NAME,name,COLUMN_MESSAGE, message, -1);
+    gtk_list_store_set(store, &iter,COLUMN_ID,mId,COLUMN_NAME,name,COLUMN_MESSAGE, message, -1);
 }
 
 GtkWidget *message_list::getView() {
     return view;
+}
+
+void message_list::setData(const std::vector<Message>& messages) {
+    GtkListStore *store;
+    store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
+    gtk_list_store_clear(store);
+    for (auto i : messages) {
+        append(i.getMId(), i.getMContent(), i.getUFromusername());
+    }
 }
 
