@@ -26,7 +26,7 @@ char * NetworkUtils::buffer = (char *)malloc(sizeof(char)*1024);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 void NetworkUtils::listen_from_server() {
-    std::cout << "listening from server" <<std::endl;
+    std::cout << "listening from server " <<std::endl;
     int val_read;
 
     while(true){
