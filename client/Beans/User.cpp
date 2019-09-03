@@ -17,11 +17,11 @@ void User::setUId(int uId) {
     User::uId = uId;
 }
 
-char *User::getUName() const {
+const char *User::getUName() const {
     return uName;
 }
 
-char *User::getUPassword() const {
+const char *User::getUPassword() const {
     return uPassword;
 }
 
@@ -68,4 +68,13 @@ void User::setUPassword(char *uPassword) {
     strcpy(this->uPassword,uPassword);
 }
 
+void User::setLatestMessage(int mid)
+{
+    User::latestMessageID=mid;
+}
+
+int User::getLatestMessage()
+{
+    return User::latestMessageID;
+}
 
