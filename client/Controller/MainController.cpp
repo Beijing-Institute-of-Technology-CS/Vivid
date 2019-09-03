@@ -6,6 +6,7 @@
 #include "MainController.h"
 #include "../TestUtils/NetworkCallbackTesting.h"
 #include "../Network/NetworkUtils.h"
+#include "../../Constants.h"
 
 MainController::MainController() {
     NetworkController::setCallback(this);
@@ -53,7 +54,6 @@ void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<G
     gdk_threads_add_idle(refreshContacts, nullptr);
     //通知刷新群聊界面
     gdk_threads_add_idle(refreshGroups, nullptr);
-    //todo
     std::vector<User> users;
     show_user(LoginController::getInstance().userId, &users);
     int lastCalledMsg = 0;
@@ -92,7 +92,6 @@ void MainController::netSendMessageSuccess(Message message) {
     //将信息插入数据库
     addMsgToDB(message);
     //通知刷新消息界面
-    message.setUToId(LoginController::getInstance().userId);
     auto * data = new ChatViewRefreshData();
     data->message = message;
     data->isReceive = false;
@@ -133,7 +132,7 @@ void MainController::start() {
 }
 
 void MainController::startNetworkConnect() {
-//    NetworkUtils::start_client(BITCS);
+    NetworkUtils::start_client(BITCS);
 }
 
 void MainController::selectUser(int uId, std::string uName) {
@@ -144,6 +143,7 @@ void MainController::selectUser(int uId, std::string uName) {
 
 void MainController::selectGroup(int gId) {
     std::string title = "Group: " + std::to_string(gId);
+    NetworkController::netAddUIdToGroup(LoginController::getInstance().userId, LoginController::getInstance().userPassword.c_str(), gId);
     chatView.show(title.c_str());
     chatView.currentId = gId;
     chatView.isGroup = true;
@@ -167,16 +167,16 @@ gboolean MainController::refreshMessage(gpointer data) {
 }
 
 gboolean MainController::refreshContacts(gpointer data) {
-    //todo:
     std::vector<User> contacts;
     show_friend(LoginController::getInstance().userId, &contacts);
+    MainController::getInstance().mainView.flist.setData(contacts);
     return 0;
 }
 
 gboolean MainController::refreshGroups(gpointer data) {
-    //todo:
     std::vector<Group> groups;
     show_Groupinfo(LoginController::getInstance().userId, &groups);
+    MainController::getInstance().mainView.glist.setData(groups);
     return 0;
 }
 
@@ -205,7 +205,6 @@ gboolean MainController::showTip(gpointer commandPtr) {
 }
 
 void MainController::chatViewSend(std::string msg) {
-    //todo
     if (msg.empty()) {
         return;
     }
@@ -227,10 +226,15 @@ gboolean MainController::refreshChatView(gpointer data) {
         return 0;
     }
     std::string msg;
-    //todo: 只是暂时的逻辑，有问题
     if (!isReceive) {
         msg = message.getMContent();
-        MainController::getInstance().chatView.send_message(msg);
+        if (MainController::getInstance().chatView.isGroup && message.isGroupMessage() &&
+            message.getGId() == MainController::getInstance().chatView.currentId) {
+            MainController::getInstance().chatView.send_message(msg);
+        } else if (!MainController::getInstance().chatView.isGroup && !message.isGroupMessage() &&
+            message.getUToId() == MainController::getInstance().chatView.currentId) {
+            MainController::getInstance().chatView.send_message(msg);
+        }
         return 0;
     }
     if (MainController::getInstance().chatView.isGroup && message.isGroupMessage()) {

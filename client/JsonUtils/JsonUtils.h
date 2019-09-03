@@ -38,7 +38,7 @@ public:
 
     static char * make_request_sendMessages_json(int uToId, int gToId, char *mType, const char * mContent, int uId, const char *uPwd);
 
-    static char * make_request_adduIdToGroup_json(int uId, int gId, char *uPwd);
+    static char * make_request_adduIdToGroup_json(int uId, int gId, const char *uPwd);
 
     /**
      * parsing

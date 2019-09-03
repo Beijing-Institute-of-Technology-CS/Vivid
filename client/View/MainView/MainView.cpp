@@ -128,11 +128,6 @@ void MainView::create() {
     gtk_box_pack_start(GTK_BOX(list_box),flist.getView(),TRUE,TRUE,5);
     gtk_box_pack_start(GTK_BOX(list_box),glist.getView(),TRUE,TRUE,5);
 
-    flist.append("1","boss","nb!!!!");
-    flist.append("2","dd","handsome");
-
-    glist.append("1","who cares ");
-    glist.append("2","jesus fucking christ");
     gtk_container_add(GTK_CONTAINER(main_window),vbox);
 }
 
