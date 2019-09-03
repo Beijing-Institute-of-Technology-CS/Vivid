@@ -20,8 +20,8 @@ public:
 
     static void netRegister(const char * username, const char * password);
     static void netLogin(int uId, const char * password);
-    static void netGetInfo(int uId, char * password);
-    static void netGetMessages(int uId, char * password, int lastCalledMsg);
+    static void netGetInfo(int uId, const char * password);
+    static void netGetMessages(int uId, const char * password, int lastCalledMsg);
     static void netSendMessage(int uId, const char * password, bool isGroup, int uToId, int gToId, const char * content);
     static void netAddUIdToGroup(int uId, char * password, int gId);
 
