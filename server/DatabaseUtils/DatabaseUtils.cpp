@@ -80,7 +80,7 @@ int DatabaseUtils::doRegister(const char *username, const char *password) {
     sprintf(query_sql, "INSERT INTO User(%s, %s) VALUES(\'%s\', \'%s\')", KEY_UNAME, KEY_UPASSWORD, username, password);
 //    printf("%s\n",query_sql);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("doRegister query failed");
     }else{
         uId = mysql_insert_id(&mysql_sock);
     }
@@ -99,7 +99,7 @@ bool DatabaseUtils::checkPassword(int uId, const char *password) {
 
     sprintf(query_sql, "SELECT %s FROM User WHERE %s = %d", KEY_UPASSWORD, KEY_UID, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("checkPassword query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         MYSQL_ROW row = mysql_fetch_row(mysql_results);
@@ -126,7 +126,7 @@ bool DatabaseUtils::checkId(int uId) {
 
     sprintf(query_sql, "SELECT * FROM User WHERE %s = %d", KEY_UID, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("checkId query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
@@ -159,7 +159,7 @@ int DatabaseUtils::saveMessage(const Message &message) {
             message.getMContent(), message.getFId(), message.getUFromId(), message.getUToId(),
             message.getGId(), message.isGroupMessage()?TYPE_GROUP_MESSAGE:TYPE_USER_MESSAGE, message.getMTime());
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("saveMessage query failed");
     }else{
         mId = mysql_insert_id(&mysql_sock);
     }
@@ -180,7 +180,7 @@ bool DatabaseUtils::getMessage(int mId, Message &message) {
     sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d", KEY_MID, mId);
 //    printf("%s\n",query_sql);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("getMessage query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
@@ -223,7 +223,7 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
 
     sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d AND %s > %d", KEY_UTOID, uToId, KEY_MID, lastCalledMessage);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("getMessages query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
@@ -266,7 +266,7 @@ void DatabaseUtils::getUser(int uId, User &user) {
     sprintf(query_sql, "SELECT * FROM User WHERE %s = %d", KEY_UID, uId);
 //    std::cout << query_sql << std::endl;
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("getUser query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         MYSQL_ROW row = mysql_fetch_row(mysql_results);
@@ -291,7 +291,7 @@ void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
 
     sprintf(query_sql, "SELECT * FROM User WHERE %s IN (SELECT %s FROM Befriend WHERE %s = %d)", KEY_UID, KEY_UID2, KEY_UID1, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("getUsers query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
@@ -327,7 +327,7 @@ void DatabaseUtils::getGroups(int uId, std::vector<Group> &groups) {
 
     sprintf(query_sql, "SELECT %s FROM GroupVivid WHERE %s = %d", KEY_GID, KEY_UID, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("getGroups query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
@@ -356,7 +356,7 @@ void DatabaseUtils::addUIdToGroup(int uId, int gId) {
 
     sprintf(query_sql, "INSERT INTO GroupVivid VALUES(%d, %d)", gId, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("addUIdToGroup query failed");
     }else{
         ;
     }
@@ -375,7 +375,7 @@ void DatabaseUtils::getGroupContacts(int gId, std::vector<User> &groupContacts) 
     sprintf(query_sql, "SELECT * FROM User WHERE %s IN (SELECT %s FROM GroupVivid WHERE %s = %d)", KEY_UID, KEY_UID, KEY_GID, gId);
 //    std::cout << query_sql << std::endl;
     if(mysql_query(&mysql_sock, query_sql)!=0){
-        perror("query failed");
+        perror("getGroupContacts query failed");
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
