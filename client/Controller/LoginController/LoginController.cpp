@@ -53,6 +53,7 @@ void LoginController::loginFailed() {
 }
 
 void LoginController::loginSuccess(std::string username) {
+    insert_userinfo(userId, username.c_str(), userPassword.c_str(), 0);
     gdk_threads_add_idle(login_success, &username);
 }
 

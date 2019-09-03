@@ -136,7 +136,7 @@ char* JsonUtils::make_request_login_json(int uId, const char *password) {
  *
  * @return
  */
-char* JsonUtils::make_request_getInfo_json(int uId, char *uPwd) {
+char* JsonUtils::make_request_getInfo_json(int uId, const char *uPwd) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;
@@ -171,7 +171,7 @@ char* JsonUtils::make_request_getInfo_json(int uId, char *uPwd) {
  * @param lastCalledMessage
  * @return
  */
-char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, char *uPwd) {
+char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, const char *uPwd) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;

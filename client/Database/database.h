@@ -23,7 +23,7 @@ void init_db();
 void close_db();
 
 //向用户数据表中插入用户信息，参数分别为用户ID,用户名，密码以及用户头像ID
-int insert_userinfo (int userID, char * username, char * password, int image);
+int insert_userinfo (int userID, const char * username, const char * password, int image);
 
 //向好友数据表中插入用户信息，参数分别为当前用户ID,他的好友ID,好友用户名
 //和好友头像ID

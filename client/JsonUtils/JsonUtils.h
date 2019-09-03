@@ -29,12 +29,12 @@ public:
 
     static char * make_request_login_json(int uId, const char *password);
 
-    static char * make_request_getInfo_json(int uId, char *uPwd);
+    static char * make_request_getInfo_json(int uId, const char *uPwd);
 
     /**
      * read lastCalledMessage from db
      */
-    static char * make_request_getMessages_json(int lastCalledMessage, int uId, char *uPwd);
+    static char * make_request_getMessages_json(int lastCalledMessage, int uId, const char *uPwd);
 
     static char * make_request_sendMessages_json(int uToId, int gToId, char *mType, const char * mContent, int uId, const char *uPwd);
 
