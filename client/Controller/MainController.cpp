@@ -167,16 +167,16 @@ gboolean MainController::refreshMessage(gpointer data) {
 }
 
 gboolean MainController::refreshContacts(gpointer data) {
-    //todo:
     std::vector<User> contacts;
     show_friend(LoginController::getInstance().userId, &contacts);
+    MainController::getInstance().mainView.flist.setData(contacts);
     return 0;
 }
 
 gboolean MainController::refreshGroups(gpointer data) {
-    //todo:
     std::vector<Group> groups;
     show_Groupinfo(LoginController::getInstance().userId, &groups);
+    MainController::getInstance().mainView.glist.setData(groups);
     return 0;
 }
 
