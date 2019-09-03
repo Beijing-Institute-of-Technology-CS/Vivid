@@ -218,7 +218,8 @@ void NetworkUtils::start_server() {
 
                         JsonUtils::parse_request_register_json(buffer,username,password);
 
-                        int uId = DatabaseUtils::doRegister(username,password);
+//                        int uId = DatabaseUtils::doRegister(username,password);
+                        int uId = 1;
 
                         char *s_json = JsonUtils::make_response_register_json(TRUE_CONTENT,uId);
 
