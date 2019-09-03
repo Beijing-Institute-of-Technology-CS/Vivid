@@ -49,3 +49,26 @@ void GroupList::setData(const std::vector<Group>& contacts) {
         append(std::to_string(i.getGId()).c_str(), "");
     }
 }
+
+void GroupList::setGroup(const int id, const char *message) {
+    GtkTreeModel *pmodel;
+    pmodel = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+    GtkListStore *store;
+    GtkTreeIter iter;
+    gtk_tree_model_get_iter_first(pmodel,&iter);
+
+    do{
+        char *idstr;
+        gtk_tree_model_get(GTK_TREE_MODEL(pmodel),&iter,GROUP_ID,&idstr,-1);
+        int ID;
+        sscanf(idstr,"%d",&ID);
+        if(ID == id)
+        {
+            store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
+            gtk_list_store_set(store, &iter,GROUP_ID,idstr,GROUP_MESSAGE,message, -1);
+            return;
+        }
+    }while(gtk_tree_model_iter_next(pmodel,&iter));
+
+    append(std::to_string(id).c_str(),message);
+}

@@ -56,3 +56,28 @@ void FriendList::setData(const std::vector<User>& User) {
     }
 }
 
+void FriendList::setFriend(const int id, const char *message) {
+    GtkTreeModel *pmodel;
+    pmodel = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+    GtkListStore *store;
+    GtkTreeIter iter;
+    gtk_tree_model_get_iter_first(pmodel,&iter);
+
+    char *idstr;
+    char *name;
+    do{
+        gtk_tree_model_get(GTK_TREE_MODEL(pmodel),&iter,USER_ID,&idstr,USER_NAME,&name,-1);
+        int ID;
+        sscanf(idstr,"%d",&ID);
+        if(ID == id)
+        {
+            store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
+            gtk_list_store_set(store, &iter,USER_ID,idstr,USER_MESSAGE,message, -1);
+            return;
+        }
+    }while(gtk_tree_model_iter_next(pmodel,&iter));
+
+    append(std::to_string(id).c_str(),name,message);
+}
+
+

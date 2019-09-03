@@ -24,6 +24,7 @@ public:
     GtkWidget *getView();
     void append(const gchar *id, const gchar *name, const gchar *message);
     void setData(const std::vector<User>& User);
+    void setFriend(const int id,const char *message);
     //void get_input_login_content(const char * & username, const char * & password);
 
 private:
