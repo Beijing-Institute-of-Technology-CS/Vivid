@@ -16,24 +16,19 @@ public:
     void destroy();
     bool isGroup;
     int currentId;
-private:
+    void receive_message(const char *message);
+    void send_message(std::string message);
+    void setCallback(ChatViewCallback *callback);
     bool isShow = false;
-
+private:
     GtkWidget *chat_window = nullptr;
     GtkWidget *vbox= nullptr;
     GtkWidget *textView = nullptr;
     GtkWidget *message_box= nullptr;
 
     ChatViewCallback * callback;
-public:
-    void setCallback(ChatViewCallback *callback);
-
-private:
-
     //static char *get_text(gpointer data);
     static void on_send_clicked(GtkButton *button,gpointer data);
-    void receive_message(char *message);
-    void send_message(std::string message);
     static void clear_input_area(GtkWidget *textView);
     static void on_destroy(GtkWidget * widget, gpointer data);
 

@@ -80,7 +80,12 @@ void MainController::netGetMessageFailed() {
 void MainController::netSendMessageSuccess(Message message) {
     //将信息插入数据库
     addMsgToDB(message);
-    //todo: 通知刷新消息界面
+    //通知刷新消息界面
+    message.setUToId(LoginController::getInstance().userId);
+    auto * data = new ChatViewRefreshData();
+    data->message = message;
+    data->isReceive = false;
+    gdk_threads_add_idle(refreshChatView, data);
     gdk_threads_add_idle(refreshMessage, nullptr);
 }
 
@@ -94,7 +99,11 @@ void MainController::netSendMessageFailed() {
 void MainController::netReceiveMessage(Message message) {
     //将消息插入数据库
     addMsgToDB(message);
-    //todo: 通知刷新消息界面
+    //通知刷新消息界面
+    auto * data = new ChatViewRefreshData();
+    data->message = message;
+    data->isReceive = true;
+    gdk_threads_add_idle(refreshChatView, data);
     gdk_threads_add_idle(refreshMessage, nullptr);
 }
 
@@ -197,4 +206,35 @@ void MainController::chatViewSend(std::string msg) {
             chatView.currentId,
             msg.c_str()
             );
+}
+
+gboolean MainController::refreshChatView(gpointer data) {
+    Message message = ((ChatViewRefreshData * )data)->message;
+    bool isReceive = ((ChatViewRefreshData * )data)->isReceive;
+    free(data);
+    if (!MainController::getInstance().chatView.isShow) {
+        return 0;
+    }
+    std::string msg;
+    //todo: 只是暂时的逻辑，有问题
+    if (!isReceive) {
+        msg = message.getMContent();
+        MainController::getInstance().chatView.send_message(msg);
+        return 0;
+    }
+    if (MainController::getInstance().chatView.isGroup && message.isGroupMessage()) {
+        if (MainController::getInstance().chatView.currentId == message.getGId()) {
+            msg = "(" + std::to_string(message.getUFromId()) + ")"
+                    + message.getUFromUsername() + ": " + message.getMContent();
+        }
+    } else if (!MainController::getInstance().chatView.isGroup && !message.isGroupMessage()) {
+        if (MainController::getInstance().chatView.currentId == message.getUFromId() ||
+            MainController::getInstance().chatView.currentId == message.getUToId()) {
+            msg = message.getMContent();
+        }
+    }
+    if (isReceive) {
+        MainController::getInstance().chatView.receive_message(msg.c_str());
+    }
+    return 0;
 }

@@ -106,7 +106,7 @@ void ChatView::show(const char *name) {
     isShow = true;
 }
 
-void ChatView::receive_message(char *message) {
+void ChatView::receive_message(const char *message) {
 
     GtkWidget *single_box;
     GtkWidget *message_label;
@@ -118,6 +118,7 @@ void ChatView::receive_message(char *message) {
     gtk_box_pack_start(GTK_BOX(message_box),single_box,FALSE,FALSE,0);
 
     gtk_widget_show(single_box);
+    gtk_widget_show(message_label);
 }
 
 void ChatView::on_destroy(GtkWidget *widget, gpointer data) {

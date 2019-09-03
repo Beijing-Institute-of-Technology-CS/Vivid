@@ -11,6 +11,7 @@
 #define TIP_CONNECT_FAILED 1004
 
 
+#include <string>
 #include "LoginController/LoginController.h"
 #include "../View/MainView/MainView.h"
 #include "NetworkController/NetworkController.h"
@@ -66,8 +67,16 @@ private:
     static gboolean refreshGroups(gpointer data);
     static gboolean showTip(gpointer string);
 
+    static gboolean refreshChatView(gpointer data);
+
     //friends
     friend class LoginController;
+};
+
+class ChatViewRefreshData {
+public:
+    Message message;
+    bool isReceive;
 };
 
 #endif //CLIENT_MAINCONTROLLER_H
