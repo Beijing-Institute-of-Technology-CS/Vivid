@@ -300,7 +300,8 @@ void NetworkUtils::start_server() {
                                 JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
 
                                 std::vector<Message> messages;
-                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
+                                messages.emplace_back(Message(2,0,2,3,0, false,"777","sj2","zhc"));
+//                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
 
                                 char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
 
