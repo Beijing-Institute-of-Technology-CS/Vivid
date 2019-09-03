@@ -7,10 +7,10 @@
 
 
 void DatabaseTesting::testDatabase() {
-////    DatabaseUtils::mql_connect();
+//    DatabaseUtils::database_start();
 
-    int id = DatabaseUtils::doRegister("hello", "psd");
-    std::cout << id << std::endl;
+//    int id = DatabaseUtils::doRegister("hello", "psd");
+//    std::cout << id << std::endl;
 
 //    std::cout << DatabaseUtils::checkId(1) << std::endl;
 //
@@ -26,13 +26,13 @@ void DatabaseTesting::testDatabase() {
 //              << " " << message.getMTime() << std::endl;
 //
 //    std::vector<Message> messages;
-//    DatabaseUtils::getMessages(1, 4, messages);
+//    DatabaseUtils::getMessages(1, 2, messages);
 //    for(auto message :messages){
 //        std::cout << message.getMId() << " " << message.getMContent() << " "  << message.isGroupMessage() << " "
 //                  << message.getGId() << " " << message.getFId() << " " << message.getUFromId() << " " << message.getUToId()
 //                  << " " << message.getMTime() << std::endl;
 //    }
-//
+
 //    User user;
 //    DatabaseUtils::getUser(3, user);
 //    std::cout << user.getUId() << " " << user.getUName() << " " << user.getUPassword() << " " << user.getFIconFile()

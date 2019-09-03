@@ -154,10 +154,11 @@ int DatabaseUtils::saveMessage(const Message &message) {
     char query_sql[2048];
     int mId = -1;
 
-    sprintf(query_sql, "INSERT INTO Message(%s, %s, %s, %s, %s, %s, %s) VALUES(\'%s\', %d, %d, %d, %d, \'%s\', \'%s\')",
-            KEY_MCONTENT, KEY_FFILE, KEY_UFROMID, KEY_UTOID, KEY_GID, KEY_MTYPE, KEY_MTIME,
+    sprintf(query_sql, "INSERT INTO Message(%s, %s, %s, %s, %s, %s, %s, %s) VALUES(\'%s\', %d, %d, %d, %d, \'%s\', \'%s\', \'%s\')",
+            KEY_MCONTENT, KEY_FFILE, KEY_UFROMID, KEY_UTOID, KEY_GID, KEY_MTYPE, KEY_MTIME, KEY_UFROMUSERNAME,
             message.getMContent(), message.getFId(), message.getUFromId(), message.getUToId(),
-            message.getGId(), message.isGroupMessage()?TYPE_GROUP_MESSAGE:TYPE_USER_MESSAGE, message.getMTime());
+            message.getGId(), message.isGroupMessage()?TYPE_GROUP_MESSAGE:TYPE_USER_MESSAGE, message.getMTime(),
+            message.getUFromUsername());
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("saveMessage query failed");
     }else{
@@ -201,6 +202,7 @@ bool DatabaseUtils::getMessage(int mId, Message &message) {
 //                message.mTime = (char *)std::malloc((std::strlen(row[7])+1)*sizeof(char));
 //                strcpy(message.mTime, row[7]);
                 message.setMTime(row[7]);
+                message.setUFromUsername(row[8]);
                 flag = true;
             }
             else{
@@ -222,6 +224,7 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
     char query_sql[2048];
 
     sprintf(query_sql, "SELECT * FROM Message WHERE %s = %d AND %s > %d", KEY_UTOID, uToId, KEY_MID, lastCalledMessage);
+//    std::cout << query_sql << std::endl;
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("getMessages query failed");
     }else{
@@ -245,6 +248,7 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
 //                temp_message.mTime = (char *)std::malloc((std::strlen(row[7])+1)*sizeof(char));
 //                strcpy(temp_message.mTime, row[7]);
                 temp_message.setMTime(row[7]);
+                temp_message.setUFromUsername(row[8]);
                 messages.push_back(temp_message);
             }
         }
