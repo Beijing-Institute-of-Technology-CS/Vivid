@@ -25,5 +25,6 @@ add_executable(client main.cpp View/LoginView/LoginView.cpp
         Network/NetworkUtils.cpp Network/NetworkUtils.h Controller/NetworkController/NetworkController.cpp Controller/NetworkController/NetworkController.h TestUtils/NetworkCallbackTesting.cpp TestUtils/NetworkCallbackTesting.h
         View/MainView/ChatView/ChatView.cpp View/MainView/ChatView/ChatView.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h)
 
+#set(ENV{PKG_CONFIG_PATH} /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig)
 
 target_link_libraries(client ${GTK3_LIBRARIES})

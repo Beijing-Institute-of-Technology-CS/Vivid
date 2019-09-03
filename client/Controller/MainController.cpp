@@ -14,8 +14,8 @@
 
 MainController::MainController() {
     NetworkController::setCallback(this);
-    NetworkCallbackTesting::setCallback(this);
-    NetworkCallbackTesting::startTestingThread();
+//    NetworkCallbackTesting::setCallback(this);
+//    NetworkCallbackTesting::startTestingThread();
     chatView.setCallback(this);
     mainView.setCallback(this);
 }
