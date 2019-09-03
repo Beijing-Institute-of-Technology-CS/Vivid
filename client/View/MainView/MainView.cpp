@@ -146,6 +146,7 @@ void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpoint
         g_print("name = %s\n",name);
         int selectedId = std::stoi(id);
         std::string Name = name;
+        gtk_tree_selection_unselect_all(selection);
         ((MainView *)data)->callback->selectUser(selectedId,Name);
         g_free(id);
         g_free(name);
@@ -165,6 +166,7 @@ void MainView::tree_selection_group_changed(GtkTreeSelection *selection, gpointe
         g_print("id = %s\n",id);
         g_print("name = %s\n",message);
         int selectedId = std::stoi(id);
+        gtk_tree_selection_unselect_all(selection);
         ((MainView *)data)->callback->selectGroup(selectedId);
         g_free(id);
         g_free(message);
