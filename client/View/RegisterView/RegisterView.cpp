@@ -11,6 +11,8 @@ void RegisterView::show() {
 
     GtkWidget *box;
     GtkWidget *button_box;
+    GtkWidget *button_box_left;
+    GtkWidget *button_box_right;
     GtkWidget *fixed;
 
     GtkWidget *label_name;
@@ -26,8 +28,8 @@ void RegisterView::show() {
     regi_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
     /*窗口设置*/
-    gtk_window_set_title(GTK_WINDOW(regi_window),"Register");
-    gtk_window_set_default_size(GTK_WINDOW(regi_window),500,500);
+    gtk_window_set_title(GTK_WINDOW(regi_window),"register");
+    gtk_window_set_default_size(GTK_WINDOW(regi_window),500,350);
     gtk_window_set_position(GTK_WINDOW(regi_window),GTK_WIN_POS_CENTER);
     gtk_container_set_border_width(GTK_CONTAINER(regi_window),0);
     gtk_window_set_resizable(GTK_WINDOW(regi_window),FALSE);
@@ -36,6 +38,8 @@ void RegisterView::show() {
     box = gtk_vbox_new(FALSE,0);
     fixed=gtk_fixed_new();
     button_box = gtk_hbox_new(FALSE,15);
+    button_box_left = gtk_hbox_new(FALSE,15);
+    button_box_right = gtk_hbox_new(FALSE,15);
 
     image_logo = gtk_image_new_from_file("logo.png");
     gtk_widget_set_size_request(image_logo,500,150);
@@ -53,8 +57,8 @@ void RegisterView::show() {
     entry_check = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(entry_check),FALSE);
 
-    submit_button = gtk_button_new_with_label("submit");
-    cancel_button = gtk_button_new_with_label("cancel");
+    submit_button = gtk_button_new_with_label("          submit          ");
+    cancel_button = gtk_button_new_with_label("          cancel          ");
 
     gtk_container_add(GTK_CONTAINER(regi_window),box);
     gtk_box_pack_start(GTK_BOX(box),image_logo,FALSE,FALSE,0);
@@ -70,8 +74,19 @@ void RegisterView::show() {
     gtk_box_pack_start(GTK_BOX(box),sep,FALSE,FALSE,5);
 
     gtk_box_pack_start(GTK_BOX(box),button_box,FALSE,FALSE,5);
-    gtk_box_pack_start(GTK_BOX(button_box),submit_button,FALSE,FALSE,20);
-    gtk_box_pack_end(GTK_BOX(button_box),cancel_button,FALSE,FALSE,20);
+
+    //gtk_box_pack_start(GTK_BOX(button_box),submit_button,FALSE,FALSE,5);
+    //gtk_box_pack_end(GTK_BOX(button_box),cancel_button,FALSE,FALSE,5);
+
+    gtk_box_pack_start(GTK_BOX(button_box),button_box_left,TRUE,TRUE,5);
+    gtk_box_pack_start(GTK_BOX(button_box),button_box_right,TRUE,TRUE,5);
+
+    gtk_box_pack_end(GTK_BOX(button_box_left),submit_button,FALSE,FALSE,5);
+
+    gtk_button_set_relief(GTK_BUTTON(submit_button),GTK_RELIEF_NONE);
+
+    gtk_box_pack_start(GTK_BOX(button_box_right),cancel_button,FALSE,FALSE,5);
+    gtk_button_set_relief(GTK_BUTTON(cancel_button),GTK_RELIEF_NONE);
 
     /*按钮触发*/
     g_signal_connect(G_OBJECT(submit_button),"clicked", G_CALLBACK(onSubmitClickCallback),this);
