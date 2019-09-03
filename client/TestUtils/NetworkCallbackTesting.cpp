@@ -162,6 +162,7 @@ void NetworkCallbackTesting::testThread() {
                 message2.setMContent("M10002");
                 message2.setGroupMessage(false);
                 message2.setUFromId(LoginController::getInstance().userId);
+                message2.setUToId(1);
                 message2.setGId(0);
                 message2.setUFromUsername("ME");
                 message2.setFId(0);

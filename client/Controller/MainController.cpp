@@ -53,7 +53,6 @@ void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<G
     gdk_threads_add_idle(refreshContacts, nullptr);
     //通知刷新群聊界面
     gdk_threads_add_idle(refreshGroups, nullptr);
-    //todo
     std::vector<User> users;
     show_user(LoginController::getInstance().userId, &users);
     int lastCalledMsg = 0;
@@ -92,7 +91,6 @@ void MainController::netSendMessageSuccess(Message message) {
     //将信息插入数据库
     addMsgToDB(message);
     //通知刷新消息界面
-    message.setUToId(LoginController::getInstance().userId);
     auto * data = new ChatViewRefreshData();
     data->message = message;
     data->isReceive = false;
@@ -227,10 +225,15 @@ gboolean MainController::refreshChatView(gpointer data) {
         return 0;
     }
     std::string msg;
-    //todo: 只是暂时的逻辑，有问题
     if (!isReceive) {
         msg = message.getMContent();
-        MainController::getInstance().chatView.send_message(msg);
+        if (MainController::getInstance().chatView.isGroup && message.isGroupMessage() &&
+            message.getGId() == MainController::getInstance().chatView.currentId) {
+            MainController::getInstance().chatView.send_message(msg);
+        } else if (!MainController::getInstance().chatView.isGroup && !message.isGroupMessage() &&
+            message.getUToId() == MainController::getInstance().chatView.currentId) {
+            MainController::getInstance().chatView.send_message(msg);
+        }
         return 0;
     }
     if (MainController::getInstance().chatView.isGroup && message.isGroupMessage()) {
