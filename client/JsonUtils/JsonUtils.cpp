@@ -586,7 +586,7 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, Message &message)
 
     message.setUFromId(cJSON_GetObjectItem(pSubJson, KEY_UFROMID)->valueint);
     message.setGId(cJSON_GetObjectItem(pSubJson, KEY_GFROMID)->valueint);
-
+    message.setUToId(cJSON_GetObjectItem(pSubJson, KEY_UTOID)->valueint);
 //    char *temp_uFromUsername = cJSON_GetObjectItem(pSubJson, KEY_UFROMUSERNAME)->valuestring;
 //    message.uFromUsername = (char *)std::malloc((std::strlen(temp_uFromUsername)+1)*sizeof(char));
 //    strcpy(message.uFromUsername, temp_uFromUsername);
