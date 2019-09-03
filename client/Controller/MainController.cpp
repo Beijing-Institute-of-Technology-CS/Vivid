@@ -11,6 +11,7 @@ MainController::MainController() {
     NetworkController::setCallback(this);
     NetworkCallbackTesting::setCallback(this);
     NetworkCallbackTesting::startTestingThread();
+    chatView.setCallback(this);
     mainView.setCallback(this);
 }
 
@@ -181,4 +182,16 @@ gboolean MainController::showTip(gpointer commandPtr) {
     }
     TipView::showSimpleTipView(msg.c_str());
     return 0;
+}
+
+void MainController::chatViewSend(std::string msg) {
+    //todo
+    NetworkController::netSendMessage(
+            LoginController::getInstance().userId,
+            LoginController::getInstance().userPassword.c_str(),
+            chatView.isGroup,
+            chatView.currentId,
+            chatView.currentId,
+            msg.c_str()
+            );
 }

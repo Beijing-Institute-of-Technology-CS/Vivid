@@ -17,7 +17,7 @@
 #include "../Database/database.h"
 #include "../View/MainView/ChatView/ChatView.h"
 
-class MainController : public NetworkCallback, MainViewCallback {
+class MainController : public NetworkCallback, MainViewCallback, ChatViewCallback {
 public:
     MainController();
 
@@ -48,6 +48,8 @@ public:
 
     void selectUser(int uId, std::string uName) override;
     void selectGroup(int gId) override;
+
+    void chatViewSend(std::string msg) override;
 
 private:
     //view

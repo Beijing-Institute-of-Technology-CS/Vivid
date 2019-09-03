@@ -25,23 +25,16 @@ void ChatView::on_send_clicked(GtkButton *button, gpointer data) {
     gchar *text;
     GtkTextBuffer *buffer;
     GtkTextIter start, end;
-    std::cout<<"why"<<std::endl;
+    std::cout<<"ON_SEND_CLICK"<<std::endl;
     buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(chatView->textView));
 
     gtk_text_buffer_get_bounds(GTK_TEXT_BUFFER(buffer),&start,&end);
     text=gtk_text_buffer_get_text(buffer,&start,&end,TRUE);
 
-    GtkWidget *single_box;
-    GtkWidget *message_label;
-    single_box = gtk_hbox_new(FALSE,0);
-    message_label = gtk_label_new(text);
+//    chatView->send_message(text);
 
-    gtk_label_set_justify(GTK_LABEL(message_label),GTK_JUSTIFY_RIGHT);
-    gtk_box_pack_end(GTK_BOX(single_box),message_label,FALSE,FALSE,0);
-    gtk_box_pack_start(GTK_BOX(chatView->message_box),single_box,FALSE,FALSE,0);
+    chatView->callback->chatViewSend(text);
 
-    gtk_widget_show(single_box);
-    gtk_widget_show(message_label);
     //clear_input_area(chatView->textView);
 }
 
@@ -133,4 +126,22 @@ void ChatView::on_destroy(GtkWidget *widget, gpointer data) {
 
 void ChatView::destroy() {
     gtk_widget_destroy(chat_window);
+}
+
+void ChatView::send_message(std::string message) {
+    GtkWidget *single_box;
+    GtkWidget *message_label;
+    single_box = gtk_hbox_new(FALSE,0);
+    message_label = gtk_label_new(message.c_str());
+
+    gtk_label_set_justify(GTK_LABEL(message_label),GTK_JUSTIFY_RIGHT);
+    gtk_box_pack_end(GTK_BOX(single_box),message_label,FALSE,FALSE,0);
+    gtk_box_pack_start(GTK_BOX(message_box),single_box,FALSE,FALSE,0);
+
+    gtk_widget_show(single_box);
+    gtk_widget_show(message_label);
+}
+
+void ChatView::setCallback(ChatViewCallback *callback) {
+    ChatView::callback = callback;
 }
