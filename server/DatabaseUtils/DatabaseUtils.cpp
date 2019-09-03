@@ -289,7 +289,8 @@ void DatabaseUtils::getUsers(int uId, std::vector<User> &users) {
 //    mysql_connect(mysql_sock);
     char query_sql[2048];
 
-    sprintf(query_sql, "SELECT * FROM User WHERE %s IN (SELECT %s FROM Befriend WHERE %s = %d)", KEY_UID, KEY_UID2, KEY_UID1, uId);
+//    sprintf(query_sql, "SELECT * FROM User WHERE %s IN (SELECT %s FROM Befriend WHERE %s = %d)", KEY_UID, KEY_UID2, KEY_UID1, uId);
+    sprintf(query_sql, "SELECT * FROM User WHERE %s != %d", KEY_UID, uId);
     if(mysql_query(&mysql_sock, query_sql)!=0){
         perror("getUsers query failed");
     }else{
