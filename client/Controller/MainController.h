@@ -5,6 +5,11 @@
 #ifndef CLIENT_MAINCONTROLLER_H
 #define CLIENT_MAINCONTROLLER_H
 
+#define TIP_GET_INFO_FAILED 1001
+#define TIP_GETMESSAGE_FAILED 1002
+#define TIP_SEND_MSG_FAILED 1003
+#define TIP_CONNECT_FAILED 1004
+
 
 #include "LoginController/LoginController.h"
 #include "../View/MainView/MainView.h"
@@ -57,6 +62,7 @@ private:
     static gboolean refreshMessage(gpointer data);
     static gboolean refreshContacts(gpointer data);
     static gboolean refreshGroups(gpointer data);
+    static gboolean showTip(gpointer string);
 
     //friends
     friend class LoginController;

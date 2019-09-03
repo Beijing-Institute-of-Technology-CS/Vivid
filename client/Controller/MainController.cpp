@@ -54,7 +54,10 @@ void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<G
 }
 
 void MainController::netGetInfoFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_GET_INFO_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 
 void MainController::netGetMessageSuccess(std::vector<Message> messages) {
@@ -67,7 +70,10 @@ void MainController::netGetMessageSuccess(std::vector<Message> messages) {
 }
 
 void MainController::netGetMessageFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_GETMESSAGE_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 
 void MainController::netSendMessageSuccess(Message message) {
@@ -78,7 +84,10 @@ void MainController::netSendMessageSuccess(Message message) {
 }
 
 void MainController::netSendMessageFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_SEND_MSG_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 
 void MainController::netReceiveMessage(Message message) {
@@ -89,7 +98,10 @@ void MainController::netReceiveMessage(Message message) {
 }
 
 void MainController::connectFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_CONNECT_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 /*====================End===NetworkCallback========================*/
 
@@ -144,5 +156,29 @@ gboolean MainController::refreshGroups(gpointer data) {
     //todo:
     std::vector<Group> groups;
     show_Groupinfo(LoginController::getInstance().userId, &groups);
+    return 0;
+}
+
+gboolean MainController::showTip(gpointer commandPtr) {
+    std::string msg;
+    int command = *(int*)commandPtr;
+    free(commandPtr);
+    switch (command) {
+        case TIP_GET_INFO_FAILED:
+            msg = "获取网络数据失败";
+            break;
+        case TIP_GETMESSAGE_FAILED:
+            msg = "获取最新信息失败";
+            break;
+        case TIP_SEND_MSG_FAILED:
+            msg = "信息发送失败";
+            break;
+        case TIP_CONNECT_FAILED:
+            msg = "网络连接失败";
+            break;
+        default:
+            break;
+    }
+    TipView::showSimpleTipView(msg.c_str());
     return 0;
 }
