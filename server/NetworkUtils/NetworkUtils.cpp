@@ -297,7 +297,7 @@ void NetworkUtils::start_server() {
                             }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
                                 int lastCalledMessage=0;
 
-//                                JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
+                                JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
 
                                 std::vector<Message> messages;
                                 DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
@@ -355,6 +355,7 @@ void NetworkUtils::start_server() {
                                 strcpy(time_c,time_s.c_str());
                                 message.setMTime(time_c);
 
+                                message.setFId(0);
                                 int mId = DatabaseUtils::saveMessage(message);
                                 message.setMId(mId);
 
