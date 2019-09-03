@@ -6,6 +6,7 @@
 #include <iostream>
 #include <zconf.h>
 #include "NetworkCallbackTesting.h"
+#include "../Controller/LoginController/LoginController.h"
 
 NetworkCallback * NetworkCallbackTesting::callback = nullptr;
 
@@ -140,6 +141,63 @@ void NetworkCallbackTesting::testThread() {
 
                 callback->netGetMessageSuccess(messages);
             }
+                break;
+            case 8:
+                callback->netGetMessageFailed();
+                break;
+            case 9: {
+                Message message1;
+                message1.setMId(10001);
+                message1.setMContent("M10001");
+                message1.setGroupMessage(true);
+                message1.setUFromId(LoginController::getInstance().userId);
+                message1.setGId(1);
+                message1.setUFromUsername("ME");
+                message1.setFId(0);
+                message1.setMTime("NOW");
+                callback->netSendMessageSuccess(message1);
+
+                Message message2;
+                message2.setMId(10002);
+                message2.setMContent("M10002");
+                message2.setGroupMessage(false);
+                message2.setUFromId(LoginController::getInstance().userId);
+                message2.setGId(0);
+                message2.setUFromUsername("ME");
+                message2.setFId(0);
+                message2.setMTime("NOW");
+                callback->netSendMessageSuccess(message2);
+            }
+                break;
+            case 10:
+                callback->netSendMessageFailed();
+                break;
+            case 11: {
+                Message message1;
+                message1.setMId(201);
+                message1.setMContent("M201");
+                message1.setGroupMessage(true);
+                message1.setUFromId(1);
+                message1.setGId(3);
+                message1.setUFromUsername("U1");
+                message1.setFId(0);
+                message1.setMTime("NOOOO");
+                callback->netReceiveMessage(message1);
+
+                Message message2;
+                message2.setMId(202);
+                message2.setMContent("M202");
+                message2.setGroupMessage(false);
+                message2.setUFromId(3);
+                message2.setGId(0);
+                message2.setUFromUsername("U3");
+                message2.setFId(0);
+                message2.setMTime("NOOOO");
+                callback->netReceiveMessage(message2);
+            }
+                break;
+            case 12:
+                callback->connectFailed();
                 break;
             default:
                 break;

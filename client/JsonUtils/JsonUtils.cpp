@@ -217,7 +217,7 @@ char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, c
  * @param content
  * @return
  */
-char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mType, char *mContent, int uId, char *uPwd) {
+char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mType, const char *mContent, int uId, const char *uPwd) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;

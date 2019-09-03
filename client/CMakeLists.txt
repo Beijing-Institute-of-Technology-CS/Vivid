@@ -20,7 +20,7 @@ add_executable(client main.cpp View/LoginView/LoginView.cpp
         Controller/LoginController/LoginController.h Controller/MainController.cpp Controller/MainController.h
         ../Constants.h JsonUtils/JsonUtils.h JsonUtils/JsonUtils.cpp Utils/cJSON.c Utils/cJSON.h
         Beans/Message.cpp Beans/Message.h Beans/User.cpp Beans/User.h View/TipView/TipView.cpp View/TipView/TipView.h View/RegisterView/RegisterView.cpp View/RegisterView/RegisterView.h
-        View/MainView/MainView.cpp View/MainView/MainView.h View/MainView/List/MessageList/MessageList.cpp View/MainView/List/MessageList/MessageList.h View/MainView/List/FriendList/FriendList.cpp View/MainView/List/FriendList/FriendList.h
+        View/MainView/MainView.cpp View/MainView/MainView.h View/MainView/List/FriendList/FriendList.cpp View/MainView/List/FriendList/FriendList.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h
         Database/database.cpp Database/database.h Database/sqlite3ext.h Database/sqlite3.h Database/sqlite3.c Beans/Group.cpp Beans/Group.h TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h
         Network/NetworkUtils.cpp Network/NetworkUtils.h Controller/NetworkController/NetworkController.cpp Controller/NetworkController/NetworkController.h TestUtils/NetworkCallbackTesting.cpp TestUtils/NetworkCallbackTesting.h
         View/MainView/ChatView/ChatView.cpp View/MainView/ChatView/ChatView.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h)

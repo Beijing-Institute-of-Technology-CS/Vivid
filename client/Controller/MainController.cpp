@@ -11,6 +11,7 @@ MainController::MainController() {
     NetworkController::setCallback(this);
     NetworkCallbackTesting::setCallback(this);
     NetworkCallbackTesting::startTestingThread();
+    chatView.setCallback(this);
     mainView.setCallback(this);
 }
 
@@ -54,7 +55,10 @@ void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<G
 }
 
 void MainController::netGetInfoFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_GET_INFO_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 
 void MainController::netGetMessageSuccess(std::vector<Message> messages) {
@@ -67,29 +71,47 @@ void MainController::netGetMessageSuccess(std::vector<Message> messages) {
 }
 
 void MainController::netGetMessageFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_GETMESSAGE_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 
 void MainController::netSendMessageSuccess(Message message) {
     //将信息插入数据库
     addMsgToDB(message);
-    //todo: 通知刷新消息界面
+    //通知刷新消息界面
+    message.setUToId(LoginController::getInstance().userId);
+    auto * data = new ChatViewRefreshData();
+    data->message = message;
+    data->isReceive = false;
+    gdk_threads_add_idle(refreshChatView, data);
     gdk_threads_add_idle(refreshMessage, nullptr);
 }
 
 void MainController::netSendMessageFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_SEND_MSG_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 
 void MainController::netReceiveMessage(Message message) {
     //将消息插入数据库
     addMsgToDB(message);
-    //todo: 通知刷新消息界面
+    //通知刷新消息界面
+    auto * data = new ChatViewRefreshData();
+    data->message = message;
+    data->isReceive = true;
+    gdk_threads_add_idle(refreshChatView, data);
     gdk_threads_add_idle(refreshMessage, nullptr);
 }
 
 void MainController::connectFailed() {
-    //todo: tip
+    //tip
+    int * cmd = (int *)malloc(sizeof(int));
+    *cmd = TIP_CONNECT_FAILED;
+    gdk_threads_add_idle(showTip, cmd);
 }
 /*====================End===NetworkCallback========================*/
 
@@ -144,5 +166,75 @@ gboolean MainController::refreshGroups(gpointer data) {
     //todo:
     std::vector<Group> groups;
     show_Groupinfo(LoginController::getInstance().userId, &groups);
+    return 0;
+}
+
+gboolean MainController::showTip(gpointer commandPtr) {
+    std::string msg;
+    int command = *(int*)commandPtr;
+    free(commandPtr);
+    switch (command) {
+        case TIP_GET_INFO_FAILED:
+            msg = "获取网络数据失败";
+            break;
+        case TIP_GETMESSAGE_FAILED:
+            msg = "获取最新信息失败";
+            break;
+        case TIP_SEND_MSG_FAILED:
+            msg = "信息发送失败";
+            break;
+        case TIP_CONNECT_FAILED:
+            msg = "网络连接失败";
+            break;
+        default:
+            break;
+    }
+    TipView::showSimpleTipView(msg.c_str());
+    return 0;
+}
+
+void MainController::chatViewSend(std::string msg) {
+    //todo
+    if (msg.empty()) {
+        return;
+    }
+    NetworkController::netSendMessage(
+            LoginController::getInstance().userId,
+            LoginController::getInstance().userPassword.c_str(),
+            chatView.isGroup,
+            chatView.currentId,
+            chatView.currentId,
+            msg.c_str()
+            );
+}
+
+gboolean MainController::refreshChatView(gpointer data) {
+    Message message = ((ChatViewRefreshData * )data)->message;
+    bool isReceive = ((ChatViewRefreshData * )data)->isReceive;
+    free(data);
+    if (!MainController::getInstance().chatView.isShow) {
+        return 0;
+    }
+    std::string msg;
+    //todo: 只是暂时的逻辑，有问题
+    if (!isReceive) {
+        msg = message.getMContent();
+        MainController::getInstance().chatView.send_message(msg);
+        return 0;
+    }
+    if (MainController::getInstance().chatView.isGroup && message.isGroupMessage()) {
+        if (MainController::getInstance().chatView.currentId == message.getGId()) {
+            msg = "(" + std::to_string(message.getUFromId()) + ")"
+                    + message.getUFromUsername() + ": " + message.getMContent();
+        }
+    } else if (!MainController::getInstance().chatView.isGroup && !message.isGroupMessage()) {
+        if (MainController::getInstance().chatView.currentId == message.getUFromId() ||
+            MainController::getInstance().chatView.currentId == message.getUToId()) {
+            msg = message.getMContent();
+        }
+    }
+    if (isReceive) {
+        MainController::getInstance().chatView.receive_message(msg.c_str());
+    }
     return 0;
 }
