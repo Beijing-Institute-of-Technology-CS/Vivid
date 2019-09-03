@@ -218,12 +218,13 @@ void NetworkUtils::start_server() {
 
                         JsonUtils::parse_request_register_json(buffer,username,password);
 
-//                        int uId = DatabaseUtils::doRegister(username,password);
-//                        int uId = 1;
+                        int uId = DatabaseUtils::doRegister(username,password);
 //
-//                        char *s_json = JsonUtils::make_response_register_json(TRUE_CONTENT,uId);
-
-//                        send(fd,s_json,strlen(s_json),0);
+                        char *s_json = JsonUtils::make_response_register_json(TRUE_CONTENT,uId);
+//
+                        if(send(fd,s_json,strlen(s_json),0)<=0){
+                            std::cout << TYPE_REGISTER << " send failed";
+                        }
                     }else if(strcmp(requestType,TYPE_LOGIN)==0){
                         /**
                          * online
@@ -274,9 +275,6 @@ void NetworkUtils::start_server() {
                         int uId_from_token;
                         char * uPwd_from_token;
 
-
-
-
                         JsonUtils::parse_request_token(buffer, &uId_from_token, uPwd_from_token);
 
                         if(DatabaseUtils::checkPassword(uId_from_token, uPwd_from_token)){
@@ -292,7 +290,9 @@ void NetworkUtils::start_server() {
 
                                 char * s_json = JsonUtils::make_response_getInfo_json(TRUE_CONTENT, fIcon, contacts,groups);
 
-                                send(fd, s_json, strlen(s_json), 0);
+                                if(send(fd, s_json, strlen(s_json), 0)<=0){
+                                    std::cout << TYPE_GET_INFO << " send failed" << std::endl;
+                                }
 
                             }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
                                 int lastCalledMessage;

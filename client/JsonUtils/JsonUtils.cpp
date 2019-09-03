@@ -71,7 +71,7 @@ char* JsonUtils::make_request_reqister_json(const char *username, const char *pa
     }
     cJSON_AddStringToObject(pSubJson, KEY_USERNAME, username);
     cJSON_AddStringToObject(pSubJson, KEY_PASSWORD, password);
-    cJSON_AddItemToObject(pJsonRoot, KEY_RESPONSE_CONTENT, pSubJson);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
