@@ -300,8 +300,8 @@ void NetworkUtils::start_server() {
                                 JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
 
                                 std::vector<Message> messages;
-                                messages.emplace_back(Message(2,0,2,3,0, false,"777","sj2","zhc"));
-//                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
+//                                messages.emplace_back(Message(2,0,2,3,0, false,"777","sj2","zhc"));
+                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
 
                                 char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
 
@@ -385,7 +385,7 @@ void NetworkUtils::start_server() {
 
                                             int clientIndex = users[uToId_groupMessage].getClientIndex();
 
-                                            char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,message);
+                                            char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,message);
                                             send(clients[clientIndex].getFd(),s_json,strlen(s_json),0);
 
                                         }else{

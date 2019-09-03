@@ -227,7 +227,6 @@ void DatabaseUtils::getMessages(int uToId, int lastCalledMessage, std::vector<Me
     }else{
         MYSQL_RES *mysql_results = mysql_store_result(&mysql_sock);
         if(mysql_results == NULL){
-            ;
         }
         else{
             MYSQL_ROW row;
