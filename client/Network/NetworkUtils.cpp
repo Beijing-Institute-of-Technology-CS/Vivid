@@ -29,8 +29,8 @@ void NetworkUtils::listen_from_server() {
     std::cout << "listening from server " <<std::endl;
     int val_read;
 
-    while(true){
-        val_read = read(master_socket,buffer,BUFFER_SIZE);
+    while(true) {
+        val_read = read(master_socket, buffer, BUFFER_SIZE);
 
         /**
          * logging
@@ -41,59 +41,60 @@ void NetworkUtils::listen_from_server() {
         char *result;
 
         JsonUtils::parse_response_type_json(buffer, responseType);
-        JsonUtils::parse_response_result_json(buffer,result);
+        JsonUtils::parse_response_result_json(buffer, result);
 
         /**
          * parsing json
          */
-        if(strcmp(responseType, TYPE_REGISTER) == 0){
+        if (strcmp(responseType, TYPE_REGISTER) == 0) {
             sending_messages = false;
-            if(strcmp(result,TRUE_CONTENT)==0){
+            if (strcmp(result, TRUE_CONTENT) == 0) {
                 NetworkController::netRegisterSuccess(buffer);
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
                 NetworkController::netRegisterFailed();
             }
-        }else if(strcmp(responseType, TYPE_LOGIN) == 0){
+        } else if (strcmp(responseType, TYPE_LOGIN) == 0) {
             sending_messages = false;
-            if(strcmp(result,TRUE_CONTENT)==0){
+            if (strcmp(result, TRUE_CONTENT) == 0) {
                 NetworkController::netLoginSuccess(buffer);
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
                 NetworkController::netLoginFailed();
             }
-        }else if(strcmp(responseType, TYPE_GET_INFO)==0){
+        } else if (strcmp(responseType, TYPE_GET_INFO) == 0) {
             sending_messages = false;
-            if(strcmp(result,TRUE_CONTENT)==0){
+            if (strcmp(result, TRUE_CONTENT) == 0) {
                 NetworkController::netGetInfoSuccess(buffer);
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
                 NetworkController::netGetInfoFailed();
             }
-        }else if(strcmp(responseType, TYPE_GET_MESSAGES)==0){
+        } else if (strcmp(responseType, TYPE_GET_MESSAGES) == 0) {
             sending_messages = false;
-            if(strcmp(result,TRUE_CONTENT)==0){
+            if (strcmp(result, TRUE_CONTENT) == 0) {
                 NetworkController::netGetMessageSuccess(buffer);
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
                 NetworkController::netGetMessageFailed();
             }
-        }else if(strcmp(responseType,TYPE_SEND_MESSAGES)==0){
+        } else if (strcmp(responseType, TYPE_SEND_MESSAGES) == 0) {
             sending_messages = false;
-            if(strcmp(result,TRUE_CONTENT)==0){
+            if (strcmp(result, TRUE_CONTENT) == 0) {
                 NetworkController::netSendMessageSuccess(buffer);
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
                 NetworkController::netSendMessageFailed();
             }
-        }else if(strcmp(responseType,TYPE_RECEIVE_MESSAGES)==0){
-            if(strcmp(result,TRUE_CONTENT)==0){
+        } else if (strcmp(responseType, TYPE_RECEIVE_MESSAGES) == 0) {
+            if (strcmp(result, TRUE_CONTENT) == 0) {
                 NetworkController::netReceiveMessage(buffer);
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
 
             }
-        }else if(strcmp(responseType,TYPE_ADD_TO_GROUP)==0){
+        } else if (strcmp(responseType, TYPE_ADD_TO_GROUP) == 0) {
             sending_messages = false;
-            if(strcmp(result,TRUE_CONTENT)==0){
-            }else if(strcmp(result,FALSE_CONTENT)==0){
+            if (strcmp(result, TRUE_CONTENT) == 0) {
+            } else if (strcmp(result, FALSE_CONTENT) == 0) {
 
             }
         }
+    }
 }
 #pragma clang diagnostic pop
 
