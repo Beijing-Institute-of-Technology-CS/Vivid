@@ -9,6 +9,16 @@ add_executable(server server.cpp Beans/User.cpp Beans/User.h Beans/Message.cpp B
         Beans/Client.cpp Beans/Client.h NetworkUtils/NetworkUtils.cpp NetworkUtils/NetworkUtils.h Beans/Group.cpp Beans/Group.h
         TestUtils/DatabaseTesting.cpp TestUtils/DatabaseTesting.h
         )
+
+
 #include_directories(/usr/local/mysql/include)
 #link_directories(/usr/local/mysql/lib)
 #target_link_libraries(server /usr/local/mysql/lib)
+
+include_directories(/usr/include/mysql)
+
+link_directories(/usr/lib64/mysql)
+
+link_libraries(/usr/lib64/mysql/libmysqlclient.so)
+
+target_link_libraries(server mysqlclient pthread m rt dl)

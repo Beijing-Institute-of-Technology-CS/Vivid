@@ -68,4 +68,13 @@ void User::setUPassword(char *uPassword) {
     strcpy(this->uPassword,uPassword);
 }
 
+void User::setLatestMessage(int mid)
+{
+    User::latestMessageID=mid;
+}
+
+int User::getLatestMessage()
+{
+    return User::latestMessageID;
+}
 

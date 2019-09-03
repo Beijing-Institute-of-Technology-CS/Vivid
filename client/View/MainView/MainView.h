@@ -8,7 +8,7 @@
 
 #include <gtk/gtk.h>
 #include <string>
-#include "List/MessageList/MessageList.h"
+#include <cstring>
 #include "List/FriendList/FriendList.h"
 #include "List/GroupList/GroupList.h"
 
@@ -30,9 +30,8 @@ public:
 
     void setCallback(MainViewCallback *callback);
 
-    message_list mlist;
-    friend_list  flist;
-    GroupList gList;
+    FriendList flist;
+    GroupList glist;
 
 private:
     MainViewShowMode mode = MSG;
@@ -45,10 +44,8 @@ private:
 
     std::string getInput();
 
-    static void ChangeToMessage(GtkWidget *widget,  gpointer data);
     static void ChangeToFriend(GtkWidget *widget,  gpointer data);
     static void ChangeToGroup(GtkWidget *widget, gpointer data);
-    static void tree_selection_message_changed(GtkTreeSelection *selection,  gpointer data);
     static void tree_selection_friend_changed(GtkTreeSelection *selection,gpointer data);
     static void tree_selection_group_changed(GtkTreeSelection *selection,gpointer data);
     static void goButtonClickedCallback(GtkWidget * button, gpointer data);

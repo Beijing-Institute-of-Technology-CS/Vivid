@@ -17,8 +17,8 @@
 #include "NetworkUtils/NetworkUtils.h"
 #include "TestUtils/JsonTesting.h"
 #include "TestUtils/DatabaseTesting.h"
+#include "DatabaseUtils/DatabaseUtils.h"
 
-//#include "DatabaseUtils/DatabaseUtils.h"
 //#include "Beans/Message.h"
 //#include "Beans/User.h"
 //#include "Beans/Group.h"
@@ -33,6 +33,7 @@
 
 int main() {
 
+    DatabaseUtils::database_start();
     NetworkUtils::start_server();
 
     return 0;

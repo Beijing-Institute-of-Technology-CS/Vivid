@@ -6,6 +6,7 @@
 #include <iostream>
 #include <zconf.h>
 #include "NetworkCallbackTesting.h"
+#include "../Controller/LoginController/LoginController.h"
 
 NetworkCallback * NetworkCallbackTesting::callback = nullptr;
 
@@ -39,6 +40,164 @@ void NetworkCallbackTesting::testThread() {
                 break;
             case 4:
                 callback->netLoginFailed();
+                break;
+            case 5: {
+                std::vector<User> contacts;
+                std::vector<Group> groups;
+
+                User user1;
+                user1.setUId(1);
+                user1.setUName("U1");
+                user1.setFIconFile(0);
+                contacts.push_back(user1);
+
+                User user2;
+                user2.setUId(2);
+                user2.setUName("U2");
+                user2.setFIconFile(0);
+                contacts.push_back(user2);
+
+                Group group1;
+                group1.setGId(1);
+                groups.push_back(group1);
+
+                Group group2;
+                group2.setGId(2);
+                groups.push_back(group2);
+
+                callback->netGetInfoSuccess(contacts, groups);
+            }
+                break;
+            case 6:
+                callback->netGetMessageFailed();
+                break;
+            case 7: {
+                std::vector<Message> messages;
+                Message message1;
+                message1.setMId(101);
+                message1.setMContent("M101");
+                message1.setGroupMessage(true);
+                message1.setGId(1);
+                message1.setUFromId(11);
+                message1.setUFromUsername("U11");
+                message1.setFId(0);
+                message1.setMTime("TIME!!!!");
+                messages.push_back(message1);
+
+                Message message2;
+                message2.setMId(102);
+                message2.setMContent("M102");
+                message2.setGroupMessage(true);
+                message2.setGId(1);
+                message2.setUFromId(22);
+                message2.setUFromUsername("U22");
+                message2.setFId(0);
+                message2.setMTime("TIME!!!!");
+                messages.push_back(message2);
+
+                Message message3;
+                message3.setMId(103);
+                message3.setMContent("M103");
+                message3.setGroupMessage(true);
+                message3.setGId(2);
+                message3.setUFromId(11);
+                message3.setUFromUsername("U11");
+                message3.setFId(0);
+                message3.setMTime("TIME!!!!");
+                messages.push_back(message3);
+
+                Message message4;
+                message4.setMId(104);
+                message4.setMContent("M104");
+                message4.setGroupMessage(false);
+                message4.setGId(0);
+                message4.setUFromId(11);
+                message4.setUFromUsername("U11");
+                message4.setFId(0);
+                message4.setMTime("TIME!!!!");
+                messages.push_back(message4);
+
+                Message message5;
+                message5.setMId(105);
+                message5.setMContent("M105");
+                message5.setGroupMessage(false);
+                message5.setGId(0);
+                message5.setUFromId(12);
+                message5.setUFromUsername("U12");
+                message5.setFId(0);
+                message5.setMTime("TIME!!!!");
+                messages.push_back(message5);
+
+                Message message6;
+                message6.setMId(106);
+                message6.setMContent("M106");
+                message6.setGroupMessage(false);
+                message6.setGId(0);
+                message6.setUFromId(11);
+                message6.setUFromUsername("U11");
+                message6.setFId(0);
+                message6.setMTime("TIME!!!!");
+                messages.push_back(message6);
+
+                callback->netGetMessageSuccess(messages);
+            }
+                break;
+            case 8:
+                callback->netGetMessageFailed();
+                break;
+            case 9: {
+                Message message1;
+                message1.setMId(10001);
+                message1.setMContent("M10001");
+                message1.setGroupMessage(true);
+                message1.setUFromId(LoginController::getInstance().userId);
+                message1.setGId(1);
+                message1.setUFromUsername("ME");
+                message1.setFId(0);
+                message1.setMTime("NOW");
+                callback->netSendMessageSuccess(message1);
+
+                Message message2;
+                message2.setMId(10002);
+                message2.setMContent("M10002");
+                message2.setGroupMessage(false);
+                message2.setUFromId(LoginController::getInstance().userId);
+                message2.setGId(0);
+                message2.setUFromUsername("ME");
+                message2.setFId(0);
+                message2.setMTime("NOW");
+                callback->netSendMessageSuccess(message2);
+            }
+                break;
+            case 10:
+                callback->netSendMessageFailed();
+                break;
+            case 11: {
+                Message message1;
+                message1.setMId(201);
+                message1.setMContent("M201");
+                message1.setGroupMessage(true);
+                message1.setUFromId(1);
+                message1.setGId(3);
+                message1.setUFromUsername("U1");
+                message1.setFId(0);
+                message1.setMTime("NOOOO");
+                callback->netReceiveMessage(message1);
+
+                Message message2;
+                message2.setMId(202);
+                message2.setMContent("M202");
+                message2.setGroupMessage(false);
+                message2.setUFromId(3);
+                message2.setGId(0);
+                message2.setUFromUsername("U3");
+                message2.setFId(0);
+                message2.setMTime("NOOOO");
+                callback->netReceiveMessage(message2);
+            }
+                break;
+            case 12:
+                callback->connectFailed();
                 break;
             default:
                 break;

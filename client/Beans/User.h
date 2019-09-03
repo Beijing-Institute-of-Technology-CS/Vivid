@@ -36,6 +36,10 @@ public:
 
     void setUPassword(char *uPassword);
 
+    void setLatestMessage(int mid);
+
+    int getLatestMessage();
+
 
 private:
     int uId;
@@ -53,6 +57,7 @@ private:
 
     char * uName;
     char * uPassword;
+    int latestMessageID;
 
 };
 

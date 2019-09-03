@@ -10,7 +10,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-//#include <mysql.h>
+#include <mysql/mysql.h>
 
 #include "../Beans/Message.h"
 #include "../../Constants.h"
@@ -19,8 +19,6 @@
 
 class DatabaseUtils {
 public:
-//    static void mql_connect(MYSQL &mysql_sock);
-
     /**
      * 注册用户
      * @param username
@@ -98,7 +96,15 @@ public:
      * @param gId
      * @param groupContacts
      */
+
     static void getGroupContacts(int gId, std::vector<User> &groupContacts);
+
+    static void database_start();
+
+private:
+    static void mysql_connect(MYSQL &mysql_sock);
+    static MYSQL mysql_sock;
+
 };
 
 

@@ -1,5 +1,5 @@
 //
-// Created by William Zhang on 2019-09-02.
+// Created by dd on 8/31/19.
 //
 
 #ifndef CLIENT_GROUPLIST_H
@@ -11,20 +11,21 @@
 
 enum{
     GROUP_ID,
+    GROUP_MESSAGE,
     GROUP_COLUMNS
 };
 
-class GroupList {
+class GroupList
+{
 public:
     GroupList();
     GtkWidget *getView();
-    void append(const gchar *id);
-    void setData(const std::vector<Group>& groups);
+    void append(const gchar *id,const gchar *message);
+    void setData(const std::vector<Group>& contacts);
 private:
     GtkWidget *view= nullptr;
     GtkCellRenderer *renderer= nullptr;
     GtkTreeModel  *list_model_create();
+
 };
-
-
 #endif //CLIENT_GROUPLIST_H

@@ -5,14 +5,20 @@
 #ifndef CLIENT_MAINCONTROLLER_H
 #define CLIENT_MAINCONTROLLER_H
 
+#define TIP_GET_INFO_FAILED 1001
+#define TIP_GETMESSAGE_FAILED 1002
+#define TIP_SEND_MSG_FAILED 1003
+#define TIP_CONNECT_FAILED 1004
 
+
+#include <string>
 #include "LoginController/LoginController.h"
 #include "../View/MainView/MainView.h"
 #include "NetworkController/NetworkController.h"
 #include "../Database/database.h"
 #include "../View/MainView/ChatView/ChatView.h"
 
-class MainController : public NetworkCallback, MainViewCallback {
+class MainController : public NetworkCallback, MainViewCallback, ChatViewCallback {
 public:
     MainController();
 
@@ -44,6 +50,8 @@ public:
     void selectUser(int uId, std::string uName) override;
     void selectGroup(int gId) override;
 
+    void chatViewSend(std::string msg) override;
+
 private:
     //view
     MainView mainView;
@@ -52,8 +60,23 @@ private:
     static void startNetworkConnect();
     void startMainView();
 
+    void addMsgToDB(Message message);
+
+    static gboolean refreshMessage(gpointer data);
+    static gboolean refreshContacts(gpointer data);
+    static gboolean refreshGroups(gpointer data);
+    static gboolean showTip(gpointer string);
+
+    static gboolean refreshChatView(gpointer data);
+
     //friends
     friend class LoginController;
+};
+
+class ChatViewRefreshData {
+public:
+    Message message;
+    bool isReceive;
 };
 
 #endif //CLIENT_MAINCONTROLLER_H

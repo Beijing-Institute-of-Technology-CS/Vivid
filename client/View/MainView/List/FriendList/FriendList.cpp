@@ -1,51 +1,58 @@
 //
-// Created by dd on 8/31/19.
+// Created by dd on 8/30/19.
 //
 
-#include <string>
 #include "FriendList.h"
+#include <string>
 
-friend_list::friend_list() {
+FriendList::FriendList() {
+
     view =gtk_tree_view_new_with_model(list_model_create());
 
     renderer=gtk_cell_renderer_text_new();
 
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view),
-                                                FRIEND_ID,
+                                                USER_ID,
                                                 "id",renderer,
-                                                "text",FRIEND_ID,
+                                                "text",USER_ID,
                                                 NULL);
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view),
-                                                FRIEND_NAME,
+                                                USER_NAME,
                                                 "name",renderer,
-                                                "text",FRIEND_NAME,
+                                                "text",USER_NAME,
+                                                NULL);
+    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view),
+                                                USER_MESSAGE,
+                                                "last message",renderer,
+                                                "text",USER_MESSAGE,
                                                 NULL);
 }
 
-GtkWidget *friend_list::getView() {
-    return view;
-}
-
-GtkTreeModel *friend_list::list_model_create() {
+GtkTreeModel *FriendList::list_model_create() {
     GtkListStore *store;
-    store = gtk_list_store_new(FRIEND_COLUMNS,G_TYPE_STRING, G_TYPE_STRING);
+    store = gtk_list_store_new(USER_COLUMNS,G_TYPE_STRING,G_TYPE_STRING, G_TYPE_STRING);
     return GTK_TREE_MODEL(store);
 }
 
-void friend_list::append(const gchar *id, const gchar *name) {
+void FriendList::append(const gchar *id, const gchar *name,const char *message) {
     GtkListStore *store;
     GtkTreeIter iter;
 
     store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
     gtk_list_store_append(store, &iter);
-    gtk_list_store_set(store, &iter,FRIEND_ID,id,FRIEND_NAME,name, -1);
+    gtk_list_store_set(store, &iter,USER_ID,id,USER_NAME,name, USER_MESSAGE,message,-1);
 }
 
-void friend_list::setData(const std::vector<User>& contacts) {
+GtkWidget *FriendList::getView() {
+    return view;
+}
+
+void FriendList::setData(const std::vector<User>& User) {
     GtkListStore *store;
     store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
     gtk_list_store_clear(store);
-    for (auto i : contacts) {
-        append(std::to_string(i.getUId()).c_str(), i.getUName());
+    for (auto i : User) {
+        append(std::to_string(i.getUId()).c_str(), i.getUName(),"");
     }
 }
+

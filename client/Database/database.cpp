@@ -29,13 +29,14 @@ void init_db()
 				       "ID       INTEGER PRIMARY KEY  NOT NULL,"\
 				       "USERNAME TEXT  NOT NULL,"\
 				       "PASSWORD TEXT  NOT NULL,"\
-				       "IMAGE    INTEGER NOT NULL);";
+				       "IMAGE    INTEGER NOT NULL,"\
+				       "LATESTMESSAGE  INTEGER DEFAULT 0);";
 
 		char * sql_friend = "CREATE TABLE FRIEND("\
 				     "FRIEND_ID   INTEGER  NOT NULL,"\
 				     "FRIEND_NAME TEXT     NOT NULL,"\
 				     "IMAGE       INTEGER  NOT NULL,"\
-				     "PRIMARY KEY FRIEND_ID);";
+				     "PRIMARY KEY (FRIEND_ID));";
 
 		char * sql_message = "CREATE TABLE MESSAGE(" \
 				      "MESSAGEID  INTEGER   PRIMARY KEY    NOT NULL,"\
@@ -75,7 +76,7 @@ int insert_userinfo (int userID, char * username, char * password, int image)
 	char *sql_insert;//sql语句
 	sql_insert= (char *)malloc(500*sizeof(char));
 	memset(sql_insert,'\0',sizeof(sql_insert));
-	sprintf(sql_insert, "INSERT INTO USERINFO VALUES (\'%d\', \'%s\', \'%s\', \'%d\')",userID, username, password, image);
+	sprintf(sql_insert, "INSERT INTO USERINFO (ID, USERNAME, PASSWORD, IMAGE) VALUES (\'%d\', \'%s\', \'%s\', \'%d\')",userID, username, password, image);
 	char *errmsg;//记录错误信息
 	res = sqlite3_exec(db, sql_insert, NULL, NULL,&errmsg);//执行sql语句
 	free(sql_insert);
@@ -91,7 +92,7 @@ int insert_userinfo (int userID, char * username, char * password, int image)
 }
 
 //插入好友关系
-int insert_friend(int friend_id, char * friend_name, int image_id)
+int insert_friend(int friend_id, const char * friend_name, int image_id)
 {
 	int res;//记录sql语句返回值
 	char *sql_insert;
@@ -172,7 +173,7 @@ int show_user(int id, vector<User> * us)
 		puts(errmsg);
 		return 0;
 	}
-	
+
 //	for (int i=4;i<4+(*ncol)*(*nrow);i++)//打印查询结果
 //		puts(resValue[i]);
     while (!us->empty())
@@ -187,6 +188,8 @@ int show_user(int id, vector<User> * us)
         u.setUPassword(resValue[i*ncol+2]);
         sscanf(resValue[i*ncol+3],"%d",&a);
         u.setFIconFile(a);
+        sscanf(resValue[i*ncol+4],"%d",&a);
+        u.setLatestMessage(a);
         us->push_back(u);
     }
 	printf("用户查询成功！\n");
@@ -233,7 +236,7 @@ int show_friend(int id, vector<User> * frd)
 }
 
 //插入聊天记录信息
-int insert_Usermessage(int message_id, int from_id, int to_id, char * content, char * time)
+int insert_Usermessage(int message_id, int from_id, int to_id, const char * content, const char * time)
 {
 	int res;//保存sql返回值
 	char * sql_insert;
@@ -241,14 +244,27 @@ int insert_Usermessage(int message_id, int from_id, int to_id, char * content, c
 	char * errmsg;//保存错误信息
 	memset(sql_insert, '\0',sizeof(sql_insert));
 	sprintf(sql_insert, "INSERT INTO MESSAGE VALUES (\'%d\', \'%d\', \'%d\', \'%s\', \'%s\',\'%d\')", message_id, from_id, to_id, content, time, 0);
-       	res = sqlite3_exec(db, sql_insert, NULL, NULL, &errmsg);//执行sql语句
+	res = sqlite3_exec(db, sql_insert, NULL, NULL, &errmsg);//执行sql语句
 	free(sql_insert);
 	if (res!=SQL_OK)//错误处理
 	{
 		puts(errmsg);
 		return 0;
 	}
-	printf("聊天信息插入成功！\n");
+	puts("聊天信息插入成功！");
+	char * sql_update;
+	sql_update=(char *)malloc(500*sizeof(char));
+	memset(sql_update, '\0', sizeof(sql_update));
+	sprintf(sql_update, "UPDATE USERINFO SET LATESTMESSAGE = \'%d\' WHERE (ID = \'%d\' AND LATESTMESSAGE < \'%d\') OR (ID = \'%d\' AND LATESTMESSAGE < \'%d\')", message_id,
+	                                                from_id, message_id, to_id, message_id);
+	res=sqlite3_exec(db, sql_update, NULL, NULL, &errmsg);
+	free(sql_update);
+    if (res!=SQL_OK)//错误处理
+    {
+        puts(errmsg);
+        return 0;
+    }
+	printf("信息ID更新成功！\n");
 	return 1;
 }
 
@@ -285,16 +301,65 @@ int show_Usermessage(int id, vector<Message> * ms)
         temp.setUFromId(a);
         sscanf(resValue[i*ncol+2],"%d",&a);
         temp.setUToId(a);
-        temp.setContent(resValue[i*ncol+3]);
+        temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
-        ms->push_back(temp);
+        if (!strcmp(resValue[i*ncol+5],"0"))
+        {
+            temp.setGroupMessage(false);
+            ms->push_back(temp);
+        }
     }
 	printf("消息记录查询成功！\n");
 	return 1;
 }
 
+//显示聊天记录
+int show_Convmessage(int id1, int id2, vector<Message> * ms)
+{
+    int res;
+    char **resValue;//保存查询结果
+    int nrow;//查询结果数量
+    int ncol;//查询结果有几列
+    char * sql_select;
+    sql_select=(char *)malloc(500*sizeof(char));
+    char * errmsg;
+    memset(sql_select, '\0', sizeof(sql_select));
+    sprintf(sql_select, "SELECT * FROM MESSAGE WHERE (FROMID = \'%d\' AND TOID = \'%d\') OR (FROMID = \'%d\' AND TOID = \'%d\') ORDER BY MESSAGEID", id1, id2, id2, id1);
+    res = sqlite3_get_table(db, sql_select, &resValue, &nrow, &ncol, &errmsg);//执行查询语句
+    free(sql_select);
+    if (res!=SQL_OK)//错误处理
+    {
+        puts(errmsg);
+        return 0;
+    }
+//	for (int i=5;i<5+ncol*nrow;i++)//打印查询结果
+//		puts(resValue[i]);
+    while(!ms->empty())
+        ms->pop_back();
+    for (int i=1;i<nrow+1;i++)
+    {
+        Message temp;
+        int a;
+        sscanf(resValue[i*ncol],"%d",&a);
+        temp.setMId(a);
+        sscanf(resValue[i*ncol+1],"%d",&a);
+        temp.setUFromId(a);
+        sscanf(resValue[i*ncol+2],"%d",&a);
+        temp.setUToId(a);
+        temp.setMContent(resValue[i*ncol+3]);
+        temp.setMTime(resValue[i*ncol+4]);
+        if (!strcmp(resValue[i*ncol+5],"0"))
+        {
+            temp.setGroupMessage(false);
+            ms->push_back(temp);
+        }
+    }
+    printf("会话消息记录查询成功！\n");
+    return 1;
+}
+
 //插入群聊消息
-int insert_Groupmessage(int message_id, int from_id, int to_id, char * content, char * time, int group_id)
+int insert_Groupmessage(int message_id, int from_id, int to_id, const char * content, const char * time, int group_id)
 {
 	int res;//保存sql返回值
 	char * sql_insert=(char *)malloc(500*sizeof(char));
@@ -308,6 +373,18 @@ int insert_Groupmessage(int message_id, int from_id, int to_id, char * content, 
 		puts(errmsg);
 		return 0;
 	}
+    char * sql_update;
+    sql_update=(char *)malloc(500*sizeof(char));
+    memset(sql_update, '\0', sizeof(sql_update));
+    sprintf(sql_update, "UPDATE USERINFO SET LATESTMESSAGE = \'%d\' WHERE ID = \'%d\' OR ID = \'%d\' ", message_id,
+            from_id, message_id, to_id, message_id);
+    res=sqlite3_exec(db, sql_update, NULL, NULL, &errmsg);
+    free(sql_update);
+    if (res!=SQL_OK)//错误处理
+    {
+        puts(errmsg);
+        return 0;
+    }
 	printf("群聊信息插入成功！\n");
 	return 1;
 }
@@ -343,8 +420,9 @@ int show_Groupmessage(int group_id, vector<Message> * ms)
         temp.setUFromId(a);
         sscanf(resValue[i*ncol+2],"%d",&a);
         temp.setUToId(a);
-        temp.setContent(resValue[i*ncol+3]);
+        temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setGroupMessage(true);
         ms->push_back(temp);
     }
 	printf("群聊消息查询成功!\n");
@@ -430,66 +508,3 @@ int group_or_not(int message_id)
 		return 1;
 	return 2;
 }
-
-
-/*
-
-int main ()
-{
-	init_db();
-	insert_userinfo(2,"123","123",1);
-	insert_friend(2,"123",1);
-	delete_friend(2);
-	update_user(1,"234","321",1);
-	show_user(2,&us);
-	for(int i=0;i<us.size();i++)
-    {
-	    cout<<us[i].getUId()<<endl;
-	    cout<<us[i].getUName()<<endl;
-	    cout<<us[i].getUPassword()<<endl;
-    }
-
-	show_friend(1,&frd);
-	for (int i=0;i<us.size();i++)
-    {
-	    cout<<frd[i].getUId()<<endl;
-	    cout<<frd[i].getUName()<<endl;
-	    cout<<frd[i].getFIconFile()<<endl;
-    }
-
-	insert_Usermessage(1,1,2,"12431234","10:00:00");
-	insert_Usermessage(2,2,1,"asdfasdf","10:00:01");
-	show_Usermessage(1, &ms);
-	for (int i=0;i<ms.size();i++)
-    {
-	    cout<<ms[i].getContent()<<endl;
-	    cout<<ms[i].getGFromId()<<endl;
-	    cout<<ms[i].getMId()<<endl;
-	    cout<<ms[i].getMTime()<<endl;
-	    cout<<ms[i].getUFromId()<<endl;
-    }
-
-	insert_Group(2,2);
-	show_Groupinfo(2, &gp);
-	for (int i=0;i<gp.size();i++)
-    {
-	    cout<<gp[i].getUId()<<endl;
-	    cout<<gp[i].getGId()<<endl;
-    }
-	insert_Groupmessage(3,1,2,"1234543","11:11:11",123);
-	show_Groupmessage(123, &ms);
-	for (int i=0;i<ms.size();i++)
-    {
-        cout<<ms[i].getContent()<<endl;
-        cout<<ms[i].getGFromId()<<endl;
-        cout<<ms[i].getMId()<<endl;
-        cout<<ms[i].getMTime()<<endl;
-        cout<<ms[i].getUFromId()<<endl;
-    }
-
-	int ans;
-	ans=group_or_not(2);
-	printf("%d\n",ans);
-	return 0;
-}
-*/

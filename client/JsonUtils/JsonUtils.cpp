@@ -71,7 +71,7 @@ char* JsonUtils::make_request_reqister_json(const char *username, const char *pa
     }
     cJSON_AddStringToObject(pSubJson, KEY_USERNAME, username);
     cJSON_AddStringToObject(pSubJson, KEY_PASSWORD, password);
-    cJSON_AddItemToObject(pJsonRoot, KEY_RESPONSE_CONTENT, pSubJson);
+    cJSON_AddItemToObject(pJsonRoot, KEY_REQUEST_CONTENT, pSubJson);
 
     p = cJSON_Print(pJsonRoot);
     if(NULL == p)
@@ -217,7 +217,7 @@ char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, c
  * @param content
  * @return
  */
-char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mType, char *mContent, int uId, char *uPwd) {
+char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mType, const char *mContent, int uId, const char *uPwd) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;
@@ -468,6 +468,7 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
     while(json_groupsArray != NULL){
         Group group;
         group.setGId(cJSON_GetObjectItem(json_groupsArray, KEY_GID)->valueint);
+        groupsArray->push_back(group);
         json_groupsArray = json_groupsArray->next;
     }
 

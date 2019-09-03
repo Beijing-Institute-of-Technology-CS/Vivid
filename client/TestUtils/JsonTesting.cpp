@@ -60,8 +60,8 @@ void JsonTesting::test_parse_response_json() {
     groupsArray.push_back(Group(2));
     int messagesNumber = 20;
     std::vector<Message> messagesArray;
-    messagesArray.push_back(Message(1, "contentttt", 2, TYPE_GROUP_MESSAGE, "18:00"));
-    messagesArray.push_back(Message(2, "ttt", 3, TYPE_USER_MESSAGE, "18:15"));
+//    messagesArray.push_back(Message(1, "contentttt", 2, TYPE_GROUP_MESSAGE, "18:00"));
+//    messagesArray.push_back(Message(2, "ttt", 3, TYPE_USER_MESSAGE, "18:15"));
 
     cJSON *pJsonRoot = cJSON_CreateObject();
     cJSON_AddStringToObject(pJsonRoot, KEY_RESPONSE_TYPE, responseType);
@@ -115,8 +115,8 @@ void JsonTesting::test_parse_response_json() {
         cJSON *json_messagesItem = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_messagesItem, KEY_MID, messagesArray.at(i).getMId());
         cJSON_AddStringToObject(json_messagesItem, KEY_MCONTENT, messagesArray.at(i).getMContent());
-        cJSON_AddStringToObject(json_messagesItem, KEY_MTYPE, messagesArray.at(i).getMType());
-        cJSON_AddNumberToObject(json_messagesItem, KEY_GFROMID, messagesArray.at(i).getGFromId());
+//        cJSON_AddStringToObject(json_messagesItem, KEY_MTYPE, messagesArray.at(i).getMType());
+//        cJSON_AddNumberToObject(json_messagesItem, KEY_GFROMID, messagesArray.at(i).getGFromId());
         cJSON_AddNumberToObject(json_messagesItem, KEY_UFROMID, messagesArray.at(i).getUFromId());
 //        cJSON_AddStringToObject(json_messagesItem, KEY_UFROMUSERNAME, messagesArray.at(i).getUFromusername());
 //!message.uFromUsername must be initialed before testing! (default: NULL)
