@@ -186,6 +186,9 @@ gboolean MainController::showTip(gpointer commandPtr) {
 
 void MainController::chatViewSend(std::string msg) {
     //todo
+    if (msg == "") {
+        return;
+    }
     NetworkController::netSendMessage(
             LoginController::getInstance().userId,
             LoginController::getInstance().userPassword.c_str(),
