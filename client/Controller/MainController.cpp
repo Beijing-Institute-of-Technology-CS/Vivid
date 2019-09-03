@@ -7,6 +7,10 @@
 #include "../TestUtils/NetworkCallbackTesting.h"
 #include "../Network/NetworkUtils.h"
 #include "../../Constants.h"
+#include <map>
+#include <vector>
+#include <utility>
+#include <iostream>
 
 MainController::MainController() {
     NetworkController::setCallback(this);
@@ -78,7 +82,7 @@ void MainController::netGetMessageSuccess(std::vector<Message> messages) {
         addMsgToDB(i);
     }
     //通知刷新消息界面
-    gdk_threads_add_idle(refreshMessage, nullptr);
+    refreshMsgs();
 }
 
 void MainController::netGetMessageFailed() {
@@ -96,7 +100,7 @@ void MainController::netSendMessageSuccess(Message message) {
     data->message = message;
     data->isReceive = false;
     gdk_threads_add_idle(refreshChatView, data);
-    gdk_threads_add_idle(refreshMessage, nullptr);
+    refreshMsgs();
 }
 
 void MainController::netSendMessageFailed() {
@@ -114,7 +118,7 @@ void MainController::netReceiveMessage(Message message) {
     data->message = message;
     data->isReceive = true;
     gdk_threads_add_idle(refreshChatView, data);
-    gdk_threads_add_idle(refreshMessage, nullptr);
+    refreshMsgs();
 }
 
 void MainController::connectFailed() {
@@ -159,10 +163,18 @@ void MainController::addMsgToDB(Message message) {
 
 gboolean MainController::refreshMessage(gpointer data) {
     //todo:
-    std::vector<Group> groups;
-    std::vector<Message> groupMsgs;
-    std::vector<Message> userMsgs;
-    show_Usermessage(LoginController::getInstance().userId, &userMsgs);
+    auto * p = (std::pair<std::map<int, std::string>, std::map<int, std::string>> *) data;
+    auto userMsgMap = p->first;
+    auto groupMsgMap = p->second;
+    free(data);
+    for (auto & v : userMsgMap) {
+        std::cout<<v.first<<": ";
+        std::cout<<v.second<<std::endl;
+    }
+    for (auto & v : groupMsgMap) {
+        std::cout<<v.first<<": ";
+        std::cout<<v.second<<std::endl;
+    }
     return 0;
 }
 
@@ -252,4 +264,30 @@ gboolean MainController::refreshChatView(gpointer data) {
         MainController::getInstance().chatView.receive_message(msg.c_str());
     }
     return 0;
+}
+
+void MainController::refreshMsgs() {
+    std::vector<Group> groups;
+    std::vector<Message> userMsgs;
+    std::map<int, std::string> userMsgMap;
+    std::map<int, std::string> groupMsgMap;
+    show_Usermessage(LoginController::getInstance().userId, &userMsgs);
+    show_Groupinfo(LoginController::getInstance().userId, &groups);
+    for (auto i : userMsgs) {
+        userMsgMap[i.getUToId()] = std::string(i.getMContent());
+        userMsgMap[i.getUFromId()] = std::string(i.getMContent());
+    }
+    for (auto i : groups) {
+        int gId = i.getGId();
+        std::vector<Message> groupMsgs;
+        show_Groupmessage(gId, &groupMsgs);
+        if (groupMsgs.empty()) continue;
+        groupMsgMap[gId] = groupMsgs[groupMsgs.size() - 1].getMContent();
+    }
+
+    auto * p = new std::pair<std::map<int, std::string>, std::map<int, std::string>>();
+    p->first = userMsgMap;
+    p->second = groupMsgMap;
+
+    gdk_threads_add_idle(refreshMessage, p);
 }
