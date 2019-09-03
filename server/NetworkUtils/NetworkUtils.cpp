@@ -295,16 +295,16 @@ void NetworkUtils::start_server() {
                                 }
 
                             }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
-                                int lastCalledMessage=0;
-
+//                                int lastCalledMessage=0;
+//
 //                                JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
-
-                                std::vector<Message> messages;
-                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
-
-                                char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
-
-                                send(fd,s_json,strlen(s_json),0);
+//
+//                                std::vector<Message> messages;
+//                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
+//
+//                                char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
+//
+//                                send(fd,s_json,strlen(s_json),0);
 
                             }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
                                 int uToId;
