@@ -62,6 +62,8 @@ private:
 
     void addMsgToDB(Message message);
 
+    void refreshMsgs();
+
     static gboolean refreshMessage(gpointer data);
     static gboolean refreshContacts(gpointer data);
     static gboolean refreshGroups(gpointer data);
