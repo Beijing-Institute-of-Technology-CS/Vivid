@@ -186,7 +186,7 @@ gboolean MainController::showTip(gpointer commandPtr) {
 
 void MainController::chatViewSend(std::string msg) {
     //todo
-    if (msg == "") {
+    if (msg.empty()) {
         return;
     }
     NetworkController::netSendMessage(
