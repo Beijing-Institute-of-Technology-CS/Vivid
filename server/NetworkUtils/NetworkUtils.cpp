@@ -418,7 +418,7 @@ void NetworkUtils::start_server() {
                                     DatabaseUtils::addUIdToGroup(uId_AddToGroup, gId_AddToGroup);
 
                                     char *s_json = JsonUtils::make_response_adduIdToGroup_json(TRUE_CONTENT);
-                                    send(clients[fd].getFd(),s_json,strlen(s_json),0);
+                                    send(fd,s_json,strlen(s_json),0);
 
                             }
                         }else{
