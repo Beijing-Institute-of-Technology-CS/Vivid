@@ -295,16 +295,17 @@ void NetworkUtils::start_server() {
                                 }
 
                             }else if(strcmp(requestType,TYPE_GET_MESSAGES)==0){
-//                                int lastCalledMessage=0;
-//
-//                                JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
-//
-//                                std::vector<Message> messages;
-//                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
-//
-//                                char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
-//
-//                                send(fd,s_json,strlen(s_json),0);
+                                int lastCalledMessage=0;
+
+                                JsonUtils::parse_request_getMessages_json(buffer,&lastCalledMessage);
+
+                                std::vector<Message> messages;
+//                                messages.emplace_back(Message(2,0,2,3,0, false,"777","sj2","zhc"));
+                                DatabaseUtils::getMessages(uId_from_token, lastCalledMessage, messages);
+
+                                char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
+
+                                send(fd,s_json,strlen(s_json),0);
 
                             }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
                                 int uToId;
@@ -355,6 +356,7 @@ void NetworkUtils::start_server() {
                                 strcpy(time_c,time_s.c_str());
                                 message.setMTime(time_c);
 
+                                message.setFId(0);
                                 int mId = DatabaseUtils::saveMessage(message);
                                 message.setMId(mId);
 
@@ -383,7 +385,7 @@ void NetworkUtils::start_server() {
 
                                             int clientIndex = users[uToId_groupMessage].getClientIndex();
 
-                                            char *s_json = JsonUtils::make_response_sendMessages_json(TRUE_CONTENT,message);
+                                            char *s_json = JsonUtils::make_response_receiveMessages_json(TRUE_CONTENT,message);
                                             send(clients[clientIndex].getFd(),s_json,strlen(s_json),0);
 
                                         }else{

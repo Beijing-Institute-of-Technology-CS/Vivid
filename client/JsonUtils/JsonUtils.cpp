@@ -260,7 +260,7 @@ char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mTyp
     return p;
 }
 
-char* JsonUtils::make_request_adduIdToGroup_json(int uId, int gId, char *uPwd) {
+char* JsonUtils::make_request_adduIdToGroup_json(int uId, int gId, const char *uPwd) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;

@@ -8,7 +8,7 @@
 #define PORT 8899
 #define QUEUE_SIZE 5
 #define POOL_SIZE 10
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 1048576
 #define USERS_SIZE 100
 
 

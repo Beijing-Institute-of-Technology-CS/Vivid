@@ -22,6 +22,7 @@ public:
     GtkWidget *getView();
     void append(const gchar *id,const gchar *message);
     void setData(const std::vector<Group>& contacts);
+    void setGroup(const int id,const char *message);
 private:
     GtkWidget *view= nullptr;
     GtkCellRenderer *renderer= nullptr;

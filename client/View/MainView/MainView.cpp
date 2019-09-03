@@ -128,11 +128,6 @@ void MainView::create() {
     gtk_box_pack_start(GTK_BOX(list_box),flist.getView(),TRUE,TRUE,5);
     gtk_box_pack_start(GTK_BOX(list_box),glist.getView(),TRUE,TRUE,5);
 
-    flist.append("1","boss","nb!!!!");
-    flist.append("2","dd","handsome");
-
-    glist.append("1","who cares ");
-    glist.append("2","jesus fucking christ");
     gtk_container_add(GTK_CONTAINER(main_window),vbox);
 }
 
@@ -151,6 +146,7 @@ void MainView::tree_selection_friend_changed(GtkTreeSelection *selection, gpoint
         g_print("name = %s\n",name);
         int selectedId = std::stoi(id);
         std::string Name = name;
+        gtk_tree_selection_unselect_all(selection);
         ((MainView *)data)->callback->selectUser(selectedId,Name);
         g_free(id);
         g_free(name);
@@ -170,6 +166,7 @@ void MainView::tree_selection_group_changed(GtkTreeSelection *selection, gpointe
         g_print("id = %s\n",id);
         g_print("name = %s\n",message);
         int selectedId = std::stoi(id);
+        gtk_tree_selection_unselect_all(selection);
         ((MainView *)data)->callback->selectGroup(selectedId);
         g_free(id);
         g_free(message);
