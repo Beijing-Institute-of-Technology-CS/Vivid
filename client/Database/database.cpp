@@ -287,6 +287,7 @@ int show_Usermessage(int id, vector<Message> * ms)
         temp.setUToId(a);
         temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setGroupMessage(false);
         ms->push_back(temp);
     }
 	printf("消息记录查询成功！\n");
@@ -345,6 +346,7 @@ int show_Groupmessage(int group_id, vector<Message> * ms)
         temp.setUToId(a);
         temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setGroupMessage(true);
         ms->push_back(temp);
     }
 	printf("群聊消息查询成功!\n");

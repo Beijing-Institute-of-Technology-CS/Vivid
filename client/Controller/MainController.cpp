@@ -118,14 +118,15 @@ void MainController::selectGroup(int gId) {
 
 void MainController::addMsgToDB(Message message) {
     if (!message.isGroupMessage()) {
-        insert_Usermessage(message.getMId(), message.getUFromId(), message.getUToId(), message.getMContent(), message.getMTime());
+        insert_Usermessage(message.getMId(), message.getUFromId(), LoginController::getInstance().userId, message.getMContent(), message.getMTime());
     } else {
-        insert_Groupmessage(message.getMId(), message.getUFromId(), message.getUToId(), message.getMContent(), message.getMTime(), message.getGId());
+        insert_Groupmessage(message.getMId(), message.getUFromId(), LoginController::getInstance().userId, message.getMContent(), message.getMTime(), message.getGId());
     }
 }
 
 gboolean MainController::refreshMessage(gpointer data) {
     //todo:
+    std::vector<Group> groups;
     std::vector<Message> groupMsgs;
     std::vector<Message> userMsgs;
     show_Usermessage(LoginController::getInstance().userId, &userMsgs);
