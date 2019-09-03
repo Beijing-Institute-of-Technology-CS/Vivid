@@ -6,6 +6,7 @@
 #define CLIENT_LOGINCONTROLLER_H
 
 #include <string>
+#include <cstring>
 #include "../../View/LoginView/LoginView.h"
 #include "../../View/RegisterView/RegisterView.h"
 

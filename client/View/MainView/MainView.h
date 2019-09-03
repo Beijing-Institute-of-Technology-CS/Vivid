@@ -8,6 +8,7 @@
 
 #include <gtk/gtk.h>
 #include <string>
+#include <cstring>
 #include "List/MessageList/MessageList.h"
 #include "List/FriendList/FriendList.h"
 #include "List/GroupList/GroupList.h"

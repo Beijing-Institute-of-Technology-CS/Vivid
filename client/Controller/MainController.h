@@ -52,6 +52,12 @@ private:
     static void startNetworkConnect();
     void startMainView();
 
+    void addMsgToDB(Message message);
+
+    static gboolean refreshMessage(gpointer data);
+    static gboolean refreshContacts(gpointer data);
+    static gboolean refreshGroups(gpointer data);
+
     //friends
     friend class LoginController;
 };

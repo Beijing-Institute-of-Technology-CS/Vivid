@@ -35,7 +35,7 @@ void init_db()
 				     "FRIEND_ID   INTEGER  NOT NULL,"\
 				     "FRIEND_NAME TEXT     NOT NULL,"\
 				     "IMAGE       INTEGER  NOT NULL,"\
-				     "PRIMARY KEY FRIEND_ID);";
+				     "PRIMARY KEY (FRIEND_ID));";
 
 		char * sql_message = "CREATE TABLE MESSAGE(" \
 				      "MESSAGEID  INTEGER   PRIMARY KEY    NOT NULL,"\
@@ -91,7 +91,7 @@ int insert_userinfo (int userID, char * username, char * password, int image)
 }
 
 //插入好友关系
-int insert_friend(int friend_id, char * friend_name, int image_id)
+int insert_friend(int friend_id, const char * friend_name, int image_id)
 {
 	int res;//记录sql语句返回值
 	char *sql_insert;
@@ -233,7 +233,7 @@ int show_friend(int id, vector<User> * frd)
 }
 
 //插入聊天记录信息
-int insert_Usermessage(int message_id, int from_id, int to_id, char * content, char * time)
+int insert_Usermessage(int message_id, int from_id, int to_id, const char * content, const char * time)
 {
 	int res;//保存sql返回值
 	char * sql_insert;
@@ -285,8 +285,9 @@ int show_Usermessage(int id, vector<Message> * ms)
         temp.setUFromId(a);
         sscanf(resValue[i*ncol+2],"%d",&a);
         temp.setUToId(a);
-        temp.setContent(resValue[i*ncol+3]);
+        temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setGroupMessage(false);
         ms->push_back(temp);
     }
 	printf("消息记录查询成功！\n");
@@ -294,7 +295,7 @@ int show_Usermessage(int id, vector<Message> * ms)
 }
 
 //插入群聊消息
-int insert_Groupmessage(int message_id, int from_id, int to_id, char * content, char * time, int group_id)
+int insert_Groupmessage(int message_id, int from_id, int to_id, const char * content, const char * time, int group_id)
 {
 	int res;//保存sql返回值
 	char * sql_insert=(char *)malloc(500*sizeof(char));
@@ -343,8 +344,9 @@ int show_Groupmessage(int group_id, vector<Message> * ms)
         temp.setUFromId(a);
         sscanf(resValue[i*ncol+2],"%d",&a);
         temp.setUToId(a);
-        temp.setContent(resValue[i*ncol+3]);
+        temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setGroupMessage(true);
         ms->push_back(temp);
     }
 	printf("群聊消息查询成功!\n");

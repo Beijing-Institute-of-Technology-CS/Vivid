@@ -51,7 +51,7 @@ void message_list::setData(const std::vector<Message>& messages) {
     store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(view)));
     gtk_list_store_clear(store);
     for (auto i : messages) {
-        append(i.getMId(), i.getMContent(), i.getUFromusername());
+        append(i.getMId(), i.getMContent(), i.getUFromUsername());
     }
 }
 

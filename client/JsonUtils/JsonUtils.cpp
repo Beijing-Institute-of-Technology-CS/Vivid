@@ -468,6 +468,7 @@ bool JsonUtils::parse_response_getInfo_json(char *s_json, int *fIcon, int *conta
     while(json_groupsArray != NULL){
         Group group;
         group.setGId(cJSON_GetObjectItem(json_groupsArray, KEY_GID)->valueint);
+        groupsArray->push_back(group);
         json_groupsArray = json_groupsArray->next;
     }
 
