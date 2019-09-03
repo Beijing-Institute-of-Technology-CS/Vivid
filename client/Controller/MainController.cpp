@@ -79,6 +79,7 @@ void MainController::netGetInfoFailed() {
 void MainController::netGetMessageSuccess(std::vector<Message> messages) {
     //更新数据库messages信息
     for (auto i : messages) {
+        i.setUToId(LoginController::getInstance().userId);
         addMsgToDB(i);
     }
     //通知刷新消息界面
@@ -112,6 +113,7 @@ void MainController::netSendMessageFailed() {
 
 void MainController::netReceiveMessage(Message message) {
     //将消息插入数据库
+    message.setUToId(LoginController::getInstance().userId);
     addMsgToDB(message);
     //通知刷新消息界面
     auto * data = new ChatViewRefreshData();
@@ -155,7 +157,7 @@ void MainController::selectGroup(int gId) {
 
 void MainController::addMsgToDB(Message message) {
     if (!message.isGroupMessage()) {
-        insert_Usermessage(message.getMId(), message.getUFromId(), LoginController::getInstance().userId, message.getMContent(), message.getMTime());
+        insert_Usermessage(message.getMId(), message.getUFromId(), message.getUToId(), message.getMContent(), message.getMTime());
     } else {
         insert_Groupmessage(message.getMId(), message.getUFromId(), LoginController::getInstance().userId, message.getMContent(), message.getMTime(), message.getGId());
     }
