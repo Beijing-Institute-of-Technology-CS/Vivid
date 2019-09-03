@@ -107,12 +107,12 @@ void NetworkController::netGetMessages(int uId, char *password, int lastCalledMs
     NetworkUtils::send_json_to_server(json);
 }
 
-void NetworkController::netSendMessage(int uId, char * password, bool isGroup, int uToId, int gToId, char * content) {
+void NetworkController::netSendMessage(int uId, const char * password, bool isGroup, int uToId, int gToId, const char * content) {
     char * json;
     if (isGroup) {
-        JsonUtils::make_request_sendMessages_json(0, gToId, TYPE_GROUP_MESSAGE, content, uId, password);
+        json = JsonUtils::make_request_sendMessages_json(0, gToId, TYPE_GROUP_MESSAGE, content, uId, password);
     } else {
-        JsonUtils::make_request_sendMessages_json(uToId, 0, TYPE_USER_MESSAGE, content, uId, password);
+        json = JsonUtils::make_request_sendMessages_json(uToId, 0, TYPE_USER_MESSAGE, content, uId, password);
     }
     NetworkUtils::send_json_to_server(json);
 }
@@ -123,7 +123,7 @@ void NetworkController::connectFailed() {
 
 void NetworkController::netAddUIdToGroup(int uId, char *password, int gId) {
     char * json;
-    JsonUtils::make_request_adduIdToGroup_json(uId, gId, password);
+    json = JsonUtils::make_request_adduIdToGroup_json(uId, gId, password);
     NetworkUtils::send_json_to_server(json);
 }
 

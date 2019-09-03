@@ -109,8 +109,6 @@ void ChatView::show(const char *name) {
     gtk_box_pack_start(GTK_BOX(vbox),input_scroll,FALSE,FALSE,5);
     gtk_container_add(GTK_CONTAINER(input_scroll),textView);
     gtk_box_pack_start(GTK_BOX(vbox),send_button,FALSE,FALSE,0);
-
-    receive_message("nb");
     gtk_widget_show_all(chat_window);
     isShow = true;
 }

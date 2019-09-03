@@ -36,5 +36,6 @@ int main() {
     DatabaseUtils::database_start();
     NetworkUtils::start_server();
 
+//    JsonTesting::json_make_response_testing();
     return 0;
 }

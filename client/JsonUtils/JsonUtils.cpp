@@ -217,7 +217,7 @@ char* JsonUtils::make_request_getMessages_json(int lastCalledMessage, int uId, c
  * @param content
  * @return
  */
-char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mType, char *mContent, int uId, char *uPwd) {
+char* JsonUtils::make_request_sendMessages_json(int uToId, int gToId, char *mType, const char *mContent, int uId, const char *uPwd) {
     cJSON *pJsonRoot = NULL;
     cJSON *pSubJson = NULL;
     char *p = NULL;
@@ -587,7 +587,7 @@ bool JsonUtils::parse_response_sendMessages_json(char *s_json, Message &message)
 
     message.setUFromId(cJSON_GetObjectItem(pSubJson, KEY_UFROMID)->valueint);
     message.setGId(cJSON_GetObjectItem(pSubJson, KEY_GFROMID)->valueint);
-
+    message.setUToId(cJSON_GetObjectItem(pSubJson, KEY_UTOID)->valueint);
 //    char *temp_uFromUsername = cJSON_GetObjectItem(pSubJson, KEY_UFROMUSERNAME)->valuestring;
 //    message.uFromUsername = (char *)std::malloc((std::strlen(temp_uFromUsername)+1)*sizeof(char));
 //    strcpy(message.uFromUsername, temp_uFromUsername);

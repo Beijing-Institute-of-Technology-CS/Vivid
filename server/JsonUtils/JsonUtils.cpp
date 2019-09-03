@@ -329,6 +329,7 @@ char *JsonUtils::make_response_sendMessages_json(char *result, Message & message
     }
     cJSON_AddNumberToObject(json_responseContent,KEY_GFROMID,message.getGId());
     cJSON_AddNumberToObject(json_responseContent,KEY_UFROMID,message.getUFromId());
+    cJSON_AddNumberToObject(json_responseContent,KEY_UTOID, message.getUToId());
 
     cJSON_AddStringToObject(json_responseContent,KEY_UFROMUSERNAME, message.getUFromUsername());
 

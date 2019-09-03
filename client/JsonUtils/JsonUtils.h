@@ -36,7 +36,7 @@ public:
      */
     static char * make_request_getMessages_json(int lastCalledMessage, int uId, char *uPwd);
 
-    static char * make_request_sendMessages_json(int uToId, int gToId, char *mType, char * mContent, int uId, char *uPwd);
+    static char * make_request_sendMessages_json(int uToId, int gToId, char *mType, const char * mContent, int uId, const char *uPwd);
 
     static char * make_request_adduIdToGroup_json(int uId, int gId, char *uPwd);
 
