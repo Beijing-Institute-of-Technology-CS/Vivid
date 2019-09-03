@@ -216,11 +216,11 @@ void NetworkUtils::start_server() {
                         char *username;
                         char *password;
 
-//                        JsonUtils::parse_request_register_json(buffer,username,password);
+                        JsonUtils::parse_request_register_json(buffer,username,password);
 
 //                        int uId = DatabaseUtils::doRegister(username,password);
 //                        int uId = 1;
-
+//
 //                        char *s_json = JsonUtils::make_response_register_json(TRUE_CONTENT,uId);
 
 //                        send(fd,s_json,strlen(s_json),0);
