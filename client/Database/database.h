@@ -69,6 +69,9 @@ int show_Groupinfo(int user_id, vector<Group> * gp);
 //判断消息是否是群聊  是返回2，不是返回1，查询错误返回0   参数为消息ID
 int group_or_not(int message_id);
 
+//返回会话消息
+int show_Convmessage(int id1, int id2, vector<Message> * ms);
+
 #endif
 /*
 接口使用示例：
