@@ -70,7 +70,7 @@ void close_db()
 }
 
 //往用户表里插入信息，返回成功与否,1表示成功，0表示失败，下同
-int insert_userinfo (int userID, const char * username, const char * password, int image)
+int insert_userinfo (int userID, char * username, char * password, int image)
 {
 	int res;//记录sql语句执行结果
 	char *sql_insert;//sql语句
@@ -400,7 +400,7 @@ int show_Groupmessage(int group_id, vector<Message> * ms)
 	int nrow;
 	int ncol;
 	memset(sql_select, '\0', sizeof(sql_select));
-	sprintf(sql_select, "SELECT * FROM MESSAGE WHERE GROUPID = \'%d\'", group_id);
+	sprintf(sql_select, "SELECT * FROM MESSAGE WHERE GROUPID = \'%d\' ORDER BY MESSAGEID", group_id);
 	res=sqlite3_get_table(db, sql_select, &resValue, &nrow, &ncol, &errmsg);//执行查询操作
 	free(sql_select);
 	if (res!=SQL_OK)
@@ -508,3 +508,81 @@ int group_or_not(int message_id)
 		return 1;
 	return 2;
 }
+
+
+/*
+int main ()
+{
+	init_db();
+	insert_userinfo(2,"123","123",1);
+//	insert_friend(2,"123",1);
+//	delete_friend(2);
+//	update_user(1,"234","321",1);
+	show_user(2,&us);
+	for(int i=0;i<us.size();i++)
+    {
+	    cout<<us[i].getUId()<<endl;
+	    cout<<us[i].getUName()<<endl;
+	    cout<<us[i].getUPassword()<<endl;
+        cout<<us[i].getLatestMessage()<<endl;
+    }
+
+	show_friend(1,&frd);
+	for (int i=0;i<frd.size();i++)
+    {
+	    cout<<frd[i].getUId()<<endl;
+	    cout<<frd[i].getUName()<<endl;
+	    cout<<frd[i].getFIconFile()<<endl;
+    }
+
+	insert_Usermessage(1,1,2,"12431234","10:00:00");
+	insert_Usermessage(2,2,1,"asdfasdf","10:00:01");
+    insert_Groupmessage(3,1,2,"1234543","11:11:11",123);
+    show_Groupmessage(123, &ms);
+    for (int i=0;i<ms.size();i++)
+    {
+        cout<<ms[i].getMContent()<<endl;
+        cout<<ms[i].getUFromId()<<endl;
+        cout<<ms[i].getMId()<<endl;
+        cout<<ms[i].getMTime()<<endl;
+        cout<<ms[i].getUToId()<<endl;
+    }
+	show_Usermessage(1, &ms);
+	for (int i=0;i<ms.size();i++)
+    {
+        cout<<ms[i].getMContent()<<endl;
+        cout<<ms[i].getUFromId()<<endl;
+        cout<<ms[i].getMId()<<endl;
+        cout<<ms[i].getMTime()<<endl;
+        cout<<ms[i].getUToId()<<endl;
+    }
+    show_Convmessage(1,2,&ms);
+	for (int i=0;i<ms.size();i++)
+    {
+	    cout<<ms[i].getMContent()<<endl;
+	    cout<<ms[i].getUFromId()<<endl;
+	    cout<<ms[i].getMId()<<endl;
+	    cout<<ms[i].getMTime()<<endl;
+	    cout<<ms[i].getUFromId()<<endl;
+    }
+
+    show_user(2,&us);
+    for(int i=0;i<us.size();i++)
+    {
+        cout<<us[i].getUId()<<endl;
+        cout<<us[i].getUName()<<endl;
+        cout<<us[i].getUPassword()<<endl;
+        cout<<us[i].getLatestMessage()<<endl;
+    }
+	insert_Group(2,2);
+	show_Groupinfo(2, &gp);
+	for (int i=0;i<gp.size();i++)
+    {
+	    cout<<gp[i].getUId()<<endl;
+	    cout<<gp[i].getGId()<<endl;
+    }
+
+	return 0;
+}
+
+*/
