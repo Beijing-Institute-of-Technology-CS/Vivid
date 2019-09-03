@@ -172,10 +172,13 @@ gboolean MainController::refreshMessage(gpointer data) {
     for (auto & v : userMsgMap) {
         std::cout<<v.first<<": ";
         std::cout<<v.second<<std::endl;
+        if (v.first == LoginController::getInstance().userId) continue;
+        MainController::getInstance().mainView.flist.setFriend(v.first, v.second.c_str());
     }
     for (auto & v : groupMsgMap) {
         std::cout<<v.first<<": ";
         std::cout<<v.second<<std::endl;
+        MainController::getInstance().mainView.glist.setGroup(v.first, v.second.c_str());
     }
     return 0;
 }
