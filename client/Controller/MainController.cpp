@@ -18,6 +18,7 @@ MainController::MainController() {
 void MainController::startMainView() {
     mainView.create();
     mainView.show();
+    NetworkController::netGetInfo(LoginController::getInstance().userId, LoginController::getInstance().userPassword.c_str());
 }
 
 
@@ -52,6 +53,16 @@ void MainController::netGetInfoSuccess(std::vector<User> contacts, std::vector<G
     gdk_threads_add_idle(refreshContacts, nullptr);
     //通知刷新群聊界面
     gdk_threads_add_idle(refreshGroups, nullptr);
+    //todo
+    std::vector<User> users;
+    show_user(LoginController::getInstance().userId, &users);
+    int lastCalledMsg = 0;
+    if (!users.empty()) {
+        lastCalledMsg = users[0].getLatestMessage();
+    }
+
+    NetworkController::netGetMessages(LoginController::getInstance().userId,
+            LoginController::getInstance().userPassword.c_str(), lastCalledMsg);
 }
 
 void MainController::netGetInfoFailed() {

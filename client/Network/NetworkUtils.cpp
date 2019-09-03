@@ -87,8 +87,13 @@ void NetworkUtils::listen_from_server() {
             }else if(strcmp(result,FALSE_CONTENT)==0){
 
             }
+        }else if(strcmp(responseType,TYPE_ADD_TO_GROUP)==0){
+            sending_messages = false;
+            if(strcmp(result,TRUE_CONTENT)==0){
+            }else if(strcmp(result,FALSE_CONTENT)==0){
+
+            }
         }
-    }
 }
 #pragma clang diagnostic pop
 
@@ -133,7 +138,7 @@ void NetworkUtils::init_client(char *ip) {
     std::thread t_listen_from_server(NetworkUtils::listen_from_server);
     t_listen_from_server.detach();
 
-    std::cout << "client started" << std::endl;
+    std::cout << "client started " << std::endl;
     client_ready = true;
 }
 

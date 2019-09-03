@@ -418,7 +418,10 @@ void NetworkUtils::start_server() {
                                     DatabaseUtils::addUIdToGroup(uId_AddToGroup, gId_AddToGroup);
 
                                     char *s_json = JsonUtils::make_response_adduIdToGroup_json(TRUE_CONTENT);
-                                    send(clients[fd].getFd(),s_json,strlen(s_json),0);
+
+                                    if(send(fd,s_json,strlen(s_json),0)<=0){
+                                        std::cout << TYPE_ADD_TO_GROUP << " failed" <<std::endl;
+                                    }
 
                             }
                         }else{

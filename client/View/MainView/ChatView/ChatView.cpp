@@ -31,11 +31,9 @@ void ChatView::on_send_clicked(GtkButton *button, gpointer data) {
     gtk_text_buffer_get_bounds(GTK_TEXT_BUFFER(buffer),&start,&end);
     text=gtk_text_buffer_get_text(buffer,&start,&end,TRUE);
 
-//    chatView->send_message(text);
-
     chatView->callback->chatViewSend(text);
 
-    //clear_input_area(chatView->textView);
+    clear_input_area(chatView->textView);
 }
 
 void ChatView::clear_input_area(GtkWidget *textView) {
@@ -114,7 +112,7 @@ void ChatView::receive_message(const char *message) {
     message_label = gtk_label_new(message);
     printf("%s\n",message);
     gtk_label_set_justify(GTK_LABEL(message_label),GTK_JUSTIFY_LEFT);
-    gtk_box_pack_end(GTK_BOX(single_box),message_label,FALSE,FALSE,0);
+    gtk_box_pack_start(GTK_BOX(single_box),message_label,FALSE,FALSE,0);
     gtk_box_pack_start(GTK_BOX(message_box),single_box,FALSE,FALSE,0);
 
     gtk_widget_show(single_box);

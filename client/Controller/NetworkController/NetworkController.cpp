@@ -95,13 +95,13 @@ void NetworkController::netLogin(int uId, const char *password) {
     NetworkUtils::send_json_to_server(json);
 }
 
-void NetworkController::netGetInfo(int uId, char *password) {
+void NetworkController::netGetInfo(int uId, const char *password) {
     char * json;
     json = JsonUtils::make_request_getInfo_json(uId, password);
     NetworkUtils::send_json_to_server(json);
 }
 
-void NetworkController::netGetMessages(int uId, char *password, int lastCalledMsg) {
+void NetworkController::netGetMessages(int uId, const char *password, int lastCalledMsg) {
     char * json;
     json = JsonUtils::make_request_getMessages_json(lastCalledMsg, uId, password);
     NetworkUtils::send_json_to_server(json);

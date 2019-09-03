@@ -70,7 +70,7 @@ void close_db()
 }
 
 //往用户表里插入信息，返回成功与否,1表示成功，0表示失败，下同
-int insert_userinfo (int userID, char * username, char * password, int image)
+int insert_userinfo (int userID, const char * username, const char * password, int image)
 {
 	int res;//记录sql语句执行结果
 	char *sql_insert;//sql语句
