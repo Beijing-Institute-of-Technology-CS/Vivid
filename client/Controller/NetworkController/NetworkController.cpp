@@ -121,7 +121,7 @@ void NetworkController::connectFailed() {
     callback->connectFailed();
 }
 
-void NetworkController::netAddUIdToGroup(int uId, char *password, int gId) {
+void NetworkController::netAddUIdToGroup(int uId, const char *password, int gId) {
     char * json;
     json = JsonUtils::make_request_adduIdToGroup_json(uId, gId, password);
     NetworkUtils::send_json_to_server(json);

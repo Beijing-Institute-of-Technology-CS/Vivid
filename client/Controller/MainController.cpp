@@ -6,6 +6,7 @@
 #include "MainController.h"
 #include "../TestUtils/NetworkCallbackTesting.h"
 #include "../Network/NetworkUtils.h"
+#include "../../Constants.h"
 
 MainController::MainController() {
     NetworkController::setCallback(this);
@@ -131,7 +132,7 @@ void MainController::start() {
 }
 
 void MainController::startNetworkConnect() {
-//    NetworkUtils::start_client(BITCS);
+    NetworkUtils::start_client(BITCS);
 }
 
 void MainController::selectUser(int uId, std::string uName) {
@@ -142,6 +143,7 @@ void MainController::selectUser(int uId, std::string uName) {
 
 void MainController::selectGroup(int gId) {
     std::string title = "Group: " + std::to_string(gId);
+    NetworkController::netAddUIdToGroup(LoginController::getInstance().userId, LoginController::getInstance().userPassword.c_str(), gId);
     chatView.show(title.c_str());
     chatView.currentId = gId;
     chatView.isGroup = true;
@@ -203,7 +205,6 @@ gboolean MainController::showTip(gpointer commandPtr) {
 }
 
 void MainController::chatViewSend(std::string msg) {
-    //todo
     if (msg.empty()) {
         return;
     }
