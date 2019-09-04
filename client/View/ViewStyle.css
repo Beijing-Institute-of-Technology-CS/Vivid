@@ -35,6 +35,12 @@
 /*注册按钮*/
 #login_view_reg_btn {
     background-color: transparent;
+    border: none;
+}
+#login_view_reg_btn:hover {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 /*ID输入框*/
