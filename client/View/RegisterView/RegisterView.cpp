@@ -41,7 +41,7 @@ void RegisterView::show() {
     button_box_left = gtk_hbox_new(FALSE,15);
     button_box_right = gtk_hbox_new(FALSE,15);
 
-    image_logo = gtk_image_new_from_file("logo.png");
+    image_logo = gtk_image_new_from_file("logoooooo.png");
     gtk_widget_set_size_request(image_logo,500,150);
 
     sep = gtk_hseparator_new();
