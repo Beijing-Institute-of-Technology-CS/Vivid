@@ -7,4 +7,24 @@
     background-color: red;
 }
 
+/*登录按钮*/
+#login_view_login_btn {
+    background-color: red;
+}
+
+/*注册按钮*/
+#login_view_reg_btn {
+    background-color: red;
+}
+
+/*ID输入框*/
+#login_view_id_entry {
+    background-color: red;
+}
+
+/*密码输入框*/
+#login_view_psw_entry {
+    background-color: red;
+}
+
 /*==========================================*/
