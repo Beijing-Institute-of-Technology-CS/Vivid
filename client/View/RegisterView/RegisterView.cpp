@@ -9,84 +9,29 @@ void RegisterView::show() {
         return;
     }
 
-    GtkWidget *box;
-    GtkWidget *button_box;
-    GtkWidget *button_box_left;
-    GtkWidget *button_box_right;
-    GtkWidget *fixed;
-
-    GtkWidget *label_name;
-    GtkWidget *label_pwd;
-    GtkWidget *label_check;
+    GtkBuilder *builder;
 
     GtkWidget *submit_button;
     GtkWidget *cancel_button;
-    GtkWidget *image_logo;
-    GtkWidget *sep;
 
+    builder = gtk_builder_new ();//指针分配空间
+    gtk_builder_add_from_file (builder, "RegisterView.xml", NULL);//读取xml文件
 
     regi_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-    /*窗口设置*/
-    gtk_window_set_title(GTK_WINDOW(regi_window),"register");
-    gtk_window_set_default_size(GTK_WINDOW(regi_window),500,350);
-    gtk_window_set_position(GTK_WINDOW(regi_window),GTK_WIN_POS_CENTER);
-    gtk_container_set_border_width(GTK_CONTAINER(regi_window),0);
-    gtk_window_set_resizable(GTK_WINDOW(regi_window),FALSE);
+    regi_window = GTK_WIDGET (gtk_builder_get_object (builder, "window"));
+    entry_name = GTK_WIDGET (gtk_builder_get_object (builder, "entry_name"));
+    entry_pwd = GTK_WIDGET (gtk_builder_get_object (builder, "entry_pass"));
+    entry_check = GTK_WIDGET (gtk_builder_get_object (builder, "entry_check"));
+    submit_button= GTK_WIDGET (gtk_builder_get_object (builder, "button_submit"));
+    cancel_button= GTK_WIDGET (gtk_builder_get_object (builder, "button_cancel"));
 
-    /*按从上到下顺序布置*/
-    box = gtk_vbox_new(FALSE,0);
-    fixed=gtk_fixed_new();
-    button_box = gtk_hbox_new(FALSE,15);
-    button_box_left = gtk_hbox_new(FALSE,15);
-    button_box_right = gtk_hbox_new(FALSE,15);
-
-    image_logo = gtk_image_new_from_file("logo.png");
-    gtk_widget_set_size_request(image_logo,500,150);
-
-    sep = gtk_hseparator_new();
-
-    label_name = gtk_label_new("username:");
-    entry_name = gtk_entry_new();
-
-    label_pwd = gtk_label_new("password:");
-    entry_pwd = gtk_entry_new();
-    gtk_entry_set_visibility(GTK_ENTRY(entry_pwd),FALSE);
-
-    label_check = gtk_label_new("password:");
-    entry_check = gtk_entry_new();
-    gtk_entry_set_visibility(GTK_ENTRY(entry_check),FALSE);
-
-    submit_button = gtk_button_new_with_label("          submit          ");
-    cancel_button = gtk_button_new_with_label("          cancel          ");
-
-    gtk_container_add(GTK_CONTAINER(regi_window),box);
-    gtk_box_pack_start(GTK_BOX(box),image_logo,FALSE,FALSE,0);
-    gtk_box_pack_start(GTK_BOX(box),fixed,FALSE,FALSE,0);
-
-    gtk_fixed_put(GTK_FIXED(fixed),label_name,120,10);
-    gtk_fixed_put(GTK_FIXED(fixed),entry_name,200,10);
-    gtk_fixed_put(GTK_FIXED(fixed),label_pwd,120,60);
-    gtk_fixed_put(GTK_FIXED(fixed),entry_pwd,200,60);
-    gtk_fixed_put(GTK_FIXED(fixed),label_check,120,110);
-    gtk_fixed_put(GTK_FIXED(fixed),entry_check,200,110);
-
-    gtk_box_pack_start(GTK_BOX(box),sep,FALSE,FALSE,5);
-
-    gtk_box_pack_start(GTK_BOX(box),button_box,FALSE,FALSE,5);
-
-    //gtk_box_pack_start(GTK_BOX(button_box),submit_button,FALSE,FALSE,5);
-    //gtk_box_pack_end(GTK_BOX(button_box),cancel_button,FALSE,FALSE,5);
-
-    gtk_box_pack_start(GTK_BOX(button_box),button_box_left,TRUE,TRUE,5);
-    gtk_box_pack_start(GTK_BOX(button_box),button_box_right,TRUE,TRUE,5);
-
-    gtk_box_pack_end(GTK_BOX(button_box_left),submit_button,FALSE,FALSE,5);
-
-    gtk_button_set_relief(GTK_BUTTON(submit_button),GTK_RELIEF_NONE);
-
-    gtk_box_pack_start(GTK_BOX(button_box_right),cancel_button,FALSE,FALSE,5);
-    gtk_button_set_relief(GTK_BUTTON(cancel_button),GTK_RELIEF_NONE);
+    gtk_widget_set_name(regi_window, "register_view_window");
+    gtk_widget_set_name(entry_name, "register_view_entry_name");
+    gtk_widget_set_name(entry_pwd, "register_view_entry_pwd");
+    gtk_widget_set_name(entry_check, "register_view_entry_check");
+    gtk_widget_set_name(submit_button, "register_view_submit_btn");
+    gtk_widget_set_name(cancel_button, "register_view_cancel_btn");
 
     /*按钮触发*/
     g_signal_connect(G_OBJECT(submit_button),"clicked", G_CALLBACK(onSubmitClickCallback),this);

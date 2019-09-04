@@ -11,6 +11,7 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+#include "../Utils/CSSUtils.h"
 
 MainController::MainController() {
     NetworkController::setCallback(this);
@@ -133,6 +134,7 @@ void MainController::connectFailed() {
 /*====================End===NetworkCallback========================*/
 
 void MainController::start() {
+    CSSUtils::initCSS();
     LoginController::getInstance().startLoginView();
     std::thread thread(startNetworkConnect);
     thread.detach();

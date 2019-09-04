@@ -23,10 +23,27 @@ add_executable(client main.cpp View/LoginView/LoginView.cpp
         View/MainView/MainView.cpp View/MainView/MainView.h View/MainView/List/FriendList/FriendList.cpp View/MainView/List/FriendList/FriendList.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h
         Database/database.cpp Database/database.h Database/sqlite3ext.h Database/sqlite3.h Database/sqlite3.c Beans/Group.cpp Beans/Group.h TestUtils/JsonTesting.cpp TestUtils/JsonTesting.h
         Network/NetworkUtils.cpp Network/NetworkUtils.h Controller/NetworkController/NetworkController.cpp Controller/NetworkController/NetworkController.h TestUtils/NetworkCallbackTesting.cpp TestUtils/NetworkCallbackTesting.h
-        View/MainView/ChatView/ChatView.cpp View/MainView/ChatView/ChatView.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h)
+        View/MainView/ChatView/ChatView.cpp View/MainView/ChatView/ChatView.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h Utils/CSSUtils.cpp Utils/CSSUtils.h)
 
 #set(ENV{PKG_CONFIG_PATH} /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/MainView.xml
         ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 target_link_libraries(client ${GTK3_LIBRARIES})
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/LoginView/login.xml
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/ViewStyle.css
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/Assets/close_btn_icon.png
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/Assets/next_btn_icon.png
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/Assets/logo.png
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/RegisterView/RegisterView.xml
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)

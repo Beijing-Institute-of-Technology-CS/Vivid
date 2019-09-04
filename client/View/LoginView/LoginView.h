@@ -46,6 +46,7 @@ private:
     static void on_button_login_clicked(GtkWidget *button, gpointer data);
     static void on_button_register_clicked(GtkWidget *button, gpointer data);
     static void on_destroy(GtkWidget *widget, gpointer data);
+    static void on_button_close_clicked(GtkWidget *button, gpointer data);
 };
 
 //登录点击回调

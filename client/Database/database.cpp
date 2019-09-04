@@ -226,6 +226,7 @@ int show_friend(int id, vector<User> * frd)
         sscanf(resValue[i*ncol],"%d",&a);
         temp.setUId(a);
         temp.setUName(resValue[i*ncol+1]);
+        temp.setUPassword("");
         sscanf(resValue[i*ncol],"%d",&a);
         temp.setFIconFile(a);
         frd->push_back(temp);
@@ -303,6 +304,7 @@ int show_Usermessage(int id, vector<Message> * ms)
         temp.setUToId(a);
         temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setUFromUsername("");
         if (!strcmp(resValue[i*ncol+5],"0"))
         {
             temp.setGroupMessage(false);
@@ -348,6 +350,7 @@ int show_Convmessage(int id1, int id2, vector<Message> * ms)
         temp.setUToId(a);
         temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
+        temp.setUFromUsername("");
         if (!strcmp(resValue[i*ncol+5],"0"))
         {
             temp.setGroupMessage(false);
@@ -423,6 +426,7 @@ int show_Groupmessage(int group_id, vector<Message> * ms)
         temp.setMContent(resValue[i*ncol+3]);
         temp.setMTime(resValue[i*ncol+4]);
         temp.setGroupMessage(true);
+        temp.setUFromUsername("");
         ms->push_back(temp);
     }
 	printf("群聊消息查询成功!\n");

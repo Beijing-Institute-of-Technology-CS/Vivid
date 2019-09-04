@@ -234,7 +234,7 @@ void NetworkUtils::start_server() {
 
                         JsonUtils::parse_request_login_json(buffer,&uId,password);
 
-                        if(DatabaseUtils::checkPassword(uId,password)){
+                        if(DatabaseUtils::checkId(uId)&&DatabaseUtils::checkPassword(uId,password)){
                             /**
                              * login online
                              */
@@ -277,7 +277,7 @@ void NetworkUtils::start_server() {
 
                         JsonUtils::parse_request_token(buffer, &uId_from_token, uPwd_from_token);
 
-                        if(DatabaseUtils::checkPassword(uId_from_token, uPwd_from_token)){
+                        if(DatabaseUtils::checkId(uId_from_token)&&DatabaseUtils::checkPassword(uId_from_token, uPwd_from_token)){
                             if(strcmp(requestType,TYPE_GET_INFO)==0){
 
                                 int fIcon = 0;
