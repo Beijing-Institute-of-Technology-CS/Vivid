@@ -32,6 +32,8 @@ void LoginView::show() {
     psw_entry = GTK_WIDGET(gtk_builder_get_object(builder, "psw_entry"));
     close_button = GTK_WIDGET(gtk_builder_get_object(builder, "close_btn"));
 
+    gtk_widget_set_name(close_button, "login_view_close_btn");
+
     //连接
     g_signal_connect(G_OBJECT(login_window),"destroy", G_CALLBACK(on_destroy), this);
     g_signal_connect(G_OBJECT(login_button),"clicked", G_CALLBACK(on_button_login_clicked), this);
