@@ -55,8 +55,8 @@ private:
      *
      */
 
-    char * uName;
-    char * uPassword;
+    char * uName=nullptr;
+    char * uPassword=nullptr;
     int latestMessageID;
 
 };
