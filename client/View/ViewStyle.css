@@ -28,6 +28,7 @@
     border: none;
 }
 #login_view_login_btn:hover {
+    opacity: 0.8;
     box-shadow: none;
 }
 
