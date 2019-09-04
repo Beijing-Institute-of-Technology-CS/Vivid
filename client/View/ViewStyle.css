@@ -233,3 +233,92 @@
     opacity: 1;
     box-shadow: none;
 }
+
+/*=======mainView==========*/
+
+/*close btn*/
+#main_view_close_btn {
+    background-image: url("close_btn_icon.png");
+    background-size: contain;
+    margin: 10px;
+    padding: 3px;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    border: none;
+}
+#main_view_close_btn:hover {
+    opacity: 1;
+    box-shadow: none;
+}
+
+/*other btn*/
+#main_view_go_btn, #main_view_contacts_btn, #main_view_group_btn, #main_view_send_btn {
+    background-color: transparent;
+    border: none;
+    font-family: sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+#main_view_go_btn:hover, #main_view_contacts_btn:hover, #main_view_group_btn:hover, #main_view_send_btn:hover {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+
+/*main icon*/
+#main_view_logo {
+    background-image: url("logo.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 37%;
+}
+
+#main_view_name_label{
+    font-family: sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: whitesmoke;
+    min-height: 30px;
+}
+
+#main_view_window{
+    background-color: white;
+}
+
+#main_view_input_text{
+    font-family: sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    /*margin: 5pt;*/
+    /*background-color: red;*/
+    padding: 15px;
+}
+
+#main_view_friend_tree_view, #main_view_group_tree_view{
+    font-family: sans-serif;
+    font-size: large;
+    font-weight: bold;
+    /*text-align: center;*/
+}
+
+
+#main_view_receive_box{
+    font-family: sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    /*margin: 5pt;*/
+    /*background-color: red;*/
+    padding: 15px;
+}
+
+#main_view_send_box{
+    font-family: sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    /*margin: 5pt;*/
+    /*background-color: red;*/
+    padding: 15px;
+}

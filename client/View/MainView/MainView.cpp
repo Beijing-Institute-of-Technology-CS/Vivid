@@ -50,6 +50,7 @@ GtkBuilder * MainView::create() {
     GtkWidget *list_box;
     GtkWidget *logo_img;
     GtkBuilder *builder;
+    GtkWidget *send_button;
     /**
      * 创建构件
      */
@@ -63,6 +64,7 @@ GtkBuilder * MainView::create() {
     button_go = GTK_WIDGET(gtk_builder_get_object(builder,"button_go"));
     friend_button = GTK_WIDGET(gtk_builder_get_object(builder,"button_friend"));
     group_button = GTK_WIDGET(gtk_builder_get_object(builder,"button_group"));
+    send_button = GTK_WIDGET(gtk_builder_get_object(builder,"button_send"));
 
     gtk_button_set_label(GTK_BUTTON(friend_button),"Contacts");
     gtk_button_set_label(GTK_BUTTON(group_button),"Group");
@@ -80,7 +82,7 @@ GtkBuilder * MainView::create() {
     gtk_widget_set_name(button_go, "main_view_go_btn");
     gtk_widget_set_name(friend_button, "main_view_contacts_btn");
     gtk_widget_set_name(group_button, "main_view_group_btn");
-
+    gtk_widget_set_name(send_button, "main_view_send_btn");
 
     /**
      * 信号连接
