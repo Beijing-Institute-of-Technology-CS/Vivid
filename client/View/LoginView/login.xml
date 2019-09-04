@@ -102,7 +102,7 @@
                         <child>
                           <object class="GtkEntry" id="id_entry">
                             <property name="width_request">100</property>
-                            <property name="height_request">40</property>
+                            <property name="height_request">10</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -138,7 +138,7 @@
                         <child>
                           <object class="GtkEntry" id="psw_entry">
                             <property name="width_request">100</property>
-                            <property name="height_request">40</property>
+                            <property name="height_request">10</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
