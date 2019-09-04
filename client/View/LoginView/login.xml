@@ -92,7 +92,7 @@
                             <property name="height_request">40</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">id:</property>
+                            <property name="label" translatable="yes">ID:</property>
                           </object>
                           <packing>
                             <property name="x">80</property>
@@ -128,7 +128,7 @@
                             <property name="height_request">40</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">passage:</property>
+                            <property name="label" translatable="yes">Password:</property>
                           </object>
                           <packing>
                             <property name="x">80</property>
@@ -198,7 +198,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="reg_btn">
-                    <property name="label" translatable="yes">register</property>
+                    <property name="label" translatable="yes">Register</property>
                     <property name="width_request">200</property>
                     <property name="height_request">30</property>
                     <property name="visible">True</property>
