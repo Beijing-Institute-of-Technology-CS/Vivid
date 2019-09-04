@@ -4,10 +4,17 @@
 
 #include "FriendList.h"
 #include <string>
+#include <iostream>
 
-FriendList::FriendList() {
+void FriendList::create(GtkWidget *view) {
 
-    view =gtk_tree_view_new_with_model(list_model_create());
+//    std::cout<<"from friendlist"<<std::endl;
+//    GtkBuilder *builder;
+//    builder = gtk_builder_new();
+//    gtk_builder_add_from_file(builder,"MainView.xml",NULL);
+//    view =GTK_WIDGET(gtk_builder_get_object(builder,"contact_list"));
+    this->view =view;
+    gtk_tree_view_set_model(GTK_TREE_VIEW(view),list_model_create());
 
     renderer=gtk_cell_renderer_text_new();
 
@@ -78,6 +85,10 @@ void FriendList::setFriend(const int id, const char *message) {
     }while(gtk_tree_model_iter_next(pmodel,&iter));
 
     append(std::to_string(id).c_str(),NULL,message);
+}
+
+FriendList::FriendList() {
+
 }
 
 

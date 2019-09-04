@@ -15,14 +15,15 @@
 
 MainController::MainController() {
     NetworkController::setCallback(this);
-//    NetworkCallbackTesting::setCallback(this);
-//    NetworkCallbackTesting::startTestingThread();
+    NetworkCallbackTesting::setCallback(this);
+    NetworkCallbackTesting::startTestingThread();
     chatView.setCallback(this);
     mainView.setCallback(this);
 }
 
 void MainController::startMainView() {
-    mainView.create();
+
+    chatView.create(mainView.create());
     mainView.show();
     NetworkController::netGetInfo(LoginController::getInstance().userId, LoginController::getInstance().userPassword.c_str());
 }
@@ -144,7 +145,15 @@ void MainController::startNetworkConnect() {
 }
 
 void MainController::selectUser(int uId, std::string uName) {
-    chatView.show(uName.c_str());
+    GList *list=gtk_container_get_children(GTK_CONTAINER(chatView.message_box));
+    GList *head = list;
+//    for(int i=0;i<g_list_length(list);i++)
+//    {
+//        gtk_widget_destroy(GTK_WIDGET(head->data));
+//        head=head->next;
+//    }
+    chatView.setName(uName.c_str());
+    chatView.show();
     chatView.currentId = uId;
     chatView.isGroup = false;
 }
@@ -152,7 +161,15 @@ void MainController::selectUser(int uId, std::string uName) {
 void MainController::selectGroup(int gId) {
     std::string title = "Group: " + std::to_string(gId);
     NetworkController::netAddUIdToGroup(LoginController::getInstance().userId, LoginController::getInstance().userPassword.c_str(), gId);
-    chatView.show(title.c_str());
+    GList *list=gtk_container_get_children(GTK_CONTAINER(chatView.message_box));
+    GList *head = list;
+    for(int i=0;i<g_list_length(list);i++)
+        {
+            gtk_widget_destroy(GTK_WIDGET(head->data));
+            head=head->next;
+        }
+    chatView.setName(std::to_string(gId).c_str());
+    chatView.show();
     chatView.currentId = gId;
     chatView.isGroup = true;
 }

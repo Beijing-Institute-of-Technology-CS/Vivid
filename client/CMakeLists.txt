@@ -26,6 +26,8 @@ add_executable(client main.cpp View/LoginView/LoginView.cpp
         View/MainView/ChatView/ChatView.cpp View/MainView/ChatView/ChatView.h View/MainView/List/GroupList/GroupList.cpp View/MainView/List/GroupList/GroupList.h Utils/CSSUtils.cpp Utils/CSSUtils.h)
 
 #set(ENV{PKG_CONFIG_PATH} /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/MainView.xml
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 target_link_libraries(client ${GTK3_LIBRARIES})
 

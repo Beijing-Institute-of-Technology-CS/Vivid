@@ -6,28 +6,32 @@
 #define CLIENT_CHATVIEW_H
 
 #include <gtk/gtk.h>
+#include <vector>
 
 class ChatViewCallback;
+
 
 class ChatView
 {
 public:
-    void show(const char *name);
-    void destroy();
+    void create(GtkBuilder * builder);
+    void setName(const char *name=NULL);
+    void show();
     bool isGroup;
     int currentId;
+    GtkWidget *message_box= nullptr;
     void receive_message(const char *message);
     void send_message(std::string message);
     void setCallback(ChatViewCallback *callback);
     bool isShow = false;
 private:
-    GtkWidget *chat_window = nullptr;
+    //std::vector <GtkWidget *> msg;
     GtkWidget *vbox= nullptr;
     GtkWidget *textView = nullptr;
-    GtkWidget *message_box= nullptr;
+    GtkWidget * name_label=nullptr;
+
 
     ChatViewCallback * callback;
-    //static char *get_text(gpointer data);
     static void on_send_clicked(GtkButton *button,gpointer data);
     static void clear_input_area(GtkWidget *textView);
     static void on_destroy(GtkWidget * widget, gpointer data);

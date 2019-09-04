@@ -19,6 +19,7 @@ class GroupList
 {
 public:
     GroupList();
+    void create(GtkWidget *view);
     GtkWidget *getView();
     void append(const gchar *id,const gchar *message);
     void setData(const std::vector<Group>& contacts);
