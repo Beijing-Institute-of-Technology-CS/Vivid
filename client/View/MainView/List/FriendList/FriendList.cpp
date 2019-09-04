@@ -77,7 +77,7 @@ void FriendList::setFriend(const int id, const char *message) {
         }
     }while(gtk_tree_model_iter_next(pmodel,&iter));
 
-    append(std::to_string(id).c_str(),name,message);
+    append(std::to_string(id).c_str(),NULL,message);
 }
 
 
