@@ -47,7 +47,7 @@
 
 #login_view_id_entry:focus{
     border-style:solid;
-    border-bottom-color: #03a9f4;
+    border-bottom-color: #85B1FF;
     box-shadow: none;
 }
 
@@ -61,7 +61,7 @@
 
 #login_view_psw_entry:focus{
     border-style:solid;
-    border-bottom-color: #03a9f4;
+    border-bottom-color: #85B1FF;
     box-shadow: none;
 }
 
