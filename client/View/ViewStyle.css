@@ -171,3 +171,65 @@
     font-size: large;
     font-weight: bold;
 }
+
+#register_view_label_name, #register_view_label_pass, #register_view_label_check{
+    font-family: sans-serif;
+    font-size: large;
+    font-weight: bold;
+}
+
+#register_view_logo{
+    background-image: url("logo.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 37%;
+}
+
+/*submit按钮*/
+#register_view_submit_btn {
+    background-color: transparent;
+    border: none;
+    font-family: sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+#register_view_submit_btn:hover {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+
+/*cancel按钮*/
+#register_view_cancel_btn {
+    background-color: transparent;
+    border: none;
+    font-family: sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+#register_view_cancel_btn:hover {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+
+/*窗口关闭按钮*/
+#register_view_close_btn {
+    background-image: url("close_btn_icon.png");
+    background-size: contain;
+    margin: 10px;
+    padding: 3px;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    border: none;
+}
+#register_view_close_btn:hover {
+    opacity: 1;
+    box-shadow: none;
+}

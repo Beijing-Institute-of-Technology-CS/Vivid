@@ -11,8 +11,13 @@ void RegisterView::show() {
 
     GtkBuilder *builder;
 
+    GtkWidget *label_name;
+    GtkWidget *label_pass;
+    GtkWidget *label_check;
     GtkWidget *submit_button;
     GtkWidget *cancel_button;
+    GtkWidget *regi_logo;
+    GtkWidget *close_btn;
 
     builder = gtk_builder_new ();//指针分配空间
     gtk_builder_add_from_file (builder, "RegisterView.xml", NULL);//读取xml文件
@@ -20,18 +25,28 @@ void RegisterView::show() {
     regi_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
     regi_window = GTK_WIDGET (gtk_builder_get_object (builder, "window"));
+    label_name = GTK_WIDGET (gtk_builder_get_object (builder, "label_name"));
     entry_name = GTK_WIDGET (gtk_builder_get_object (builder, "entry_name"));
+    label_pass = GTK_WIDGET (gtk_builder_get_object (builder, "label_pass"));
     entry_pwd = GTK_WIDGET (gtk_builder_get_object (builder, "entry_pass"));
+    label_check = GTK_WIDGET (gtk_builder_get_object (builder, "label_check"));
     entry_check = GTK_WIDGET (gtk_builder_get_object (builder, "entry_check"));
     submit_button= GTK_WIDGET (gtk_builder_get_object (builder, "button_submit"));
     cancel_button= GTK_WIDGET (gtk_builder_get_object (builder, "button_cancel"));
+    regi_logo = GTK_WIDGET (gtk_builder_get_object (builder, "logo"));
+    close_btn = GTK_WIDGET (gtk_builder_get_object (builder, "buttonclose"));
 
     gtk_widget_set_name(regi_window, "register_view_window");
+    gtk_widget_set_name(label_name, "register_view_label_name");
     gtk_widget_set_name(entry_name, "register_view_entry_name");
+    gtk_widget_set_name(label_pass, "register_view_label_pass");
     gtk_widget_set_name(entry_pwd, "register_view_entry_pwd");
+    gtk_widget_set_name(label_check, "register_view_label_check");
     gtk_widget_set_name(entry_check, "register_view_entry_check");
     gtk_widget_set_name(submit_button, "register_view_submit_btn");
     gtk_widget_set_name(cancel_button, "register_view_cancel_btn");
+    gtk_widget_set_name(regi_logo, "register_view_logo");
+    gtk_widget_set_name(close_btn, "register_view_close_btn");
 
     /*按钮触发*/
     g_signal_connect(G_OBJECT(submit_button),"clicked", G_CALLBACK(onSubmitClickCallback),this);
