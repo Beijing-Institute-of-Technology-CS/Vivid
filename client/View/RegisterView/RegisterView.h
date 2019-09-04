@@ -38,7 +38,7 @@ private:
     static void onSubmitClickCallback(GtkWidget * button, gpointer data);
     static void onCancelClickCallback(GtkWidget * widget, gpointer data);
     static void onDestroy(GtkWidget * widget, gpointer data);
-
+    static void on_close_btn_callback(GtkWidget * widget, gpointer data);
 };
 
 //注册点击回调

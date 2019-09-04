@@ -52,6 +52,7 @@ void RegisterView::show() {
     g_signal_connect(G_OBJECT(submit_button),"clicked", G_CALLBACK(onSubmitClickCallback),this);
     g_signal_connect(G_OBJECT(cancel_button),"clicked", G_CALLBACK(onCancelClickCallback),this);
     g_signal_connect(G_OBJECT(regi_window),"destroy", G_CALLBACK(onDestroy), this);
+    g_signal_connect(G_OBJECT(close_btn),"clicked", G_CALLBACK(on_close_btn_callback), this);
 
     gtk_widget_show_all(regi_window);
     isShow = true;
@@ -95,4 +96,8 @@ void RegisterView::onCancelClickCallback(GtkWidget *widget, gpointer data) {
 
 void RegisterView::onDestroy(GtkWidget *widget, gpointer data) {
     ((RegisterView *)data)->isShow = false;
+}
+
+void RegisterView::on_close_btn_callback(GtkWidget *widget, gpointer data) {
+    gtk_widget_destroy(((RegisterView *)data)->regi_window);
 }
