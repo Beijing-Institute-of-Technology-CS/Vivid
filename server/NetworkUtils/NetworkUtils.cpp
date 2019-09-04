@@ -305,6 +305,9 @@ void NetworkUtils::start_server() {
 
                                 char *s_json = JsonUtils::make_response_getMessages_json(TRUE_CONTENT,messages);
 
+                                std::cout <<"wotm" << std::endl;
+                                std::cout << s_json << std::endl;
+
                                 send(fd,s_json,strlen(s_json),0);
 
                             }else if(strcmp(requestType,TYPE_SEND_MESSAGES)==0){
