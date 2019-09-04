@@ -19,7 +19,17 @@
 
 /*登录按钮*/
 #login_view_login_btn {
-    background-color: red;
+    background-image: url("next_btn_icon.png");
+    background-size: contain;
+    margin: 10px;
+    padding: 5px;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    border: none;
+}
+#login_view_login_btn:hover {
+    opacity: 1;
+    box-shadow: none;
 }
 
 /*注册按钮*/
