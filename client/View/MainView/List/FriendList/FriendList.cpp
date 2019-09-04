@@ -33,6 +33,8 @@ void FriendList::create(GtkWidget *view) {
                                                 "last message",renderer,
                                                 "text",USER_MESSAGE,
                                                 NULL);
+
+    gtk_widget_set_name(view, "main_view_friend_tree_view");
 }
 
 GtkTreeModel *FriendList::list_model_create() {

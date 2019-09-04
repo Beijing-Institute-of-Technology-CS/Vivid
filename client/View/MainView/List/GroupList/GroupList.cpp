@@ -24,6 +24,8 @@ void GroupList::create(GtkWidget *view) {
                                                 "text",GROUP_MESSAGE,
                                                 NULL);
 
+    gtk_widget_set_name(view, "main_view_group_tree_view");
+
 }
 
 GtkWidget *GroupList::getView() {

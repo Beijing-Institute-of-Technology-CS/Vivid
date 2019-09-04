@@ -48,6 +48,7 @@ GtkBuilder * MainView::create() {
     GtkTreeSelection *friend_selection;
     GtkTreeSelection *group_selection;
     GtkWidget *list_box;
+    GtkWidget *logo_img;
     GtkBuilder *builder;
     /**
      * 创建构件
@@ -69,6 +70,18 @@ GtkBuilder * MainView::create() {
     group_selection = GTK_TREE_SELECTION(gtk_builder_get_object(builder,"group_selection"));
     flist.create(GTK_WIDGET(gtk_builder_get_object(builder,"contact_list")));
     glist.create(GTK_WIDGET(gtk_builder_get_object(builder,"group_list")));
+
+    logo_img = GTK_WIDGET(gtk_builder_get_object(builder, "image_main_logo"));
+
+    gtk_widget_set_name(main_window, "main_view_window");
+    gtk_widget_set_name(exit_button, "main_view_close_btn");
+    gtk_widget_set_name(logo_img, "main_view_logo");
+    gtk_widget_set_name(inputEntry, "main_view_search_entry");
+    gtk_widget_set_name(button_go, "main_view_go_btn");
+    gtk_widget_set_name(friend_button, "main_view_contacts_btn");
+    gtk_widget_set_name(group_button, "main_view_group_btn");
+
+
     /**
      * 信号连接
      */

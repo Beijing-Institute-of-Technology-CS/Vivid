@@ -51,6 +51,8 @@ void ChatView::receive_message(const char *message) {
     gtk_box_pack_start(GTK_BOX(single_box),message_label,FALSE,FALSE,0);
     gtk_box_pack_start(GTK_BOX(message_box),single_box,FALSE,FALSE,0);
 
+    gtk_widget_set_name(single_box, "main_view_receive_box");
+
     gtk_widget_show(single_box);
     gtk_widget_show(message_label);
 }
@@ -69,6 +71,8 @@ void ChatView::send_message(std::string message) {
     gtk_label_set_justify(GTK_LABEL(message_label),GTK_JUSTIFY_RIGHT);
     gtk_box_pack_end(GTK_BOX(single_box),message_label,FALSE,FALSE,0);
     gtk_box_pack_start(GTK_BOX(message_box),single_box,FALSE,FALSE,0);
+
+    gtk_widget_set_name(single_box, "main_view_send_box");
 
     gtk_widget_show(single_box);
     gtk_widget_show(message_label);
@@ -97,6 +101,10 @@ void ChatView::create(GtkBuilder *builder) {
     g_signal_connect(G_OBJECT(send_button),"clicked",G_CALLBACK(on_send_clicked),this);
 
     gtk_button_set_label(GTK_BUTTON(send_button),"send");
+
+    gtk_widget_set_name(name_label, "main_view_name_label");
+    gtk_widget_set_name(textView, "main_view_input_text");
+    gtk_widget_set_name(send_button, "main_view_send_btn");
 }
 
 void ChatView::setName(const char *name)
