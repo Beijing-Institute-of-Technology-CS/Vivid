@@ -60,11 +60,11 @@ private:
 
     bool groupMessage;
 
-    char * mContent;
+    char * mContent= nullptr;
 
-    char * mTime;
+    char * mTime= nullptr;
 
-    char * uFromUsername;
+    char * uFromUsername= nullptr;
 
 };
 

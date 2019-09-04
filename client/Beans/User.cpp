@@ -64,7 +64,7 @@ void User::setUName(char *uName) {
 }
 
 void User::setUPassword(char *uPassword) {
-    this->uPassword = (char *)malloc(sizeof(char)*strlen(uPassword)+1);
+    this->uPassword = (char *)malloc(sizeof(char)*(strlen(uPassword)+1));
     strcpy(this->uPassword,uPassword);
 }
 
