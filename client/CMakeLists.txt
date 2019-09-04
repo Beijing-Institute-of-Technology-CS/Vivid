@@ -33,3 +33,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/LoginView/login.xml
         ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/ViewStyle.css
         ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/Assets/close_btn_icon.png
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
