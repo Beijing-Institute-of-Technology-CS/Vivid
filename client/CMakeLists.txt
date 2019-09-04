@@ -28,3 +28,6 @@ add_executable(client main.cpp View/LoginView/LoginView.cpp
 #set(ENV{PKG_CONFIG_PATH} /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig)
 
 target_link_libraries(client ${GTK3_LIBRARIES})
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/LoginView/login.xml
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
