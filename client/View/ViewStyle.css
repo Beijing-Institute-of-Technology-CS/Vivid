@@ -34,17 +34,36 @@
 
 /*注册按钮*/
 #login_view_reg_btn {
-    background-color: red;
+    background-color: transparent;
 }
 
 /*ID输入框*/
 #login_view_id_entry {
-    background-color: red;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid grey;
+    border-radius: 0;
+}
+
+#login_view_id_entry:focus{
+    border-style:solid;
+    border-bottom-color: #03a9f4;
+    box-shadow: none;
 }
 
 /*密码输入框*/
 #login_view_psw_entry {
-    background-color: red;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid grey;
+    border-radius: 0;
 }
+
+#login_view_psw_entry:focus{
+    border-style:solid;
+    border-bottom-color: #03a9f4;
+    box-shadow: none;
+}
+
 
 /*==========================================*/
