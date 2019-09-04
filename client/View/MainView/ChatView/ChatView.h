@@ -18,7 +18,7 @@ public:
     void setName(const char *name=NULL);
     void show();
     bool isGroup;
-    int currentId;
+    int currentId = -1;
     GtkWidget *message_box= nullptr;
     void receive_message(const char *message);
     void send_message(std::string message);

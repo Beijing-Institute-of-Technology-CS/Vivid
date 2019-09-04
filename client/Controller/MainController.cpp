@@ -147,11 +147,11 @@ void MainController::startNetworkConnect() {
 void MainController::selectUser(int uId, std::string uName) {
     GList *list=gtk_container_get_children(GTK_CONTAINER(chatView.message_box));
     GList *head = list;
-//    for(int i=0;i<g_list_length(list);i++)
-//    {
-//        gtk_widget_destroy(GTK_WIDGET(head->data));
-//        head=head->next;
-//    }
+    for(int i=0;i<g_list_length(list);i++)
+    {
+        gtk_widget_destroy(GTK_WIDGET(head->data));
+        head=head->next;
+    }
     chatView.setName(uName.c_str());
     chatView.show();
     chatView.currentId = uId;
@@ -164,10 +164,10 @@ void MainController::selectGroup(int gId) {
     GList *list=gtk_container_get_children(GTK_CONTAINER(chatView.message_box));
     GList *head = list;
     for(int i=0;i<g_list_length(list);i++)
-        {
-            gtk_widget_destroy(GTK_WIDGET(head->data));
-            head=head->next;
-        }
+    {
+        gtk_widget_destroy(GTK_WIDGET(head->data));
+        head=head->next;
+    }
     chatView.setName(std::to_string(gId).c_str());
     chatView.show();
     chatView.currentId = gId;
@@ -242,6 +242,9 @@ gboolean MainController::showTip(gpointer commandPtr) {
 
 void MainController::chatViewSend(std::string msg) {
     if (msg.empty()) {
+        return;
+    }
+    if (chatView.currentId <= 0) {
         return;
     }
     NetworkController::netSendMessage(
