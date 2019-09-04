@@ -27,7 +27,7 @@ void RegisterView::show() {
     cancel_button= GTK_WIDGET (gtk_builder_get_object (builder, "button_cancel"));
 
     gtk_widget_set_name(regi_window, "register_view_window");
-    gtk_widget_set_name(entry_name, "register_view_entry_view");
+    gtk_widget_set_name(entry_name, "register_view_entry_name");
     gtk_widget_set_name(entry_pwd, "register_view_entry_pwd");
     gtk_widget_set_name(entry_check, "register_view_entry_check");
     gtk_widget_set_name(submit_button, "register_view_submit_btn");
