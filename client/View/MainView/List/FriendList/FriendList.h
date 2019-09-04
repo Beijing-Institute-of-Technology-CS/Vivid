@@ -18,7 +18,7 @@ enum{
 class FriendList {
 public:
     FriendList();
-    //void create();
+    void create(GtkWidget *view);
     //void show();
     //void destroy();
     GtkWidget *getView();

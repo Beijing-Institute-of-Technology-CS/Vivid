@@ -3,10 +3,13 @@
 //
 
 #include <string>
+#include <iostream>
 #include "GroupList.h"
 
-GroupList::GroupList() {
-    view =gtk_tree_view_new_with_model(list_model_create());
+void GroupList::create(GtkWidget *view) {
+
+    this->view =view;
+    gtk_tree_view_set_model(GTK_TREE_VIEW(view),list_model_create());
 
     renderer=gtk_cell_renderer_text_new();
 
@@ -20,6 +23,7 @@ GroupList::GroupList() {
                                                 "message",renderer,
                                                 "text",GROUP_MESSAGE,
                                                 NULL);
+
 }
 
 GtkWidget *GroupList::getView() {
@@ -71,4 +75,8 @@ void GroupList::setGroup(const int id, const char *message) {
     }while(gtk_tree_model_iter_next(pmodel,&iter));
 
     append(std::to_string(id).c_str(),message);
+}
+
+GroupList::GroupList() {
+
 }

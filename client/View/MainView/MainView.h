@@ -20,11 +20,10 @@ enum MainViewShowMode {
 
 class MainView {
 public:
-    MainView();
     /**
      * 展示主界面
      */
-    void create();
+    GtkBuilder* create();
     void show();
     void destroy();
 
@@ -35,10 +34,8 @@ public:
 
 private:
     MainViewShowMode mode = MSG;
-
     GtkWidget *main_window = nullptr;
-    GtkWidget * inputEntry;
-    GtkWidget * inputHBox;
+    GtkWidget *inputEntry;
 
     MainViewCallback * callback;
 
