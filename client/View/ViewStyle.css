@@ -65,5 +65,18 @@
     box-shadow: none;
 }
 
+/*logo*/
+#login_view_logo{
+    background-image: url("logo.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 110%;
+}
+
+/*window*/
+#login_view_window {
+    background-color: white;
+}
+
 
 /*==========================================*/

@@ -18,6 +18,7 @@ void LoginView::show() {
     GtkWidget *login_button;
     GtkWidget *reg_button;
     GtkWidget *close_button;
+    GtkWidget *logo_img;
 
     //GTK BUILDER
     GtkBuilder * builder;
@@ -31,12 +32,16 @@ void LoginView::show() {
     id_entry = GTK_WIDGET(gtk_builder_get_object(builder, "id_entry"));
     psw_entry = GTK_WIDGET(gtk_builder_get_object(builder, "psw_entry"));
     close_button = GTK_WIDGET(gtk_builder_get_object(builder, "close_btn"));
+    logo_img = GTK_WIDGET(gtk_builder_get_object(builder, "login_view_logo"));
 
     gtk_widget_set_name(close_button, "login_view_close_btn");
     gtk_widget_set_name(login_button, "login_view_login_btn");
     gtk_widget_set_name(reg_button, "login_view_reg_btn");
     gtk_widget_set_name(id_entry, "login_view_id_entry");
     gtk_widget_set_name(psw_entry, "login_view_psw_entry");
+    gtk_widget_set_name(logo_img, "login_view_logo");
+    gtk_widget_set_name(login_window, "login_view_window");
+
 
     //连接
     g_signal_connect(G_OBJECT(login_window),"destroy", G_CALLBACK(on_destroy), this);
