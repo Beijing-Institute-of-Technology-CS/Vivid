@@ -42,3 +42,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/Assets/next_btn_icon.png
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/Assets/logo.png
         ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/View/RegisterView/RegisterView.xml
+        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
